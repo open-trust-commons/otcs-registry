@@ -1,0 +1,21 @@
+# A one-sided registry observation. Neither named project has said anything about
+# this edge, which is why it carries its limits and its sources on its face.
+source_project: example-doctrine
+target_project: ktp
+relationship_type: CONCEPTUALLY_OVERLAPS
+asserted_by: OTCS analysis (not the projects)
+evidence:
+  - "Both reject authorization plus audit as sufficient for safe execution"
+date: "2026-07-28"
+status: otcs_observed
+non_claims:
+  - No derivation established in either direction.
+  - No implementation relationship established.
+  - No equivalence established.
+  - Neither project has reviewed or agreed to this edge.
+observed_source:
+  - "https://example.org/doctrine/paper"
+subject_notified: false
+notes: >-
+  Recorded so the reading is checkable and contestable. It is the registry's
+  reading, not either project's claim.

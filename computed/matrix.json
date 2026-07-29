@@ -1,0 +1,137 @@
+{
+  "stamp": {
+    "algorithm_version": "matrix-0.1.0",
+    "weights": {
+      "rung_logic": "validated-manifest-v0.1"
+    },
+    "inputs": [
+      {
+        "file": "registry/projects/abt/otcs.yaml",
+        "sha256": "d771d8678fcf433f243f51d211502dc3025683070e353360f2803897845b4583"
+      },
+      {
+        "file": "registry/projects/abt/relationships.yaml",
+        "sha256": "1db95cb4df5f7c04b56ab581fab26959f121d2c381d122be39b5daa7c4982e26"
+      },
+      {
+        "file": "registry/projects/ex-gatekeeper/otcs.yaml",
+        "sha256": "97ed73af8ef8b94c2a1915c9f2fff31db34db194f33c36f6a5ed11d63d683618"
+      },
+      {
+        "file": "registry/projects/ex-ledgerline/otcs.yaml",
+        "sha256": "90525f8cfcf2e3c4f38173394d81a134b34b40985036899712b98b77921a601d"
+      },
+      {
+        "file": "registry/projects/ex-ledgerline/relationships.yaml",
+        "sha256": "0c74099a430bdd8278c9c572f15a498eb0bb2605cffeb41488a0e8034dbd9fea"
+      },
+      {
+        "file": "registry/projects/ex-mendwell/otcs.yaml",
+        "sha256": "90c8d561e8342d5d37666b5d8264c0581d8f9aaa06e89fde4d31584650738d2e"
+      },
+      {
+        "file": "registry/projects/ex-mendwell/relationships.yaml",
+        "sha256": "79898037dd49ea37e63c2d40cdfe9505c677038820d42ae57141efbfe18ff928"
+      },
+      {
+        "file": "registry/projects/ex-watchtower/otcs.yaml",
+        "sha256": "6c29e315e88def16064f1ede5a9e120085e9175173caf6ca9951561a7d72daf4"
+      },
+      {
+        "file": "registry/projects/ex-watchtower/relationships.yaml",
+        "sha256": "cfc5896b8a236cd6484513555d45bed56f79749e5388d82a3a611a2299aac9ef"
+      },
+      {
+        "file": "registry/projects/ktp/otcs.yaml",
+        "sha256": "947d8ff5c100aaea61fcad51e0c466c4dc50e7d6a5a43b52e098cbeb08a5ab56"
+      },
+      {
+        "file": "registry/projects/ktp-demo/otcs.yaml",
+        "sha256": "2c35bd913b8b11a1663db4f583a194c92a30d453c17e4a3471d687426b93e564"
+      },
+      {
+        "file": "registry/projects/ktp-demo/relationships.yaml",
+        "sha256": "ceacebe55a1134b18ee911418eb0e21cb98fe0d94d29794e99d53bda37ab5e00"
+      }
+    ],
+    "generated_at": "2026-07-25T00:00:00Z",
+    "note": "Computed interpretation, not an authoritative project attribute (EVIDENCE-MODEL.md §6)."
+  },
+  "ladder": [
+    "CLAIMS_TO_IMPLEMENT",
+    "MANIFEST_VALIDATED",
+    "REFERENCE_IMPLEMENTATION",
+    "CONFORMANCE_TESTED"
+  ],
+  "unpopulated_rungs": [
+    "REFERENCE_IMPLEMENTATION",
+    "CONFORMANCE_TESTED"
+  ],
+  "summary": {
+    "registered": 3,
+    "observed": 0,
+    "example": 4
+  },
+  "rows": [
+    {
+      "id": "abt",
+      "record_state": "registered",
+      "provides": {
+        "environment": "MANIFEST_VALIDATED"
+      },
+      "consumes": []
+    },
+    {
+      "id": "ex-gatekeeper",
+      "record_state": "example",
+      "provides": {
+        "receipt": "MANIFEST_VALIDATED"
+      },
+      "consumes": [
+        "decision"
+      ]
+    },
+    {
+      "id": "ex-ledgerline",
+      "record_state": "example",
+      "provides": {
+        "receipt": "MANIFEST_VALIDATED",
+        "provenance": "MANIFEST_VALIDATED"
+      },
+      "consumes": []
+    },
+    {
+      "id": "ex-mendwell",
+      "record_state": "example",
+      "provides": {
+        "repair": "MANIFEST_VALIDATED"
+      },
+      "consumes": []
+    },
+    {
+      "id": "ex-watchtower",
+      "record_state": "example",
+      "provides": {
+        "environment": "MANIFEST_VALIDATED",
+        "observer": "MANIFEST_VALIDATED"
+      },
+      "consumes": []
+    },
+    {
+      "id": "ktp",
+      "record_state": "registered",
+      "provides": {},
+      "consumes": []
+    },
+    {
+      "id": "ktp-demo",
+      "record_state": "registered",
+      "provides": {
+        "environment": "MANIFEST_VALIDATED",
+        "decision": "MANIFEST_VALIDATED",
+        "receipt": "MANIFEST_VALIDATED"
+      },
+      "consumes": []
+    }
+  ]
+}

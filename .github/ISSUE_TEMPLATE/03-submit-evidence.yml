@@ -1,0 +1,33 @@
+name: Submit evidence
+description: Attach evidence to an existing claim — yours or someone else's.
+title: "[Evidence] "
+labels: ["evidence"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Evidence attaches to a **specific claim**, never to a project as a whole
+        (EVIDENCE-MODEL.md §2). A project can hold a verified claim and a disputed one at once.
+  - type: input
+    id: project
+    attributes: { label: Project }
+    validations: { required: true }
+  - type: input
+    id: claim
+    attributes: { label: Which claim does this concern? }
+    validations: { required: true }
+  - type: dropdown
+    id: state
+    attributes:
+      label: What evidence state do you believe this supports?
+      options: [DOCUMENTED, REPRODUCIBLE, INDEPENDENTLY_TESTED, FIELD_OBSERVED, DISPUTED]
+    validations: { required: true }
+  - type: textarea
+    id: evidence
+    attributes: { label: The evidence }
+    validations: { required: true }
+  - type: textarea
+    id: independence
+    attributes:
+      label: If claiming INDEPENDENTLY_TESTED — your relationship to the project
+      description: "A separate legal entity is not independence. Disclose shared founders, funders, advisory roles, reciprocal review, employment, contractor status, code contribution, commercial dependency, or substantial prior collaboration. 'None' is a valid answer."

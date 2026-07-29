@@ -1,0 +1,7 @@
+# schema-valid but semantically illegal: maturity 4 requires INDEPENDENTLY_TESTED or better
+project: ktp
+class: IMPLEMENTATION
+content: Claims independent-evaluation maturity while self-asserted.
+date: "2026-07-25"
+evidence_state: SELF_ASSERTED
+maturity: 4

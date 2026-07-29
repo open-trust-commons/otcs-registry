@@ -1,0 +1,16 @@
+# Anti-convergence gate: claims DOCUMENTED_DERIVATION with no skeptical_review.
+id: "urn:otcs:analysis:bad:1.0.0"
+type: pairwise_composition_review
+subjects: ["urn:otcs:project:a", "urn:otcs:project:b"]
+lenses: [ktp_coordinates]
+input_snapshot: { registry_release: "0.0.8", graph_snapshot_sha256: "bbbb" }
+method: { specification: "otcs-pairwise-review-0.1.0" }
+findings:
+  - id: finding-1
+    statement: "Both use the word continuity, therefore B derives from A."
+    evidence: ["vibes"]
+    status: ai_generated
+    relationship_state: DOCUMENTED_DERIVATION
+limitations: ["none"]
+participants: { author: "someone", conflicts: [] }
+status: [ai_generated]

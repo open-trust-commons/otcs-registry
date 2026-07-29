@@ -1,0 +1,13 @@
+proposal_id: OTCS-0002
+title: Contributed-object lifecycle, artifact typing, synthesis-map legend, and claim evidence classes
+class: model_revision
+phase: DRAFT
+author: Chris Perkins (nmcitra)
+sponsor: Chris Perkins (nmcitra)
+created: "2026-07-26"
+clock_start: "2026-07-26"
+review_date: "2027-01-26"
+affected_projects: [ktp, ktp-demo, abt, ex-gatekeeper, ex-watchtower, ex-ledgerline, ex-mendwell]
+phase_history:
+  - { phase: SEED, date: "2026-07-26" }
+  - { phase: DRAFT, date: "2026-07-26" }

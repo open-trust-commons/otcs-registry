@@ -1,0 +1,10 @@
+proposal_id: OTCS-0001
+ballot_type: A_READINESS
+voter: chris-perkins-nmcitra
+affiliation: nmcitra (founder; maintainer of all three registered seed projects)
+choice: READY
+rationale: Records validate (45/45), evidence states and record_state discipline are in force, and the founder-only objection is raised and answered on the record.
+conflicts_disclosed:
+  - maintainer of every registered seed record
+  - author of the proposal
+date: "2026-07-25"

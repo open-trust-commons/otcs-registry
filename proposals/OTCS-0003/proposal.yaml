@@ -1,0 +1,13 @@
+proposal_id: OTCS-0003
+title: Split the coordinate vector into three layers — coordinates, governance intent, functions
+class: model_revision
+phase: DRAFT
+author: Chris Perkins (nmcitra)
+sponsor: Chris Perkins (nmcitra)
+created: "2026-07-27"
+clock_start: "2026-07-27"
+review_date: "2027-01-27"
+affected_projects: [ktp, ktp-demo, abt, ex-gatekeeper, ex-watchtower, ex-ledgerline, ex-mendwell]
+phase_history:
+  - { phase: SEED, date: "2026-07-27" }
+  - { phase: DRAFT, date: "2026-07-27" }

@@ -1,0 +1,10 @@
+# INVALID: anchor fields on an event that is not EVIDENCE_ANCHORED. A decision
+# record must not be able to describe itself as anchored.
+event_id: ev-000016
+actor_id: chris-perkins-nmcitra
+event_type: DECISION_RECORDED
+timestamp: "2026-07-27T11:00:00-06:00"
+anchor_id: anchor-0001
+anchor_status: ANCHOR_CONFIRMED
+content_hash: cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+prev_hash: bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb

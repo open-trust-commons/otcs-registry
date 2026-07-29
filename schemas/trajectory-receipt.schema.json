@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "otcs:trajectory-receipt",
+  "title": "OTCS Trajectory Receipt",
+  "type": "object",
+  "required": ["participant", "proposal", "joined_at", "versions_reviewed", "objections_reviewed", "conflicts_disclosed", "final_position", "position_changed", "qualified_at", "ballot"],
+  "additionalProperties": false,
+  "properties": {
+    "participant": { "type": "string" },
+    "proposal": { "type": "string" },
+    "joined_at": { "type": "string", "format": "date" },
+    "versions_reviewed": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "contributions": { "type": "array", "items": { "type": "string" } },
+    "objections_reviewed": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "conflicts_disclosed": { "type": "array", "items": { "type": "string" } },
+    "initial_position": { "type": "string" },
+    "final_position": { "type": "string" },
+    "position_changed": { "type": "boolean" },
+    "qualified_at": { "type": "string", "format": "date" },
+    "ballot": { "type": "string" },
+    "signature": { "type": "string" }
+  }
+}

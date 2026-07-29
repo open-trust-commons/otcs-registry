@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "otcs:claim",
+  "title": "OTCS Claim Record",
+  "type": "object",
+  "required": ["project", "class", "content", "date", "evidence_state", "maturity"],
+  "additionalProperties": false,
+  "properties": {
+    "project": { "type": "string" },
+    "class": { "enum": ["ORIGINALITY", "IMPLEMENTATION", "PERFORMANCE", "SECURITY", "INTEROPERABILITY", "STANDARDS", "DERIVATION", "ATTRIBUTION", "VALIDATION"] },
+    "content": { "type": "string", "minLength": 10 },
+    "date": { "type": "string", "format": "date" },
+    "source_artifact": { "type": "string" },
+    "evidence": { "type": "array", "items": { "type": "string" } },
+    "evidence_state": { "enum": ["SELF_ASSERTED", "DOCUMENTED", "REPRODUCIBLE", "INDEPENDENTLY_TESTED", "FIELD_OBSERVED", "DISPUTED", "RETRACTED"] },
+    "maturity": { "type": "integer", "minimum": 0, "maximum": 5 },
+    "relationship_to_prior": { "type": "string" },
+    "evaluator": { "type": "string" },
+    "evaluator_independence_disclosed": { "type": "boolean" }
+  }
+}

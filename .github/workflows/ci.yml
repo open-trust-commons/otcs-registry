@@ -1,0 +1,60 @@
+# CI runs EXACTLY what a contributor can run locally. Nothing merge-gating is unavailable to you.
+name: ci
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version-file: '.nvmrc', cache: npm }
+      - run: npm ci
+      - name: Validate schemas, records, and cross-references
+        run: npm run validate
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version-file: '.nvmrc', cache: npm }
+      - run: npm ci
+      - run: npm test
+  coherence:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version-file: '.nvmrc', cache: npm }
+      - run: npm ci
+      - name: Do the documents still agree with each other?
+        run: npm run coherence
+  ledger:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version-file: '.nvmrc', cache: npm }
+      - run: npm ci
+      - name: Verify governance ledger chain
+        run: npm run ledger:verify
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version-file: '.nvmrc', cache: npm }
+      - run: npm ci
+      - name: Deterministic build check (build twice, compare)
+        run: |
+          npm run build:site
+          find site/dist -type f -exec sha256sum {} \; | sort > /tmp/a.txt
+          npm run build:site
+          find site/dist -type f -exec sha256sum {} \; | sort > /tmp/b.txt
+          diff /tmp/a.txt /tmp/b.txt && echo "deterministic ✓"
+      - name: Roadmap status (measured, not asserted)
+        run: npm run roadmap:status

@@ -1,0 +1,6 @@
+- project: abt
+  class: PERFORMANCE
+  content: First measurement results published (v0.3 — rho = Z/mu with three operating zones); single-organization data, no independent replication.
+  date: "2026-07-25"
+  evidence_state: DOCUMENTED
+  maturity: 1

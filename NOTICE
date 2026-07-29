@@ -1,0 +1,19 @@
+Open Trust Commons — OTCS (Open Trust Coordination System)
+Copyright 2026 Chris Perkins (nmcitra)
+
+Code, schemas, and tooling in this repository are licensed under the
+Apache License, Version 2.0 (see LICENSE).
+
+Specification and documentation text — CHARTER.md, GOVERNANCE.md, VOTING.md,
+EVIDENCE-MODEL.md, SECURITY.md, COMMUNICATIONS.md, NON-GOALS.md, REGISTRY-POLICY.md,
+PRIVACY.md, TRADEMARKS.md, docs/, and interfaces/ — are licensed under
+Creative Commons Attribution 4.0 International (see LICENSE-SPECS).
+
+The Kinetic Trust Protocol (KTP) is independently authored by Chris Perkins.
+OTCS adopts KTP's coordinate system. OTCS does not own KTP, and registration
+of KTP in this registry confers no ownership, endorsement, or validation —
+the same terms that apply to every registered project.
+
+Registered project records are authored by their own maintainers and remain
+their work. Registration is a public, attributable claim by a project about
+itself, and nothing more.

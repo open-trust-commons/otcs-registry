@@ -1,0 +1,10 @@
+proposal_id: OTCS-0001
+ballot_type: B_RATIFICATION
+voter: chris-perkins-nmcitra
+affiliation: nmcitra (founder; maintainer of all three registered seed projects)
+choice: SUPPORT
+rationale: Seeds are honest (validation zeros stated), examples are watermarked, and the registry cannot launch emptier than this without launching empty. Decision may not be recorded before the clock expires 2026-07-28.
+conflicts_disclosed:
+  - maintainer of every registered seed record
+  - author of the proposal
+date: "2026-07-25"

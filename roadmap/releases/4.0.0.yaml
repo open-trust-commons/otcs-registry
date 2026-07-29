@@ -1,0 +1,22 @@
+version: "4.0.0"
+name: "Public Trust Infrastructure"
+status: north_star
+note: >
+  Published as direction, NOT as a near-term promise. What v4 means: no single host is
+  essential; no single maintainer group is essential; the registry, graph, reviews, and
+  interfaces survive organizational exit.
+commons_stage_required: C6
+criteria:
+  ecosystem:
+    qualifying_active_projects: { minimum: 250, state: unmet }
+    independent_stewards: { minimum: 100, state: unmet }
+    independent_registry_operators: { minimum: 10, state: unmet }
+    operational_domain_profiles: { minimum: 10, state: unmet }
+    stable_interfaces: { minimum: 10, state: unmet }
+    jurisdictions_and_languages: { minimum: 2, state: unmet }
+    unaffiliated_institutions_consuming: { minimum: 5, state: unmet }
+  durability:
+    independent_legal_or_fiscal_stewardship: { required: true, state: unmet }
+    multi_year_transparent_sustainability_plan: { required: true, state: unmet }
+    documented_succession_beyond_founder: { required: true, state: unmet }
+    record_survives_organizational_exit: { required: true, state: unmet }

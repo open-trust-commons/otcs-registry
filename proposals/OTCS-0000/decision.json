@@ -1,0 +1,14 @@
+{
+  "proposal_id": "OTCS-0000",
+  "outcome": "RATIFIED",
+  "governance_outcome": "ALLOW",
+  "individual_result": { "qualified": 1, "support": 1, "object": 0, "abstain": 0 },
+  "project_result": { "affected": 0, "ballots": 0 },
+  "process_validity": {
+    "determination": "VALID",
+    "grounds": "Stage 1 founder-led incubation, declared in CHARTER.md §7. Participant set = founder only; constitutional clock waived as pre-existence bootstrap. Both limitations disclosed here rather than laundered. Review date set; any external participant may reopen via the proposal process.",
+    "limitations_disclosed": ["founder-only participant set", "clock waived (bootstrap)"]
+  },
+  "review_date": "2027-01-25",
+  "recorded": "2026-07-25"
+}

@@ -1,0 +1,11 @@
+receipt_id: rcpt-0001
+decision_reference: dec-0001
+actor: agentic-system://fulfillment-bot
+action: execute
+target: orders-api
+timestamp: "2026-07-25T21:01:00-06:00"
+result: EXECUTED_SHAPED
+enforcement_point: gateway://edge-1
+evidence_hashes:
+  - bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+external_anchor: recorder://zone-b-flight-recorder

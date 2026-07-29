@@ -1,0 +1,37 @@
+name: Propose a relationship
+description: Assert that your project relates to another. Counterparty sign-off is required for anything above self-asserted.
+title: "[Relationship] "
+labels: ["relationship"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        You may assert a relationship from your project. You **cannot** register a relationship
+        *for* another project above `self_asserted` — promotion to `mutually_confirmed` requires
+        the counterparty's sign-off (EVIDENCE-MODEL.md §5).
+  - type: input
+    id: source
+    attributes: { label: Source project (yours) }
+    validations: { required: true }
+  - type: input
+    id: target
+    attributes: { label: Target project }
+    validations: { required: true }
+  - type: dropdown
+    id: type
+    attributes:
+      label: Relationship type
+      options: [BUILDS_ON, IMPLEMENTS, EXTENDS, USES, INTEGRATES_WITH, SUPPLIES_SIGNAL_TO, ENFORCES_FOR, RECORDS_FOR, TESTS, VALIDATES, CRITIQUES, FORKS, TRANSLATES, ADAPTS, INSPIRED_BY, CONCEPTUALLY_OVERLAPS, CLAIMS_PRIORITY_OVER, DISPUTES_DERIVATION_FROM]
+    validations: { required: true }
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Links, commits, documents. "We both work on trust" is not evidence of a relationship.
+    validations: { required: true }
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: What exactly is related? A specific interface, formalism, or component — not the whole architecture unless that is genuinely true.
+    validations: { required: true }

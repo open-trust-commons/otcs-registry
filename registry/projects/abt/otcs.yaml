@@ -1,0 +1,60 @@
+otcs_version: "0.1"
+# first_public_date approximate — flagged in PROGRESS "For Chris" for correction
+project:
+  id: abt
+  name: ABT — Ambiguity Bandwidth Theory
+  status: research
+  first_public_date: "2026-06-01"
+  current_version: "0.3"
+  license: See canonical publication
+  record_state: registered
+  maintainers:
+    - name: Chris Perkins (nmcitra)
+      representative: true
+declaration:
+  problem: >
+    Measures an organization's ambiguity load against its resolution capacity
+    (rho = Z/mu) and locates the operating zone, supplying environmental state
+    and repair-capacity measurements that action-governance systems can consume.
+  governed_object: [environment]
+  primary_users: [operations leaders, governance systems]
+  threat_or_failure_model: >
+    Saturation: unresolved ambiguity arriving faster than resolution capacity,
+    degrading the environment's ability to support autonomous action.
+  evidence_outputs: [zone measurements, saturation indicators]
+  known_limitations: >
+    Measurement model with first published results; instrumentation is manual;
+    no independent replication yet; calibration is organization-specific.
+coordinates:
+  actor: { organization: 1.0, human: 0.6 }
+  authority: []
+  verbs: []
+  environment: [ambiguity_load, repair_capacity, uncertainty, human_availability]
+  functions: { sense: 0.7, interpret: 0.9 }
+  time: [during_action]
+ownership:
+  owners:
+    - name: Chris Perkins (nmcitra)
+      public_contact: kinetic-trust@proton.me
+  verification:
+    status: documentation_naming
+    verified_at: "2026-07-27"
+    evidence:
+      - "authorship stated in the ABT publication"
+    verified_by: Chris Perkins (nmcitra)
+freshness:
+  review_interval_days: 365
+  next_owner_confirmation: "2027-07-27"
+  confirmation_status: CURRENT
+consent:
+  publication: true
+  metadata_use: true
+  history_preservation: true
+  mapping_and_analysis: true
+  public_correction_process: true
+  consented_at: "2026-07-27"
+evidence: { specification: 2, implementation: 1, independent_validation: 0 }
+interfaces:
+  provides: [environment]
+offers: [ambiguity-load measurement, repair-capacity signals]
+needs: [independent replication, instrumentation partners]

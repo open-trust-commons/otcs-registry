@@ -1,0 +1,17 @@
+participant: chris-perkins-nmcitra
+proposal: OTCS-0001
+joined_at: "2026-07-25"
+versions_reviewed: [v1]
+contributions:
+  - authored proposal
+  - raised objection-001
+  - answered objection-001
+objections_reviewed: [objection-001]
+conflicts_disclosed:
+  - maintainer of every registered seed record
+  - author of the proposal
+initial_position: SUPPORT
+final_position: SUPPORT
+position_changed: false
+qualified_at: "2026-07-25"
+ballot: ballots/chris-perkins-B.yaml

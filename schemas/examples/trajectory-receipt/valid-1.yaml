@@ -1,0 +1,12 @@
+participant: example-participant
+proposal: OTCS-0000
+joined_at: "2026-07-25"
+versions_reviewed: [v1]
+contributions: [question on scope of §7]
+objections_reviewed: [objection-001]
+conflicts_disclosed: []
+initial_position: undecided
+final_position: SUPPORT
+position_changed: true
+qualified_at: "2026-07-25"
+ballot: ballots/example-participant-B.yaml

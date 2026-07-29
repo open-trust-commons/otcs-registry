@@ -1,0 +1,9 @@
+event_id: ev-000015
+actor_id: chris-perkins-nmcitra
+event_type: EVIDENCE_ANCHORED
+timestamp: "2026-07-27T10:45:00-06:00"
+anchor_id: anchor-0001
+covers_through_event: ev-000014
+anchor_status: ANCHOR_PENDING
+content_hash: bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+prev_hash: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa

@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "otcs:relationship",
+  "title": "OTCS Relationship Edge",
+  "type": "object",
+  "required": [
+    "source_project",
+    "target_project",
+    "relationship_type",
+    "asserted_by",
+    "date",
+    "status"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "source_project": {
+      "type": "string"
+    },
+    "target_project": {
+      "type": "string"
+    },
+    "relationship_type": {
+      "enum": [
+        "BUILDS_ON",
+        "IMPLEMENTS",
+        "EXTENDS",
+        "USES",
+        "INTEGRATES_WITH",
+        "SUPPLIES_SIGNAL_TO",
+        "ENFORCES_FOR",
+        "RECORDS_FOR",
+        "TESTS",
+        "VALIDATES",
+        "CRITIQUES",
+        "FORKS",
+        "TRANSLATES",
+        "ADAPTS",
+        "INSPIRED_BY",
+        "CONCEPTUALLY_OVERLAPS",
+        "CLAIMS_PRIORITY_OVER",
+        "DISPUTES_DERIVATION_FROM"
+      ]
+    },
+    "asserted_by": {
+      "type": "string"
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "status": {
+      "enum": [
+        "otcs_observed",
+        "self_asserted",
+        "mutually_confirmed",
+        "independently_verified",
+        "disputed"
+      ],
+      "description": "Standing of the edge, weakest first. otcs_observed is BELOW self_asserted: the registry asserted this about projects that have not spoken, so it is the only status where neither named party has said anything. self_asserted means one side claimed it; mutually_confirmed requires the counterparty to sign off; independently_verified requires a party neither side controls."
+    },
+    "counterparty_signoff": {
+      "type": "string",
+      "description": "required to reach mutually_confirmed"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "non_claims": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "description": "What this edge explicitly does NOT assert \u2014 'no derivation established', 'no equivalence established'. Required on otcs_observed edges: an unbounded registry assertion about a project that has not been asked is the exact harm the observed record state exists to contain."
+    },
+    "observed_source": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Public material the observation was drawn from. Where it came from, so the subject can check it."
+    },
+    "subject_notified": {
+      "type": "boolean",
+      "description": "Whether the named projects have been told this edge exists. False is honest; absent is not."
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "otcs_observed"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "required": [
+          "non_claims",
+          "observed_source"
+        ]
+      }
+    }
+  ]
+}

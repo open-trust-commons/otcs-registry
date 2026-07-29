@@ -1,0 +1,46 @@
+name: Propose an interface
+description: Propose a new or changed normative interface. Requires IPR disclosure.
+title: "[Interface] "
+labels: ["proposal", "interface"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Interface proposals carry a 21–30 day clock (30–45 for breaking changes) and **require
+        IPR disclosure to advance past DRAFT** (IPR-POLICY.md). No interface reaches STABLE
+        with an undisclosed patent position.
+  - type: input
+    id: name
+    attributes: { label: Interface name }
+    validations: { required: true }
+  - type: textarea
+    id: problem
+    attributes: { label: What problem does it solve, and why does it need to be shared? }
+    validations: { required: true }
+  - type: textarea
+    id: wire
+    attributes: { label: Proposed wire format / semantics }
+    validations: { required: true }
+  - type: textarea
+    id: patents
+    attributes:
+      label: "IPR — known patents or applications"
+      description: "Yours or known to you. 'None known' is acceptable; silence is not."
+    validations: { required: true }
+  - type: textarea
+    id: assignee
+    attributes: { label: "IPR — employer or assignee rights, licensing restrictions" }
+    validations: { required: true }
+  - type: dropdown
+    id: rf
+    attributes:
+      label: Royalty-free implementation commitment for the accepted interface?
+      options: ["Yes", "No — and I understand this will be published with the proposal"]
+    validations: { required: true }
+  - type: checkboxes
+    id: authority
+    attributes:
+      label: Authority
+      options:
+        - label: I have authority to contribute this material.
+          required: true

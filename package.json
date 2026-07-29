@@ -1,0 +1,31 @@
+{
+  "name": "otcs",
+  "version": "0.1.0",
+  "description": "Open Trust Coordination System \u2014 protocol, registry, and site",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "author": "Chris Perkins (nmcitra)",
+  "scripts": {
+    "validate": "tsx src/validate.ts",
+    "test": "vitest run",
+    "ledger:verify": "tsx src/ledger.ts verify",
+    "build:site": "tsx src/sitegen.ts",
+    "serve": "tsx src/serve.ts",
+    "generate": "tsx src/generate.ts",
+    "roadmap:status": "tsx src/roadmap-status.ts",
+    "anchor": "tsx src/anchor.ts round",
+    "anchor:verify": "tsx src/anchor.ts verify",
+    "anchor:status": "tsx src/anchor.ts status",
+    "anchor:stamp": "tsx src/anchor.ts stamp",
+    "generate:docs": "tsx src/generate-docs.ts",
+    "coherence": "tsx src/coherence.ts"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0",
+    "vitest": "^2.1.0",
+    "ajv": "^8.17.0",
+    "ajv-formats": "^3.0.0",
+    "yaml": "^2.5.0"
+  }
+}

@@ -1,0 +1,26 @@
+otcs_version: "0.1"
+project:
+  id: ex-watchtower
+  name: Example Watchtower (fictional)
+  status: prototype
+  first_public_date: "2026-01-01"
+  license: Apache-2.0
+  record_state: example
+  maintainers: [{ name: Example Maintainer }]
+declaration:
+  problem: >
+    Fictional demonstration record: an observability provider emitting
+    environmental signals with confidence and freshness for decision systems.
+  governed_object: [environment]
+  evidence_outputs: [environmental signals]
+  known_limitations: Fictional demonstration record. Implements nothing.
+coordinates:
+  actor: { service: 1.0 }
+  authority: []
+  verbs: []
+  environment: [system_health, dependency_health, threat_pressure, uncertainty]
+  functions: { sense: 0.9, record: 0.6 }
+  time: [during_action]
+evidence: { specification: 1, implementation: 0, independent_validation: 0 }
+interfaces:
+  provides: [environment, observer]

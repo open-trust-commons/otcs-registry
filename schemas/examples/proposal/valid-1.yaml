@@ -1,0 +1,11 @@
+proposal_id: OTCS-0000
+title: Adopt the OTCS charter and constitutional documents
+class: constitutional
+phase: RATIFICATION
+author: Chris Perkins (nmcitra)
+created: "2026-07-25"
+clock_start: "2026-07-25"
+review_date: "2027-01-25"
+phase_history:
+  - { phase: SEED, date: "2026-07-25" }
+  - { phase: DRAFT, date: "2026-07-25" }

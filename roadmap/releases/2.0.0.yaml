@@ -1,0 +1,35 @@
+version: "2.0.0"
+name: "Federated Commons"
+status: planned
+commons_stage_required: C4
+criteria:
+  ecosystem:
+    qualifying_active_projects: { minimum: 50, sustained_days: 180, state: unmet }
+    independent_stewards:       { minimum: 30, state: unmet }
+    project_classes:            { minimum: 8,  state: unmet }
+    project_hosted_manifests:   { minimum: 25, state: unmet }
+  federation:
+    independent_registry_operators: { minimum: 2, state: unmet }
+    stable_ids_survive_import_export: { required: true, state: unmet }
+    conflicting_observations_coexist: { required: true, state: unmet,
+      note: "neither instance may overwrite the other" }
+    inter_registry_conflict_resolved: { required: true, state: unmet }
+    local_annotations_preserved: { required: true, state: unmet }
+  interoperability:
+    stable_interfaces: { minimum: 3, state: unmet }
+    independent_implementations_per_interface: { minimum: 2, state: unmet }
+    mutually_confirmed_relationships: { minimum: 25, state: unmet }
+    published_analyses_with_owner_responses: { minimum: 10, state: unmet }
+  governance:
+    maintainers: { minimum: 5, state: unmet }
+    non_founder_majority: { required: true, state: unmet }
+    registry_operators_represented: { minimum: 2, state: unmet }
+    recusal_recall_succession_fork_exercised: { required: true, state: unmet }
+    completed_trajectory_proposals: { minimum: 3, state: unmet }
+  security:
+    external_security_audit: { required: true, state: unmet }
+    key_rotation_exercised: { required: true, state: unmet }
+    registry_restoration_exercised: { required: true, state: unmet }
+    mirror_divergence_detected_and_repaired: { required: true, state: unmet }
+    federation_abuse_and_malicious_import_tests: { required: true, state: unmet }
+    unresolved_critical_findings: { maximum: 0, state: met }

@@ -1,0 +1,11 @@
+proposal_id: OTCS-0000
+ballot_type: B_RATIFICATION
+voter: chris-perkins-nmcitra
+affiliation: nmcitra (founder; author of KTP and of this proposal)
+choice: SUPPORT
+rationale: Founding adoption of the constitutional documents at Stage 1; every mitigation for this self-ratification is declared in CHARTER.md sections 6 and 7 and in the decision record.
+conflicts_disclosed:
+  - author of the proposal being ratified
+  - founder and sole maintainer at Stage 1
+  - author of KTP, the coordinate system the charter adopts
+date: "2026-07-25"

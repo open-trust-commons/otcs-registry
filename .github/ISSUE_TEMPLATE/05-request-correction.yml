@@ -1,0 +1,29 @@
+name: Request a correction
+description: Something in the record is factually wrong.
+title: "[Correction] "
+labels: ["correction"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Corrections produce **new records**; history is annotated, never rewritten
+        (GOVERNANCE.md §10). You may correct facts about your project. You may not remove
+        another party's dispute because it is uncomfortable.
+  - type: input
+    id: where
+    attributes: { label: What record — file path or URL }
+    validations: { required: true }
+  - type: textarea
+    id: wrong
+    attributes: { label: What is incorrect }
+    validations: { required: true }
+  - type: textarea
+    id: correct
+    attributes: { label: What is correct, and what evidence supports it }
+    validations: { required: true }
+  - type: dropdown
+    id: relationship
+    attributes:
+      label: Your relationship to this record
+      options: [I am the project owner/steward, I am a named counterparty, I am an outside reader, Other]
+    validations: { required: true }

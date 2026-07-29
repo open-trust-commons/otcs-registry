@@ -1,0 +1,76 @@
+measured_at: 2026-07-27
+note: Computed from the live registry against QUALIFYING-PROJECTS.md. A
+  measurement, not a claim.
+commons_stage:
+  id: C0
+  name: Seed
+qualifying_active_projects: 1
+independent_stewards: 1
+steward_list:
+  - chris perkins (nmcitra)
+project_classes: []
+registry_records_total: 7
+non_qualifying:
+  - id: abt
+    reasons:
+      - no canonical public artifact
+  - id: ex-gatekeeper
+    reasons:
+      - record_state=example
+      - owner not verified
+      - no canonical public artifact
+      - no evidence record
+      - owner confirmation older than 12 months
+  - id: ex-ledgerline
+    reasons:
+      - record_state=example
+      - owner not verified
+      - no canonical public artifact
+      - no evidence record
+      - owner confirmation older than 12 months
+  - id: ex-mendwell
+    reasons:
+      - record_state=example
+      - owner not verified
+      - no canonical public artifact
+      - no evidence record
+      - owner confirmation older than 12 months
+  - id: ex-watchtower
+    reasons:
+      - record_state=example
+      - owner not verified
+      - no canonical public artifact
+      - no evidence record
+      - owner confirmation older than 12 months
+  - id: ktp-demo
+    reasons:
+      - no canonical public artifact
+gates:
+  1.0.0:
+    name: Stable Commons Contract
+    commons_stage_required: C2
+    qualifying_active_projects: 1 / 10
+    independent_stewards: 1 / 7
+    project_classes: 0 / 4
+    sustained_days_required: 90
+  2.0.0:
+    name: Federated Commons
+    commons_stage_required: C4
+    qualifying_active_projects: 1 / 50
+    independent_stewards: 1 / 30
+    project_classes: 0 / 8
+    sustained_days_required: 180
+  3.0.0:
+    name: Runtime Commons
+    commons_stage_required: C5
+    qualifying_active_projects: 1 / 100
+    independent_stewards: 1 / 50
+    project_classes: 0 / 10
+    sustained_days_required: 180
+  4.0.0:
+    name: Public Trust Infrastructure
+    commons_stage_required: C6
+    qualifying_active_projects: 1 / 250
+    independent_stewards: 1 / 100
+    project_classes: 0 / —
+    sustained_days_required: null

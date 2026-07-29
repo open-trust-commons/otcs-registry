@@ -1,0 +1,35 @@
+version: "3.0.0"
+name: "Runtime Commons"
+status: planned
+commons_stage_required: C5
+criteria:
+  ecosystem:
+    qualifying_active_projects: { minimum: 100, sustained_days: 180, state: unmet }
+    independent_stewards: { minimum: 50, state: unmet }
+    project_classes: { minimum: 10, state: unmet }
+    independent_registry_operators: { minimum: 5, state: unmet }
+  runtime_interoperability:
+    stable_runtime_interfaces:
+      required: [signal, decision, enforcement_result, receipt, repair_environment_update]
+      state: unmet
+    implementations_per_runtime_interface: { minimum: 3, state: unmet }
+    end_to_end_compositions: { minimum: 3, state: unmet,
+      note: "signal → environmental evaluation → ALLOW/SHAPE/DEAUTOMATE/VETO → enforcement → external effect → receipt → environment update, across INDEPENDENTLY MAINTAINED projects" }
+    bounded_operational_domains: { minimum: 3, state: unmet }
+  evidence:
+    independent_evaluations: { minimum: 20, state: unmet }
+    published_failures_or_incidents: { minimum: 3, state: unmet }
+    each_failure_has_remediation_evidence: { required: true, state: unmet }
+    no_full_safety_claim_from_test_success: { required: true, state: met,
+      note: "structural — NON-GOALS.md #18" }
+  governance:
+    non_founder_governing_majority: { required: true, state: unmet }
+    domain_councils_for_runtime_profiles: { required: true, state: unmet }
+    independent_conflict_and_appeal_process: { required: true, state: unmet }
+    stable_fiscal_or_institutional_host: { required: true, state: unmet }
+  security:
+    production_runtime_threat_model: { required: true, state: unmet }
+    external_penetration_and_architecture_review: { required: true, state: unmet }
+    incident_response_exercises: { required: true, state: unmet }
+    privacy_impact_assessment: { required: true, state: unmet }
+    conformance_revocation_and_recovery: { required: true, state: unmet }

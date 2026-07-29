@@ -1,0 +1,12 @@
+- project: ktp-demo
+  class: IMPLEMENTATION
+  content: 22 automated checks including 7 pre-registered falsifiers pass, covering environment-only causation, trajectory accumulation (sleeper), monotone resistance, conservative uncertainty, silent containment, and record integrity.
+  date: "2026-07-25"
+  evidence_state: REPRODUCIBLE
+  maturity: 2
+- project: ktp-demo
+  class: SECURITY
+  content: The decision record is tamper-evident (hash-chained); it is not tamper-proof, and cryptographic non-bypassability is out of scope.
+  date: "2026-07-25"
+  evidence_state: REPRODUCIBLE
+  maturity: 2

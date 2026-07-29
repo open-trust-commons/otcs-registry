@@ -1,0 +1,7 @@
+- source_project: ex-mendwell
+  target_project: ex-watchtower
+  relationship_type: INTEGRATES_WITH
+  asserted_by: Example Maintainer (fictional demonstration edge)
+  evidence: ["fictional demonstration"]
+  date: "2026-01-01"
+  status: self_asserted

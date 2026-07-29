@@ -1,0 +1,173 @@
+profile_id: financial-crime
+domain: >-
+  Fraud and financial-crime controls in regulated financial services —
+  transaction monitoring, sanctions screening, payment authorisation,
+  case management, and the model governance around them.
+status: experimental
+maintainer: OTCS founding maintainer
+reviewed: "2026-07-29"
+reviewed_by_practitioner: false
+
+regulators:
+  - "Bank supervisors (model risk governance expectations)"
+  - "Sanctions authorities (list currency and screening obligations)"
+  - "Payment scheme rules (authorisation and chargeback windows)"
+  - "Data protection authorities (profiling and automated decision limits)"
+
+# ---------------------------------------------------------------------------
+# Terms that DO map. Every row states what the mapping loses, because a
+# crosswalk that claims to lose nothing is not a crosswalk, it is a rename.
+# ---------------------------------------------------------------------------
+terms:
+  - term: customer / counterparty
+    coordinate: actor
+    maps_to: human, organization
+    loses: >-
+      The domain distinguishes the party to the transaction from the party to
+      the relationship. One customer can be both, or neither. Actor has one slot.
+
+  - term: authorised payment initiation
+    coordinate: action
+    maps_to: transfer
+    loses: >-
+      Initiation, authorisation, clearing and settlement are four distinct
+      moments with different reversibility. `transfer` is one verb for all four.
+
+  - term: step-up authentication
+    coordinate: function
+    maps_to: constrain
+    loses: >-
+      Step-up narrows the action by adding a condition rather than by
+      restricting scope. Both are `constrain` here.
+
+  - term: hard decline
+    coordinate: function
+    maps_to: enforce
+    loses: nothing
+    note: >-
+      A clean fit. The enforcement point is the authorisation switch, which is
+      declared, so the `enforce` test is satisfiable in this domain.
+
+  - term: refer to manual review
+    coordinate: function
+    maps_to: decide
+    loses: >-
+      The referral is a handoff to a human queue, not a decision. The domain
+      treats the queue's capacity as part of the control; `decide` does not.
+
+  - term: sanctions screening
+    coordinate: authority
+    maps_to: law
+    loses: >-
+      A sanctions list is law that changes between one transaction and the next.
+      `law` reads as static in every other context the vocabulary is used in.
+
+  - term: scheme rules
+    coordinate: authority
+    maps_to: contract
+    loses: >-
+      Scheme rules bind parties who never signed them and change without their
+      agreement. That is not what `contract` means anywhere else.
+
+  - term: model risk governance approval
+    coordinate: authority
+    maps_to: mandate
+    loses: >-
+      An approval that is conditional on ongoing monitoring, and lapses if the
+      monitoring stops. `mandate` has no expiry semantics.
+
+  - term: pre-authorisation check
+    coordinate: time
+    maps_to: before_action
+    loses: nothing
+
+  - term: post-transaction monitoring
+    coordinate: time
+    maps_to: after_action, across_trajectory
+    loses: >-
+      The domain separates same-day retrospective review from long-horizon
+      pattern detection. Both land on `across_trajectory`.
+
+  - term: chargeback window
+    coordinate: time
+    maps_to: repair_window
+    loses: >-
+      The window has a scheme-defined length and a hard expiry. `repair_window`
+      carries no duration.
+
+  - term: exposure at risk
+    coordinate: environment
+    maps_to: financial_exposure
+    loses: nothing
+
+  - term: alert backlog
+    coordinate: environment
+    maps_to: human_availability
+    loses: >-
+      Backlog is a queue depth that changes what the control should do. The
+      vocabulary can say humans are scarce, not that the queue is deep.
+
+# ---------------------------------------------------------------------------
+# Terms with no honest home. This list is the finding.
+# ---------------------------------------------------------------------------
+unmapped:
+  - term: sanctions list currency
+    would_belong_in: environment
+    why_it_does_not_fit: >-
+      The age of the screening list is a condition the control must respond to —
+      screening against a stale list is a different act from screening against a
+      current one. It is not data quality, not threat pressure, and not
+      dependency health, though it gets forced into all three.
+    current_workaround: >-
+      Collapse into data_quality, which then means both "the input record is
+      malformed" and "the legal reference set is out of date" — two conditions
+      with opposite remedies.
+
+  - term: typology drift
+    would_belong_in: environment
+    why_it_does_not_fit: >-
+      The adversary's method changing under the control is not the same as
+      threat pressure rising. Pressure is volume; drift is shape. A control can
+      face falling volume and rising drift at once, and should respond
+      differently to each.
+    current_workaround: Collapse into threat_pressure, losing the distinction entirely.
+
+  - term: population drift
+    would_belong_in: environment
+    why_it_does_not_fit: >-
+      The population a model was fitted on no longer resembles the population it
+      scores. This is the single most common reason a fraud control silently
+      degrades, and there is no coordinate value for it.
+    current_workaround: >-
+      Collapse into data_quality, which reads as "the data is bad" when the data
+      is fine and the model is stale.
+
+  - term: mule network density
+    would_belong_in: environment
+    why_it_does_not_fit: >-
+      A structural property of the counterparty graph, not of the actor or the
+      transaction. The vocabulary has no place for a condition that belongs to
+      the network rather than to either party.
+    current_workaround: >-
+      No workaround. It is dropped, and the record reads as though the control
+      does not consider it.
+
+  - term: supervisory examination finding
+    would_belong_in: authority
+    why_it_does_not_fit: >-
+      A finding from a supervisor is not law, not policy, and not a mandate. It
+      is binding in practice, unenforceable in form, and often confidential. The
+      authority list has no value for obligations that bind without being rules.
+    current_workaround: Declared as organizational_policy, which understates it.
+
+  - term: dual-use disclosure limit
+    would_belong_in: evidence
+    why_it_does_not_fit: >-
+      In this domain a control cannot publish how it works without degrading it.
+      The evidence model assumes more disclosure is always more honest. Here the
+      most effective controls are the ones least able to evidence themselves,
+      and the model has no way to say "withheld for a legitimate reason" as
+      distinct from "not evidenced".
+    current_workaround: >-
+      The claim sits at SELF_ASSERTED permanently, indistinguishable from a claim
+      nobody bothered to support.

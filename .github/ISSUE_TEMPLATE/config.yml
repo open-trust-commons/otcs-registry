@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Ask a question / explore an idea
+    url: https://github.com/open-trust-commons/otcs-registry/discussions
+    about: "Discussion explores. A proposal formalizes. A pull request changes the record."
+  - name: Report a security vulnerability
+    url: https://github.com/open-trust-commons/otcs-registry/security/advisories/new
+    about: Private vulnerability reporting — never open a public issue for this.

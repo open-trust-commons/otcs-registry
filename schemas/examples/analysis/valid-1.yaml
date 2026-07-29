@@ -1,0 +1,36 @@
+id: "urn:otcs:analysis:ktp-abt:1.0.0"
+type: pairwise_composition_review
+subjects: ["urn:otcs:project:ktp", "urn:otcs:project:abt"]
+lenses: [ktp_coordinates, interface, evidence]
+input_snapshot:
+  registry_release: "0.0.8"
+  graph_snapshot_sha256: "aaaa"
+  subject_record_versions: { ktp: "1.0.0", abt: "1.0.0" }
+method:
+  specification: "otcs-pairwise-review-0.1.0"
+  deterministic_tools: ["otcs-compiler-0.0.8"]
+findings:
+  - id: finding-1
+    statement: "ABT's ambiguity-load measurement could satisfy one declared environmental input of KTP."
+    evidence: ["registry/projects/abt/otcs.yaml", "registry/projects/ktp/otcs.yaml"]
+    status: human_reviewed
+    relationship_state: POTENTIAL_INTERFACE
+    skeptical_review: >
+      No demonstrated integration exists; the coordinate names align but neither project
+      has published a wire-compatible object. Shared authorship of both projects means
+      this apparent fit is not independent evidence of composability.
+limitations:
+  - "No demonstrated integration exists."
+  - "Legal compatibility was not reviewed."
+  - "Both subjects share one maintainer; this is not an independent comparison."
+unresolved_questions:
+  - "Would ABT's measurement cadence match KTP's evaluation cadence in practice?"
+participants:
+  author: "Chris Perkins (nmcitra)"
+  affiliation: "nmcitra"
+  conflicts:
+    - "author maintains BOTH subject projects — this analysis is first-party on both sides"
+project_responses: { ktp: confirmed, abt: confirmed }
+status: [human_reviewed, published]
+freshness: { state: CURRENT, review_date: "2027-07-27" }
+supersedes: null

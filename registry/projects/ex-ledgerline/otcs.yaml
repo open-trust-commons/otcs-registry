@@ -1,0 +1,27 @@
+otcs_version: "0.1"
+project:
+  id: ex-ledgerline
+  name: Example Ledgerline (fictional)
+  status: prototype
+  first_public_date: "2026-01-01"
+  license: Apache-2.0
+  record_state: example
+  maintainers: [{ name: Example Maintainer }]
+declaration:
+  problem: >
+    Fictional demonstration record: evidence infrastructure preserving
+    tamper-evident receipts and provenance for decisions and their effects
+    across an actor's full trajectory, not per-transaction.
+  governed_object: [evidence]
+  evidence_outputs: [hash-chained receipts, provenance records]
+  known_limitations: Fictional demonstration record. Implements nothing.
+coordinates:
+  actor: { service: 1.0 }
+  authority: []
+  verbs: []
+  environment: []
+  functions: { record: 0.9 }
+  time: [after_action, across_trajectory]
+evidence: { specification: 1, implementation: 0, independent_validation: 0 }
+interfaces:
+  provides: [receipt, provenance]

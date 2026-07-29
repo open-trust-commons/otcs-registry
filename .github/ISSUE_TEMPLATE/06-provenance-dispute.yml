@@ -1,0 +1,42 @@
+name: Open a provenance dispute
+description: Contest an attribution, derivation, or priority claim.
+title: "[Dispute] "
+labels: ["dispute"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Read first.** OTCS is not a court, not a plagiarism tribunal, and makes no legal
+        determinations (NON-GOALS #7, #13). A dispute creates a **new record preserving both
+        sides** — it does not produce a verdict. OTCS rarely rules on "who had the idea";
+        it preserves specific bounded facts: a publication date, an exact phrase, a diagram,
+        a repository history, an access event, a citation.
+
+        Using a provenance claim to damage a competitor rather than correct a record is a
+        conduct violation (ACCEPTABLE-USE.md).
+  - type: textarea
+    id: claim
+    attributes: { label: The exact claim at issue }
+    validations: { required: true }
+  - type: textarea
+    id: objects
+    attributes:
+      label: What specific object moved?
+      description: "A named formalism, mechanism, phrase, diagram, or artifact. Not 'the general idea' — object-level or it cannot be assessed."
+    validations: { required: true }
+  - type: textarea
+    id: chronology
+    attributes: { label: Dated chronology with sources }
+    validations: { required: true }
+  - type: textarea
+    id: transmission
+    attributes:
+      label: Evidence of access or transmission
+      description: "How could the other party have encountered this? Overlap without a transmission path is independent convergence, not derivation."
+    validations: { required: true }
+  - type: textarea
+    id: sought
+    attributes:
+      label: What outcome are you seeking?
+      description: "Attribution restored, language removed or replaced, a relationship state changed, a response recorded."
+    validations: { required: true }

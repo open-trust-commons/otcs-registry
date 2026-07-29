@@ -1,0 +1,10 @@
+participant: example-participant
+proposal: OTCS-0000
+joined_at: "2026-07-25"
+versions_reviewed: []
+objections_reviewed: [objection-001]
+conflicts_disclosed: []
+final_position: SUPPORT
+position_changed: false
+qualified_at: "2026-07-25"
+ballot: ballots/example-participant-B.yaml

@@ -1,0 +1,7 @@
+- source_project: ex-watchtower
+  target_project: ex-gatekeeper
+  relationship_type: SUPPLIES_SIGNAL_TO
+  asserted_by: Example Maintainer (fictional demonstration edge)
+  evidence: ["fictional demonstration"]
+  date: "2026-01-01"
+  status: self_asserted

@@ -1,0 +1,10 @@
+# INVALID: an otcs_observed edge with no non_claims and no observed_source.
+# A registry assertion about projects that have not been asked, with nothing
+# bounding it and no way to check where it came from. The schema must refuse it.
+source_project: example-doctrine
+target_project: ktp
+relationship_type: BUILDS_ON
+asserted_by: OTCS analysis
+evidence: ["they look similar"]
+date: "2026-07-28"
+status: otcs_observed

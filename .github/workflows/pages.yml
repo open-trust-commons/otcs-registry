@@ -1,0 +1,39 @@
+# Publishes the SAME tested artifact CI built. Not a separate build path.
+name: pages
+on:
+  push: { branches: [main] }
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency: { group: pages, cancel-in-progress: false }
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version-file: '.nvmrc', cache: npm }
+      - run: npm ci
+      - run: npm run validate && npm test
+      - run: npm run build:site
+      - name: Write build manifest (displayed on BOTH hosts; divergence is an alert)
+        run: |
+          cat > site/dist/build-manifest.json <<JSON
+          {
+            "commit": "${{ github.sha }}",
+            "host": "github-pages-mirror",
+            "generated_at_source": "$(git log -1 --format=%cI)",
+            "note": "Mirror of the canonical OTCS site. The record is the repository, not either site."
+          }
+          JSON
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: site/dist }
+  deploy:
+    needs: build
+    environment: { name: github-pages, url: '${{ steps.deployment.outputs.page_url }}' }
+    runs-on: ubuntu-latest
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

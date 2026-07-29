@@ -1,0 +1,68 @@
+otcs_version: "0.1"
+project:
+  id: ktp-demo
+  name: KTP Environmental Demo
+  status: prototype
+  first_public_date: "2026-07-24"
+  current_version: "0.1.0"
+  license: Apache-2.0
+  record_state: registered
+  maintainers:
+    - name: Chris Perkins (nmcitra)
+      representative: true
+declaration:
+  problem: >
+    Runnable behavior demonstration of the KTP loop: identical actor, credential,
+    action, and policy across four environments, with verdicts moved only by the
+    environment and by accumulated trajectory cost (the sleeper scenario).
+  governed_object: [action, trajectory, environment]
+  threat_or_failure_model: >
+    Demonstrates the trajectory-blindness of per-request gates: thirty identical
+    individually-allowable actions crossing into SHAPE and VETO from accumulated
+    trajectory cost alone in an unchanging healthy environment.
+  decision_outputs: [ALLOW, SHAPE, VETO]
+  enforcement_points: [in-process policy enforcement point (demo scope)]
+  evidence_outputs: [hash-chained Flight Recorder records]
+  known_limitations: >
+    Behavior demo, not production enforcement: tamper-evident rather than
+    tamper-proof; hand-set estimator weights published for attack; DEAUTOMATE not
+    implemented in this demo; single-agent only; not yet published.
+coordinates:
+  actor: { ai_agent: 1.0, service: 0.6 }
+  authority: [capability, situational_approval]
+  verbs: [execute]
+  environment: [system_health, data_quality, identity_confidence, dependency_health,
+    threat_pressure, uncertainty, cumulative_trajectory]
+  functions: { sense: 0.8, interpret: 0.8, constrain: 0.7, decide: 0.9, enforce: 0.6, record: 0.9 }
+  time: [initiation, during_action, across_trajectory]
+ownership:
+  owners:
+    - name: Chris Perkins (nmcitra)
+      public_contact: kinetic-trust@proton.me
+  verification:
+    status: repository_control_confirmed
+    verified_at: "2026-07-27"
+    evidence:
+      - "local repository; NOT yet published — no public canonical artifact exists"
+    verified_by: Chris Perkins (nmcitra)
+freshness:
+  review_interval_days: 365
+  next_owner_confirmation: "2027-07-27"
+  confirmation_status: CURRENT
+consent:
+  publication: true
+  metadata_use: true
+  history_preservation: true
+  mapping_and_analysis: true
+  public_correction_process: true
+  consented_at: "2026-07-27"
+evidence: { specification: 1, implementation: 2, independent_validation: 0 }
+lineage:
+  - project: ktp
+    relationship: implements
+    evidence: ["README maps each module to its RFC"]
+depends_on: [ktp]
+interfaces:
+  provides: [environment, decision, receipt]
+offers: [reference behavior, pre-registered falsifiers, published estimator parameters]
+needs: [independent evaluator, second implementation to test conformance against]

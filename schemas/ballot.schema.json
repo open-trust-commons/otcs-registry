@@ -1,0 +1,152 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "otcs:ballot",
+  "title": "OTCS Ballot",
+  "type": "object",
+  "required": [
+    "proposal_id",
+    "ballot_type",
+    "choice",
+    "rationale",
+    "conflicts_disclosed",
+    "date"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "proposal_id": {
+      "type": "string"
+    },
+    "ballot_type": {
+      "enum": [
+        "A_READINESS",
+        "B_RATIFICATION",
+        "C_IMPLEMENTATION"
+      ]
+    },
+    "voter": {
+      "type": "string",
+      "description": "individual ballot \u2014 mutually exclusive with project"
+    },
+    "project": {
+      "type": "string",
+      "description": "project ballot \u2014 requires representative"
+    },
+    "representative": {
+      "type": "string"
+    },
+    "affiliation": {
+      "type": "string"
+    },
+    "choice": {
+      "type": "string"
+    },
+    "rationale": {
+      "type": "string",
+      "minLength": 10
+    },
+    "conflicts_disclosed": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "signature": {
+      "type": "string"
+    }
+  },
+  "allOf": [
+    {
+      "oneOf": [
+        {
+          "required": [
+            "voter"
+          ],
+          "properties": {
+            "project": {
+              "not": {}
+            }
+          }
+        },
+        {
+          "required": [
+            "project",
+            "representative"
+          ],
+          "properties": {
+            "voter": {
+              "not": {}
+            }
+          }
+        }
+      ]
+    },
+    {
+      "if": {
+        "properties": {
+          "ballot_type": {
+            "const": "A_READINESS"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "choice": {
+            "enum": [
+              "READY",
+              "NEEDS_REVISION",
+              "INSUFFICIENT_EVIDENCE"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "ballot_type": {
+            "const": "B_RATIFICATION"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "choice": {
+            "enum": [
+              "SUPPORT",
+              "SUPPORT_WITH_RESERVATION",
+              "OBJECT",
+              "ABSTAIN"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "ballot_type": {
+            "const": "C_IMPLEMENTATION"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "choice": {
+            "enum": [
+              "WILL_IMPLEMENT",
+              "WILL_TEST",
+              "MAY_IMPLEMENT",
+              "WILL_NOT_IMPLEMENT",
+              "BREAKS_CURRENT_SYSTEM",
+              "NOT_APPLICABLE"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

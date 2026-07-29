@@ -1,0 +1,334 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "otcs:analysis",
+  "title": "OTCS Analysis Record \u2014 versioned, reproducible, attributable, challengeable, supersedable",
+  "type": "object",
+  "required": [
+    "id",
+    "type",
+    "subjects",
+    "lenses",
+    "input_snapshot",
+    "method",
+    "findings",
+    "limitations",
+    "participants",
+    "status"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^urn:otcs:analysis:[a-z0-9-]+:[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "type": {
+      "enum": [
+        "project_baseline",
+        "pairwise_composition_review",
+        "collection_review",
+        "ecosystem_report",
+        "provenance_review",
+        "standards_crosswalk",
+        "minority_report"
+      ]
+    },
+    "subjects": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "lenses": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "enum": [
+          "ktp_coordinates",
+          "interface",
+          "evidence",
+          "provenance",
+          "standards_authority",
+          "operational_composition",
+          "threat",
+          "governance_health"
+        ]
+      }
+    },
+    "input_snapshot": {
+      "type": "object",
+      "required": [
+        "registry_release",
+        "graph_snapshot_sha256"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "registry_release": {
+          "type": "string"
+        },
+        "graph_snapshot_sha256": {
+          "type": "string"
+        },
+        "subject_record_versions": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "method": {
+      "type": "object",
+      "required": [
+        "specification"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "specification": {
+          "type": "string"
+        },
+        "deterministic_tools": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "ai_runs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "provider",
+              "model",
+              "run_id",
+              "artifact"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "provider": {
+                "type": "string"
+              },
+              "model": {
+                "type": "string",
+                "description": "EXACT model id"
+              },
+              "run_id": {
+                "type": "string"
+              },
+              "artifact": {
+                "type": "string",
+                "description": "path under reviews/ai-runs/ holding prompt + raw output"
+              },
+              "redactions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "statement",
+          "evidence",
+          "status",
+          "relationship_state"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "statement": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
+          },
+          "status": {
+            "enum": [
+              "auto_generated",
+              "ai_generated",
+              "human_reviewed",
+              "source_verified"
+            ]
+          },
+          "relationship_state": {
+            "enum": [
+              "SEMANTIC_SIMILARITY_ONLY",
+              "FUNCTIONAL_OVERLAP",
+              "STRUCTURAL_CORRESPONDENCE",
+              "POTENTIAL_INTERFACE",
+              "DOCUMENTED_DERIVATION",
+              "MUTUALLY_CONFIRMED_INTEGRATION"
+            ],
+            "description": "anti-convergence gate: a finding that cannot answer the structure/behavior/transmission/confirmation questions may not exceed FUNCTIONAL_OVERLAP"
+          },
+          "skeptical_review": {
+            "type": "string",
+            "description": "why this finding may be false \u2014 required for anything above FUNCTIONAL_OVERLAP"
+          }
+        }
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "unresolved_questions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "participants": {
+      "type": "object",
+      "required": [
+        "author",
+        "conflicts"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "author": {
+          "type": "string"
+        },
+        "affiliation": {
+          "type": "string"
+        },
+        "reviewers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "conflicts": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "'none' is acceptable; absence of the field is not"
+        }
+      }
+    },
+    "project_responses": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string"
+      },
+      "additionalProperties": {
+        "enum": [
+          "confirmed",
+          "confirmed_with_qualification",
+          "disputed",
+          "no_response",
+          "declined_to_respond"
+        ]
+      }
+    },
+    "status": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "enum": [
+          "auto_generated",
+          "ai_generated",
+          "human_reviewed",
+          "source_verified",
+          "owner_responded",
+          "mutually_confirmed",
+          "partially_disputed",
+          "published",
+          "superseded",
+          "stale",
+          "retracted"
+        ]
+      }
+    },
+    "freshness": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "state": {
+          "enum": [
+            "CURRENT",
+            "POTENTIALLY_STALE",
+            "STALE"
+          ]
+        },
+        "review_date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "supersedes": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "minority_reports": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "findings": {
+            "contains": {
+              "properties": {
+                "relationship_state": {
+                  "enum": [
+                    "STRUCTURAL_CORRESPONDENCE",
+                    "POTENTIAL_INTERFACE",
+                    "DOCUMENTED_DERIVATION",
+                    "MUTUALLY_CONFIRMED_INTEGRATION"
+                  ]
+                }
+              },
+              "required": [
+                "relationship_state"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "findings": {
+            "items": {
+              "required": [
+                "skeptical_review"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          }
+        }
+      }
+    }
+  ]
+}

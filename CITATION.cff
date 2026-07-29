@@ -1,0 +1,38 @@
+cff-version: 1.2.0
+title: "Open Trust Commons (OTCS — Open Trust Coordination System)"
+message: "If you reference this work, please cite it as below."
+type: software
+authors:
+  - family-names: Perkins
+    given-names: Chris
+    alias: nmcitra
+abstract: >-
+  An open protocol and public registry for locating trust-related projects
+  within a shared action-governance coordinate system; preserving their
+  provenance, maturity, evidence and relationships; and enabling voluntary
+  composition, testing and collaboration without requiring centralized
+  ownership or manufactured consensus.
+keywords:
+  - trust
+  - governance
+  - agentic systems
+  - provenance
+  - registry
+  - interoperability
+license: Apache-2.0
+license-url: "https://www.apache.org/licenses/LICENSE-2.0"
+repository-code: "https://github.com/open-trust-commons/otcs-registry"
+# v0.1.0 is the first public release; nothing below it was ever published.
+# `date-released` and `doi` are set when the release is actually cut
+# (RELEASE-PROCESS.md §2) — a release date written in advance is a guess.
+version: 0.1.0
+references:
+  - type: software
+    title: "Kinetic Trust Protocol (KTP)"
+    authors:
+      - family-names: Perkins
+        given-names: Chris
+    notes: >-
+      Independently authored. OTCS adopts KTP's coordinate system; OTCS does
+      not own KTP. KTP is registered in this registry under the same evidence
+      rules as every other project.

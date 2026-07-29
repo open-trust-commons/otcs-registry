@@ -1,0 +1,10 @@
+# both voter and project set — must be one surface or the other
+proposal_id: OTCS-0000
+ballot_type: B_RATIFICATION
+voter: example-participant
+project: ex-watchtower
+representative: Example Maintainer
+choice: SUPPORT
+rationale: Illegally casts on both surfaces at once.
+conflicts_disclosed: []
+date: "2026-07-25"

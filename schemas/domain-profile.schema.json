@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://opentrustcommons.org/schemas/domain-profile.schema.json",
+  "title": "Domain profile",
+  "description": "A crosswalk from one industry's own vocabulary into the coordinate system, plus the terms that crosswalk could not carry. The unmapped list is the point of the exercise: a profile with an empty `unmapped` array has almost certainly not been tested against the field, because no general vocabulary survives a real domain intact.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["profile_id", "domain", "status", "maintainer", "reviewed", "terms", "unmapped"],
+  "properties": {
+    "profile_id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+    "domain": { "type": "string", "minLength": 3 },
+    "status": { "enum": ["draft", "experimental", "active", "superseded"] },
+    "maintainer": { "type": "string", "minLength": 3 },
+    "reviewed": { "type": "string", "format": "date" },
+    "reviewed_by_practitioner": {
+      "type": "boolean",
+      "description": "Whether someone who works in this field has checked the crosswalk. False is an honest and common answer; a profile nobody in the domain has read is a guess about the domain."
+    },
+    "regulators": {
+      "type": "array",
+      "description": "Named only as context for why the domain's vocabulary is shaped as it is. Naming a regulator is not a claim of its involvement, endorsement, or awareness.",
+      "items": { "type": "string" }
+    },
+    "terms": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Domain terms that DO map. Each states what it maps to and what the mapping loses.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["term", "coordinate", "maps_to", "loses"],
+        "properties": {
+          "term": { "type": "string" },
+          "coordinate": {
+            "enum": ["actor", "authority", "action", "environment", "time", "evidence", "function"]
+          },
+          "maps_to": { "type": "string" },
+          "loses": {
+            "type": "string",
+            "minLength": 1,
+            "description": "What the domain term carries that the coordinate value does not. \"nothing\" is permitted but rare and should be suspected."
+          },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "unmapped": {
+      "type": "array",
+      "description": "Domain terms with no honest home in the vocabulary. This array is the finding. It is required, and it may be empty only with an explicit justification recorded in `unmapped_empty_because`.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["term", "would_belong_in", "why_it_does_not_fit"],
+        "properties": {
+          "term": { "type": "string" },
+          "would_belong_in": {
+            "enum": ["actor", "authority", "action", "environment", "time", "evidence", "function"]
+          },
+          "why_it_does_not_fit": { "type": "string", "minLength": 1 },
+          "current_workaround": {
+            "type": "string",
+            "description": "What a project in this domain has to do today instead — usually collapsing the term into a coarser value and losing the distinction."
+          },
+          "candidate_revision": {
+            "type": "string",
+            "description": "A proposal id, once one exists. Absent means the finding is recorded but nobody has proposed a fix."
+          }
+        }
+      }
+    },
+    "unmapped_empty_because": { "type": "string" }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "unmapped": { "type": "array", "maxItems": 0 } },
+        "required": ["unmapped"]
+      },
+      "then": {
+        "required": ["unmapped_empty_because"],
+        "description": "An empty finding list has to be defended in writing. Silence would let an untested profile look like a passed test."
+      }
+    }
+  ]
+}

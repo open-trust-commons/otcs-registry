@@ -1,0 +1,6 @@
+source_project: ktp-demo
+target_project: ktp
+relationship_type: IMPLEMENTS
+asserted_by: ktp-demo maintainer
+date: "2026-07-25"
+status: verified

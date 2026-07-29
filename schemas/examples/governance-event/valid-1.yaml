@@ -1,0 +1,7 @@
+event_id: ev-000001
+actor_id: chris-perkins-nmcitra
+event_type: PROPOSAL_CREATED
+proposal_id: OTCS-0000
+timestamp: "2026-07-25T21:00:00-06:00"
+content_hash: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+prev_hash: GENESIS

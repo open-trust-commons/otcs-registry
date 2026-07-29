@@ -1,0 +1,7 @@
+OTCS specification documents (CHARTER.md, GOVERNANCE.md, VOTING.md,
+EVIDENCE-MODEL.md, SECURITY.md, COMMUNICATIONS.md, docs/, interfaces/)
+are licensed under Creative Commons Attribution 4.0 International (CC BY 4.0).
+https://creativecommons.org/licenses/by/4.0/
+
+Attribution: Chris Perkins (nmcitra), Open Trust Coordination System.
+Code, schemas, and tooling are licensed separately under Apache-2.0 (see LICENSE).

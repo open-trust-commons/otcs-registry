@@ -1,0 +1,64 @@
+/* OTCS site — engineering-document aesthetic. Light + dark via media query, zero JS. */
+:root {
+  --bg: #fdfdfb; --fg: #1c1c1a; --muted: #6a6a64; --line: #d8d8d0; --accent: #1a4a7a;
+  --grey: #eceae4; --blue: #dbe7f3; --green: #ddeedd; --amber: #f5ecd4; --red: #f3dcdc;
+  --badge-fg: #1c1c1a;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #16181a; --fg: #d8dade; --muted: #8b8f96; --line: #33373c; --accent: #7aa7d4;
+    --grey: #2a2d31; --blue: #223547; --green: #21372a; --amber: #3d3320; --red: #402626;
+    --badge-fg: #d8dade;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg);
+  font: 16px/1.55 ui-sans-serif, system-ui, -apple-system, sans-serif; }
+header, footer { padding: 0.8rem 1.2rem; border-bottom: 1px solid var(--line); font-size: 0.9rem; }
+footer { border-top: 1px solid var(--line); border-bottom: none; color: var(--muted); margin-top: 3rem; }
+header nav { display: inline-block; margin-left: 1rem; color: var(--muted); }
+main { max-width: 58rem; margin: 0 auto; padding: 1rem 1.2rem 2rem; }
+h1, h2, h3, h4 { line-height: 1.25; }
+h1 { font-size: 1.6rem; } h2 { font-size: 1.25rem; margin-top: 2rem; } h3 { font-size: 1.05rem; }
+a { color: var(--accent); text-decoration: none; } a:hover { text-decoration: underline; }
+code, pre { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.9em; }
+pre { background: var(--grey); padding: 0.8rem; overflow-x: auto; border: 1px solid var(--line); }
+code { background: var(--grey); padding: 0.1em 0.3em; }
+pre code { background: none; padding: 0; }
+blockquote { border-left: 3px solid var(--accent); margin: 1rem 0; padding: 0.2rem 1rem; color: var(--muted); }
+table { border-collapse: collapse; margin: 1rem 0; width: 100%; font-size: 0.92rem; }
+th, td { border: 1px solid var(--line); padding: 0.35rem 0.6rem; text-align: left; vertical-align: top; }
+th { background: var(--grey); }
+hr { border: none; border-top: 1px solid var(--line); margin: 2rem 0; }
+.badge { display: inline-block; padding: 0.05em 0.5em; border: 1px solid var(--line);
+  border-radius: 3px; font-family: ui-monospace, Menlo, monospace; font-size: 0.75rem;
+  color: var(--badge-fg); white-space: nowrap; }
+.b-grey { background: var(--grey); } .b-blue { background: var(--blue); }
+.b-green { background: var(--green); } .b-amber { background: var(--amber); }
+.b-red { background: var(--red); }
+.b-watermark { background: repeating-linear-gradient(45deg, var(--amber), var(--amber) 6px, var(--bg) 6px, var(--bg) 12px); }
+.example-row { opacity: 0.75; }
+.example-banner { border: 1px dashed var(--amber); background: var(--amber); padding: 0.5rem 0.8rem;
+  font-weight: 600; letter-spacing: 0.06em; }
+.stamp { border: 1px dashed var(--line); background: var(--grey); color: var(--muted);
+  padding: 0.5rem 0.8rem; font-size: 0.85rem; }
+.profile { width: auto; } .profile td { text-align: center; font-family: ui-monospace, Menlo, monospace; }
+.muted { color: var(--muted); }
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 0.8rem; }
+.card { border: 1px solid var(--line); padding: 0.8rem; }
+.card h3 { margin-top: 0; }
+
+/* Flow diagrams — deterministic HTML/CSS, no diagram runtime, no JS. */
+.flow { margin: 1.2rem 0; }
+.fstep { border: 1px solid var(--line); background: var(--grey); padding: 0.55rem 0.8rem; }
+.fstep strong { display: block; }
+.fstep .sub { color: var(--muted); font-size: 0.85rem; display: block; margin-top: 0.15rem; }
+.fgate { border: 1px dashed var(--accent); background: transparent; }
+.farrow { text-align: center; color: var(--muted); padding: 0.25rem 0; font-size: 0.9rem; }
+.fbranch { display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: 0.7rem; margin: 0.4rem 0; }
+.fchain { display: flex; flex-wrap: wrap; align-items: center; gap: 0.45rem; margin: 1rem 0; }
+.fchain .link { color: var(--muted); }
+.fchain .fstep { padding: 0.15em 0.6em; font-size: 0.8rem; }
+details { border: 1px solid var(--line); padding: 0.4rem 0.7rem; margin: 0.8rem 0; }
+details summary { cursor: pointer; color: var(--muted); font-size: 0.88rem; }
+details pre { margin-top: 0.6rem; }

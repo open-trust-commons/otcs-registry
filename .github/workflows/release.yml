@@ -1,0 +1,70 @@
+# Release is GATED. Automation recommends; it does not publish a major release alone
+# (RELEASE-GOVERNANCE.md). A tag push builds and attaches artifacts; the human writes
+# the decision record and publishes.
+name: release
+on:
+  push: { tags: ['v*'] }
+permissions:
+  contents: write
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    outputs: { decision: ${{ steps.decide.outputs.decision }} }
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version-file: '.nvmrc', cache: npm }
+      - run: npm ci
+      - name: Required checks
+        run: npm run validate && npm test && npm run ledger:verify && npm run build:site
+      - name: Measure the Commons
+        run: npm run roadmap:status && cat roadmap/status.yaml
+      - id: decide
+        name: Recommend a release decision
+        run: |
+          TAG="${GITHUB_REF_NAME}"
+          if [[ "$TAG" =~ ^v[0-9]+\.0\.0$ ]]; then
+            echo "decision=DEAUTOMATE" >> $GITHUB_OUTPUT
+            echo "::warning::MAJOR release — automation may recommend ALLOW but cannot publish. A named release panel must adjudicate (RELEASE-GOVERNANCE.md)."
+          else
+            echo "decision=ALLOW" >> $GITHUB_OUTPUT
+          fi
+  artifacts:
+    needs: gate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version-file: '.nvmrc', cache: npm }
+      - run: npm ci && npm run build:site && npm run generate
+      - name: Bundle
+        run: |
+          mkdir -p dist-release
+          tar czf dist-release/otcs-specifications-${GITHUB_REF_NAME}.tar.gz *.md docs/ interfaces/
+          tar czf dist-release/otcs-schemas-${GITHUB_REF_NAME}.tar.gz schemas/
+          tar czf dist-release/otcs-registry-snapshot-${GITHUB_REF_NAME}.tar.gz registry/ computed/
+          tar czf dist-release/otcs-site-${GITHUB_REF_NAME}.tar.gz site/dist/
+          cp governance-log/events.jsonl dist-release/governance-ledger.jsonl
+          cd dist-release && sha256sum * > SHA256SUMS && sha256sum SHA256SUMS > SHA256SUMS.hash
+      - name: Anchor the release
+        # Runs after hashing: the manifest commits the hash of the artifact set.
+        # The ots client is intentionally not installed in CI — CI produces the
+        # committed manifest, a maintainer stamps it. A failed anchor must never
+        # fail a release (BITCOIN-ANCHORING.md, "Failure and recovery").
+        continue-on-error: true
+        run: |
+          cp dist-release/SHA256SUMS.hash SHA256SUMS.hash
+          npm run anchor -- "${GITHUB_REF_NAME}"
+          npm run anchor:verify
+          cp -r governance-log/anchors dist-release/anchors
+      - name: Draft the release (a human publishes it)
+        uses: softprops/action-gh-release@v2
+        with:
+          draft: true
+          files: dist-release/*
+          body: |
+            **Draft.** Release decision recommended by automation: `${{ needs.gate.outputs.decision }}`.
+            A human must complete the decision record (RELEASE-GOVERNANCE.md), confirm the
+            non-claims section, stamp the anchor manifest (`npm run anchor:stamp`), attach the
+            proof, and publish. A release may ship `ANCHOR_PENDING`; it must say so.

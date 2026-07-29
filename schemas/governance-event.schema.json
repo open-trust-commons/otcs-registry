@@ -1,0 +1,137 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "otcs:governance-event",
+  "title": "OTCS Governance Ledger Event",
+  "type": "object",
+  "required": [
+    "event_id",
+    "actor_id",
+    "event_type",
+    "timestamp",
+    "content_hash",
+    "prev_hash"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "pattern": "^ev-[0-9]{6}$"
+    },
+    "proposal_id": {
+      "type": "string"
+    },
+    "actor_id": {
+      "type": "string"
+    },
+    "project_id": {
+      "type": "string"
+    },
+    "event_type": {
+      "enum": [
+        "PROPOSAL_CREATED",
+        "VERSION_PUBLISHED",
+        "COMMENT_SUBMITTED",
+        "OBJECTION_RAISED",
+        "OBJECTION_ANSWERED",
+        "TEST_RESULT_ADDED",
+        "EVIDENCE_ANCHORED",
+        "IMPLEMENTATION_DECLARED",
+        "CONFLICT_DISCLOSED",
+        "BALLOT_CAST",
+        "BALLOT_CHANGED",
+        "DECISION_RECORDED",
+        "DECISION_REVIEWED",
+        "DECISION_REVOKED",
+        "PROJECT_REGISTERED",
+        "RECORD_UPDATED",
+        "EMERGENCY_ACTION"
+      ]
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "artifact_version": {
+      "type": "string"
+    },
+    "content_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "prev_hash": {
+      "type": "string",
+      "pattern": "^([a-f0-9]{64}|GENESIS)$"
+    },
+    "relationship": {
+      "type": "string"
+    },
+    "signature": {
+      "type": "string"
+    },
+    "anchor_id": {
+      "type": "string",
+      "pattern": "^anchor-[0-9]{4}$",
+      "description": "Manifest recorded by an EVIDENCE_ANCHORED event (BITCOIN-ANCHORING.md)."
+    },
+    "covers_through_event": {
+      "type": "string",
+      "pattern": "^ev-[0-9]{6}$",
+      "description": "Last ledger event the anchored manifest committed. Always precedes this event: a manifest cannot commit the hash of a ledger already containing the event that describes it."
+    },
+    "anchor_status": {
+      "type": "string",
+      "enum": [
+        "ANCHOR_PENDING",
+        "ANCHOR_SUBMITTED",
+        "ANCHOR_CONFIRMED"
+      ],
+      "description": "PENDING = digest fixed, not yet submitted. SUBMITTED = sent to a calendar server. CONFIRMED = verified against a Bitcoin block. Only CONFIRMED carries an external timestamp; the other two must never be described as anchored."
+    },
+    "note": {
+      "type": "string",
+      "maxLength": 2000,
+      "description": "Human-readable context. Never load-bearing \u2014 nothing may depend on parsing it."
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "event_type": {
+            "const": "EVIDENCE_ANCHORED"
+          }
+        },
+        "required": [
+          "event_type"
+        ]
+      },
+      "then": {
+        "required": [
+          "anchor_id",
+          "anchor_status"
+        ]
+      },
+      "else": {
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "anchor_id"
+              ]
+            },
+            {
+              "required": [
+                "anchor_status"
+              ]
+            },
+            {
+              "required": [
+                "covers_through_event"
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+# DEAUTOMATE without a supervisor — the outcome requires one
+decision_id: dec-0002
+action_reference: act-7782
+outcome: DEAUTOMATE
+reason_codes: [ambiguity_load_exceeded]
+authority_reference: mandate://fulfillment/2026-07

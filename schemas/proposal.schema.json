@@ -1,0 +1,153 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "otcs:proposal",
+  "title": "OTCS Proposal Record",
+  "type": "object",
+  "required": [
+    "proposal_id",
+    "title",
+    "class",
+    "phase",
+    "author",
+    "created"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "proposal_id": {
+      "type": "string",
+      "pattern": "^OTCS-[0-9]{4}$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 5
+    },
+    "class": {
+      "enum": [
+        "typo_metadata",
+        "registry_update",
+        "interface_clarification",
+        "new_interface",
+        "breaking_change",
+        "model_revision",
+        "constitutional",
+        "emergency"
+      ]
+    },
+    "phase": {
+      "enum": [
+        "SEED",
+        "DISCOVERY",
+        "DRAFT",
+        "DELIBERATION",
+        "TRIAL",
+        "RATIFICATION",
+        "OPERATION",
+        "REVIEW",
+        "DEPRECATED",
+        "RENEWED"
+      ]
+    },
+    "author": {
+      "type": "string"
+    },
+    "sponsor": {
+      "type": "string"
+    },
+    "created": {
+      "type": "string",
+      "format": "date"
+    },
+    "clock_start": {
+      "type": "string",
+      "format": "date"
+    },
+    "review_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "expiry": {
+      "type": "string",
+      "format": "date"
+    },
+    "affected_projects": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "phase_history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "phase",
+          "date"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "phase": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "certified_by": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "ipr_disclosure": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "REQUIRED for new_interface and breaking_change proposals (IPR-POLICY.md). 'None known' is acceptable; absence is not.",
+      "properties": {
+        "known_patents": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "assignee_rights": {
+          "type": "string"
+        },
+        "licensing_restrictions": {
+          "type": "string"
+        },
+        "royalty_free_commitment": {
+          "type": "boolean"
+        },
+        "no_commitment_reason": {
+          "type": "string",
+          "description": "published with the proposal when royalty_free_commitment is false"
+        },
+        "authority_to_contribute": {
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "class": {
+            "enum": [
+              "new_interface",
+              "breaking_change"
+            ]
+          }
+        },
+        "required": [
+          "class"
+        ]
+      },
+      "then": {
+        "required": [
+          "ipr_disclosure"
+        ]
+      }
+    }
+  ]
+}

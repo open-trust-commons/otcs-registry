@@ -1,0 +1,63 @@
+otcs_version: "0.1"
+project:
+  id: ktp
+  name: Kinetic Trust Protocol
+  canonical_url: https://github.com/nmcitra/ktp-rfc
+  status: research
+  first_public_date: "2023-08-02"
+  current_version: RFC drafts
+  license: See canonical repository
+  record_state: registered
+  maintainers:
+    - name: Chris Perkins (nmcitra)
+      representative: true
+declaration:
+  problem: >
+    Environment-first authorization for agentic systems: whether the world can
+    afford the action an actor is about to take, evaluated continuously along the
+    actor's trajectory (A(t) <= E(t)) rather than once at the request.
+  governed_object: [action, trajectory, environment]
+  primary_users: [platform engineers, security architects]
+  threat_or_failure_model: >
+    Per-request authorization misses accumulated trajectory cost; self-attested
+    telemetry lets a degraded environment overstate its capacity; identical
+    credentials mask divergent histories.
+  decision_outputs: [ALLOW, SHAPE, DEAUTOMATE, VETO]
+  evidence_outputs: [tamper-evident decision records (Flight Recorder)]
+  known_limitations: >
+    Specification-stage work: no independent second implementation yet; the
+    published estimator is a first calibration; enforcement is defined by the
+    specifications but performed only by implementations, not by KTP itself.
+coordinates:
+  actor: { ai_agent: 1.0, service: 0.8, delegated_subagent: 0.7, human: 0.3 }
+  authority: [mandate, capability, delegation, situational_approval]
+  verbs: [execute, transfer, delegate, commit, revoke]
+  environment: [system_health, data_quality, identity_confidence, dependency_health,
+    threat_pressure, reversibility, financial_exposure, human_availability,
+    uncertainty, cumulative_trajectory, downstream_capacity]
+  functions: { interpret: 0.8, constrain: 0.9, decide: 0.9, record: 0.7 }
+  time: [before_action, initiation, during_action, across_trajectory, repair_window]
+ownership:
+  owners:
+    - name: Chris Perkins (nmcitra)
+      public_contact: kinetic-trust@proton.me
+  verification:
+    status: repository_control_confirmed
+    verified_at: "2026-07-27"
+    evidence:
+      - https://github.com/nmcitra/ktp-rfc
+    verified_by: Chris Perkins (nmcitra)
+freshness:
+  review_interval_days: 365
+  next_owner_confirmation: "2027-07-27"
+  confirmation_status: CURRENT
+consent:
+  publication: true
+  metadata_use: true
+  history_preservation: true
+  mapping_and_analysis: true
+  public_correction_process: true
+  consented_at: "2026-07-27"
+evidence: { specification: 2, implementation: 0, independent_validation: 0 }
+offers: [action-governance coordinate system, engineering specifications, conformance definition]
+needs: [independent second implementation, external evaluation]

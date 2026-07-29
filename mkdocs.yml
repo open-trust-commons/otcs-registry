@@ -1,0 +1,85 @@
+site_name: Open Trust Commons
+site_description: >-
+  A public memory for trust-governance work. One vocabulary for locating projects
+  relative to each other — and no scores.
+site_url: https://opentrustcommons.org
+repo_url: https://github.com/open-trust-commons/otcs-registry
+repo_name: open-trust-commons/otcs-registry
+# No edit link. Most pages under docs/ are COMPILED from the repository root by
+# `npm run generate:docs`, and every one of them carries a banner saying so. An
+# edit button pointing at the generated copy would invite exactly the edit the
+# banner tells you not to make.
+edit_uri: ""
+copyright: >-
+  Code and schemas Apache-2.0 · specification text CC BY 4.0 · Kinetic Trust Protocol
+  © Chris Perkins (nmcitra). Registration is not endorsement.
+
+docs_dir: docs
+site_dir: dist
+strict: true          # warnings are fatal — a broken reference must not ship
+
+theme:
+  name: material
+  font: false         # ACCESSIBILITY + ADR-002: no external font fetch; system stack only
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.sections
+    - navigation.top
+    - search.suggest
+    - content.code.copy
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle: { icon: material/brightness-7, name: Switch to dark mode }
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle: { icon: material/brightness-4, name: Switch to light mode }
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - tables
+  - toc: { permalink: true }
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight: { anchor_linenums: true }
+
+extra:
+  generator: false    # no "Made with Material" footer — the footer states the record's terms
+  social: []          # deliberately empty: no tracking, no external assets
+
+nav:
+  - Home: index.md
+  - How it works:
+      - The process: how-it-works.md
+      - The seven coordinates: learn/coordinates.md
+      - Calibration — testing the coordinates: generated/calibration.md
+      - Evidence, not endorsement: learn/evidence.md
+      - What registration means: learn/registration.md
+      - How projects connect: learn/relationships.md
+      - What OTCS is not: generated/non-goals.md
+  - Projects:
+      - All projects: generated/projects/index.md
+      - Capability matrix: generated/matrix.md
+      - Relationship graph: generated/graph.md
+  - Interfaces:
+      - Overview: generated/interfaces/index.md
+      - The interface model: generated/interfaces/model.md
+  - Proposals: generated/proposals/index.md
+  - Participate:
+      - List your project: participate/list-a-project.md
+      - Project owner guide: participate/owner-guide.md
+      - Contributing: generated/contributing.md
+  - Governance:
+      - Charter: generated/charter.md
+      - Governance: generated/governance.md
+      - Voting: generated/voting.md
+      - Evidence model: generated/evidence-model.md
+      - Analysis model: generated/analysis-model.md
+      - Security: generated/security.md
+      - Bitcoin anchoring: generated/bitcoin-anchoring.md
+      - Ledger: generated/ledger.md
+      - Roadmap: generated/roadmap.md
+  - About: about.md

@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "otcs:wire:decision",
+  "title": "OTCS Decision Object (wire format)",
+  "type": "object",
+  "required": [
+    "decision_id",
+    "action_reference",
+    "outcome",
+    "reason_codes",
+    "authority_reference"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "decision_id": {
+      "type": "string"
+    },
+    "action_reference": {
+      "type": "string"
+    },
+    "outcome": {
+      "enum": [
+        "ALLOW",
+        "SHAPE",
+        "DEAUTOMATE",
+        "VETO"
+      ]
+    },
+    "constraints": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "added_latency_ms": {
+          "type": "number",
+          "minimum": 0
+        },
+        "rate_limit_per_min": {
+          "type": "number",
+          "minimum": 0
+        },
+        "narrowed_scope": {
+          "type": "string"
+        },
+        "evidence_required": {
+          "type": "boolean"
+        },
+        "supervisor": {
+          "type": "string",
+          "description": "DEAUTOMATE: the human or supervisory control receiving the action"
+        }
+      }
+    },
+    "reason_codes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "policy_version": {
+      "type": "string"
+    },
+    "environment_snapshot": {
+      "type": "string",
+      "description": "hash or reference, never inline raw telemetry"
+    },
+    "authority_reference": {
+      "type": "string"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "enforcement_requirements": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "receipt_requirements": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "outcome": {
+            "const": "DEAUTOMATE"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "constraints"
+        ],
+        "properties": {
+          "constraints": {
+            "type": "object",
+            "required": [
+              "supervisor"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

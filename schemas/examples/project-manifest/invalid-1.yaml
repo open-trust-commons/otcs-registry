@@ -1,0 +1,17 @@
+# collapsed single maturity number + missing record_state — both violations
+otcs_version: "0.1"
+project:
+  id: ex-bad
+  name: Bad Example
+  status: prototype
+  first_public_date: "2026-07-01"
+  license: Apache-2.0
+  maintainers:
+    - name: Example Maintainer
+declaration:
+  problem: A record that collapses maturity into one number.
+  governed_object: [action]
+  known_limitations: Demonstrates two schema violations.
+coordinates:
+  functions: { decide: 0.5 }
+evidence: 3

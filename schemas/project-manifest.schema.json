@@ -1,0 +1,810 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "otcs:project-manifest",
+  "title": "OTCS Project Manifest (otcs.yaml)",
+  "type": "object",
+  "required": [
+    "otcs_version",
+    "project",
+    "declaration",
+    "coordinates",
+    "evidence"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "otcs_version": {
+      "type": "string",
+      "pattern": "^0\\.1$"
+    },
+    "project": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "status",
+        "first_public_date",
+        "license",
+        "maintainers",
+        "record_state"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]{1,40}$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "canonical_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "organization": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "concept",
+            "research",
+            "prototype",
+            "alpha",
+            "beta",
+            "production",
+            "archived"
+          ]
+        },
+        "first_public_date": {
+          "type": "string",
+          "format": "date"
+        },
+        "current_version": {
+          "type": "string"
+        },
+        "license": {
+          "type": "string",
+          "minLength": 1
+        },
+        "citation": {
+          "type": "string"
+        },
+        "contact": {
+          "type": "string"
+        },
+        "maintainers": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "name"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "key": {
+                "type": "string"
+              },
+              "representative": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        "record_state": {
+          "enum": [
+            "registered",
+            "observed",
+            "example",
+            "withdrawn"
+          ],
+          "description": "registered = project-controlled \u00b7 observed = created from public evidence, not project-controlled, never presented as participation \u00b7 example = fictional demonstration \u00b7 withdrawn = previously registered, no longer actively participating (history preserved)"
+        },
+        "urn": {
+          "type": "string",
+          "pattern": "^urn:otcs:project:[a-z0-9][a-z0-9-]{1,40}$",
+          "description": "stable identifier; never reused for a different subject (IDENTIFIERS.md)"
+        },
+        "aliases": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "former labels after rename"
+        },
+        "superseded_by": {
+          "type": "string"
+        },
+        "forked_from": {
+          "type": "string"
+        },
+        "localized_name": {
+          "type": "object",
+          "description": "BCP-47 tag \u2192 localized name (i18n-permitting; canonical name stays in `name`)",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "project_type": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "enum": [
+              "doctrine",
+              "research_program",
+              "specification",
+              "standard_proposal",
+              "open_source_implementation",
+              "commercial_product",
+              "service",
+              "dataset",
+              "benchmark",
+              "evidence_system",
+              "meta_governance",
+              "community"
+            ]
+          },
+          "description": "What KIND of thing this is. Prevents laws, products, standards and academic models being presented as interchangeable 'frameworks'. First entry is primary."
+        },
+        "lifecycle": {
+          "enum": [
+            "concept",
+            "research",
+            "draft",
+            "prototype",
+            "alpha",
+            "beta",
+            "production",
+            "maintenance",
+            "deprecated",
+            "archived"
+          ],
+          "description": "Self-declared, publicly challengeable."
+        },
+        "canonical_artifact": {
+          "type": "string",
+          "description": "repository, versioned spec, DOI, official site, or formal product documentation. A social-media profile alone is NOT sufficient."
+        }
+      }
+    },
+    "declaration": {
+      "type": "object",
+      "required": [
+        "problem",
+        "governed_object",
+        "known_limitations"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "problem": {
+          "type": "string",
+          "minLength": 10
+        },
+        "governed_object": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "enum": [
+              "identity",
+              "credential",
+              "authority",
+              "mandate",
+              "request",
+              "model_output",
+              "tool_call",
+              "action",
+              "transaction",
+              "trajectory",
+              "memory",
+              "state_transition",
+              "environment",
+              "evidence",
+              "authorship",
+              "institutional_process"
+            ]
+          }
+        },
+        "primary_users": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "threat_or_failure_model": {
+          "type": "string"
+        },
+        "decision_outputs": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "ALLOW",
+              "SHAPE",
+              "DEAUTOMATE",
+              "VETO"
+            ]
+          }
+        },
+        "enforcement_points": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "evidence_outputs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "known_limitations": {
+          "type": "string",
+          "minLength": 10
+        },
+        "non_claims": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "What the project does NOT claim. Required in spirit: the field that makes the rest of the record readable."
+        }
+      }
+    },
+    "coordinates": {
+      "type": "object",
+      "required": [
+        "functions"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "actor": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "human": {
+              "$ref": "#/$defs/weight"
+            },
+            "ai_agent": {
+              "$ref": "#/$defs/weight"
+            },
+            "model": {
+              "$ref": "#/$defs/weight"
+            },
+            "service": {
+              "$ref": "#/$defs/weight"
+            },
+            "organization": {
+              "$ref": "#/$defs/weight"
+            },
+            "tool": {
+              "$ref": "#/$defs/weight"
+            },
+            "delegated_subagent": {
+              "$ref": "#/$defs/weight"
+            }
+          }
+        },
+        "authority": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "identity",
+              "credential",
+              "role",
+              "capability",
+              "mandate",
+              "delegation",
+              "consent",
+              "contract",
+              "law",
+              "organizational_policy",
+              "situational_approval"
+            ]
+          }
+        },
+        "verbs": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "read",
+              "write",
+              "send",
+              "publish",
+              "execute",
+              "purchase",
+              "transfer",
+              "delete",
+              "delegate",
+              "impersonate",
+              "bind",
+              "commit",
+              "modify_policy",
+              "create_identity",
+              "revoke"
+            ]
+          }
+        },
+        "custom_verbs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "verb",
+              "maps_to"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "verb": {
+                "type": "string"
+              },
+              "maps_to": {
+                "enum": [
+                  "read",
+                  "write",
+                  "send",
+                  "publish",
+                  "execute",
+                  "purchase",
+                  "transfer",
+                  "delete",
+                  "delegate",
+                  "impersonate",
+                  "bind",
+                  "commit",
+                  "modify_policy",
+                  "create_identity",
+                  "revoke"
+                ]
+              }
+            }
+          }
+        },
+        "environment": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "system_health",
+              "data_quality",
+              "identity_confidence",
+              "dependency_health",
+              "threat_pressure",
+              "ambiguity_load",
+              "repair_capacity",
+              "reversibility",
+              "financial_exposure",
+              "legal_context",
+              "human_availability",
+              "uncertainty",
+              "cumulative_trajectory",
+              "downstream_capacity"
+            ]
+          }
+        },
+        "functions": {
+          "type": "object",
+          "additionalProperties": false,
+          "minProperties": 1,
+          "properties": {
+            "sense": {
+              "$ref": "#/$defs/weight"
+            },
+            "interpret": {
+              "$ref": "#/$defs/weight"
+            },
+            "constrain": {
+              "$ref": "#/$defs/weight"
+            },
+            "decide": {
+              "$ref": "#/$defs/weight"
+            },
+            "enforce": {
+              "$ref": "#/$defs/weight"
+            },
+            "record": {
+              "$ref": "#/$defs/weight"
+            },
+            "repair": {
+              "$ref": "#/$defs/weight"
+            }
+          }
+        },
+        "time": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "design",
+              "registration",
+              "before_action",
+              "initiation",
+              "during_action",
+              "commit_point",
+              "after_action",
+              "across_trajectory",
+              "repair_window"
+            ]
+          },
+          "description": "`repair_window` is the temporal position AFTER damage, distinct from the `repair` FUNCTION (the capability). The two were the same token until 2026-07-27; a validator could not tell them apart and neither could a reader."
+        }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "required": [
+        "specification",
+        "implementation",
+        "independent_validation"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "specification": {
+          "$ref": "#/$defs/maturity"
+        },
+        "implementation": {
+          "$ref": "#/$defs/maturity"
+        },
+        "independent_validation": {
+          "$ref": "#/$defs/maturity"
+        }
+      }
+    },
+    "interfaces": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "provides": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "consumes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "lineage": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "project",
+          "relationship"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "project": {
+            "type": "string"
+          },
+          "relationship": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "depends_on": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "offers": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "needs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "mapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Status of OTCS's KTP-coordinate mapping of this project. Registration is NOT endorsement of KTP or agreement with any coordinate assignment (CHARTER.md \u00a712).",
+      "properties": {
+        "status": {
+          "enum": [
+            "project_confirmed",
+            "otcs_observed",
+            "disputed",
+            "unmapped"
+          ]
+        },
+        "disputed_coordinates": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "project_statement": {
+          "type": "string",
+          "description": "the project's own words on the disagreement \u2014 published verbatim"
+        }
+      }
+    },
+    "record": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Record-level metadata: what kind of record this is and how it is maintained.",
+      "properties": {
+        "record_version": {
+          "type": "string"
+        },
+        "participation_mode": {
+          "enum": [
+            "github_native",
+            "other_git",
+            "no_repository",
+            "private_commercial"
+          ],
+          "description": "Where the project lives. OTCS is GitHub-native but project-location-neutral (PARTICIPATION.md)."
+        },
+        "source_mode": {
+          "enum": [
+            "otcs_managed",
+            "project_hosted"
+          ],
+          "default": "otcs_managed"
+        },
+        "canonical_manifest_url": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sync_policy": {
+          "enum": [
+            "manual",
+            "webhook",
+            "daily"
+          ],
+          "default": "manual"
+        },
+        "source_status": {
+          "enum": [
+            "SOURCE_CURRENT",
+            "SOURCE_STALE",
+            "SOURCE_UNREACHABLE",
+            "SOURCE_INVALID",
+            "SIGNATURE_FAILED",
+            "OWNER_WITHDREW"
+          ]
+        },
+        "last_synced_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        },
+        "last_verified_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        }
+      }
+    },
+    "ownership": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "owners": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "organization": {
+                "type": "string"
+              },
+              "public_contact": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "verification": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "status": {
+              "enum": [
+                "repository_control_confirmed",
+                "domain_control_confirmed",
+                "organization_email_confirmed",
+                "signed_statement",
+                "platform_account_confirmed",
+                "documentation_naming",
+                "transcribed_by_otcs",
+                "unverified"
+              ]
+            },
+            "verified_at": {
+              "type": "string",
+              "format": "date"
+            },
+            "evidence": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "verified_by": {
+              "type": "string"
+            },
+            "transcribed_by": {
+              "type": "string",
+              "description": "named OTCS contributor when status is transcribed_by_otcs"
+            }
+          }
+        },
+        "ownership_history": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "maintainership_transfers": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "freshness": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "review_interval_days": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "next_owner_confirmation": {
+          "type": "string",
+          "format": "date"
+        },
+        "confirmation_status": {
+          "enum": [
+            "CURRENT",
+            "OWNER_CONFIRMATION_STALE"
+          ]
+        }
+      }
+    },
+    "withdrawal": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "active_participation": {
+          "type": "boolean"
+        },
+        "preserve_historical_record": {
+          "type": "boolean",
+          "const": true,
+          "description": "always true \u2014 withdrawal removes participation, not history"
+        },
+        "withdrawn_at": {
+          "type": "string",
+          "format": "date"
+        },
+        "reason": {
+          "type": "string"
+        }
+      }
+    },
+    "disclosures": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "licenses": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "patents": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "trademark_status": {
+          "type": "string"
+        },
+        "commercial_status": {
+          "type": "string"
+        },
+        "funding_relationships": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "shared_maintainers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "advisory_roles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "reciprocal_review": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "ai_assistance": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "consent": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Consent to registration is NOT consent to every external claim made about the project.",
+      "properties": {
+        "publication": {
+          "type": "boolean"
+        },
+        "metadata_use": {
+          "type": "boolean"
+        },
+        "history_preservation": {
+          "type": "boolean"
+        },
+        "mapping_and_analysis": {
+          "type": "boolean"
+        },
+        "public_correction_process": {
+          "type": "boolean"
+        },
+        "consented_at": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "weight": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "maturity": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 5
+    }
+  }
+}

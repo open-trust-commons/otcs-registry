@@ -1,0 +1,8 @@
+- source_project: abt
+  target_project: ktp
+  relationship_type: SUPPLIES_SIGNAL_TO
+  asserted_by: abt maintainer (Chris Perkins/nmcitra — founder edge, stays self_asserted until externally confirmed)
+  evidence:
+    - "ABT zone/saturation measurements map to the ambiguity_load and repair_capacity environmental dimensions"
+  date: "2026-07-25"
+  status: self_asserted

@@ -1,0 +1,8 @@
+signal_id: sig-0002
+signal_type: system_health
+subject: service://orders-api
+value: 0.97
+confidence: 1.5
+freshness: "2026-07-25T21:00:00-06:00"
+source: monitor://external-probe-2
+scope: zone-a

@@ -1,0 +1,6 @@
+event_id: ev-000002
+actor_id: chris-perkins-nmcitra
+event_type: BALLOT_CAST
+timestamp: "2026-07-25T21:05:00-06:00"
+content_hash: tooshort
+prev_hash: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa

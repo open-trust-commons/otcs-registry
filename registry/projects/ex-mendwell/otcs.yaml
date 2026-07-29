@@ -1,0 +1,26 @@
+otcs_version: "0.1"
+project:
+  id: ex-mendwell
+  name: Example Mendwell (fictional)
+  status: concept
+  first_public_date: "2026-01-01"
+  license: Apache-2.0
+  record_state: example
+  maintainers: [{ name: Example Maintainer }]
+declaration:
+  problem: >
+    Fictional demonstration record: a repair system restoring environmental
+    capacity after incidents via reconciliation, rollback, and human review queues.
+  governed_object: [environment]
+  evidence_outputs: [repair records]
+  known_limitations: Fictional demonstration record. Implements nothing.
+coordinates:
+  actor: { human: 0.8, service: 0.5 }
+  authority: [organizational_policy]
+  verbs: [revoke]
+  environment: [repair_capacity, reversibility]
+  functions: { repair: 0.9, interpret: 0.4 }
+  time: [repair_window, after_action]
+evidence: { specification: 0, implementation: 0, independent_validation: 0 }
+interfaces:
+  provides: [repair]

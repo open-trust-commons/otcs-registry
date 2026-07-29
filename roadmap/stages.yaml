@@ -1,0 +1,44 @@
+# Commons stages — v0.1 policy assumptions. Changing these requires a Model Revision Proposal.
+stages:
+  - id: C0
+    name: Seed
+    qualifying_projects: { min: 1, max: 4 }
+    independent_stewards: { min: 1, max: 3 }
+    meaning: founding records and fictional test cases
+  - id: C1
+    name: Founding Commons
+    qualifying_projects: { min: 5, max: 9 }
+    independent_stewards: { min: 3, max: 6 }
+    meaning: first external participants and owner workflows
+  - id: C2
+    name: Stable Commons
+    qualifying_projects: { min: 10, max: 24 }
+    independent_stewards: { min: 7 }
+    meaning: stable registry, evidence, governance, and analysis contract
+  - id: C3
+    name: Networked Commons
+    qualifying_projects: { min: 25, max: 49 }
+    independent_stewards: { min: 15 }
+    meaning: meaningful ecosystem graph, owner-hosted manifests, reusable interfaces
+  - id: C4
+    name: Federated Commons
+    qualifying_projects: { min: 50, max: 99 }
+    independent_stewards: { min: 30 }
+    meaning: multiple registry operators, distributed stewardship, stable federation
+  - id: C5
+    name: Runtime Commons
+    qualifying_projects: { min: 100, max: 249 }
+    independent_stewards: { min: 50 }
+    meaning: live cross-project signal, decision, enforcement, and receipt exchange
+  - id: C6
+    name: Public Infrastructure
+    qualifying_projects: { min: 250 }
+    independent_stewards: { min: 100 }
+    meaning: durable, multi-operator, multi-domain public-interest infrastructure
+
+sustaining:
+  threshold_fraction: 0.8
+  review_after_days_below: 180
+  note: >
+    Versions are never rolled back when participation drops. The STAGE is marked
+    AT RISK and a governance review is required after sustained shortfall.

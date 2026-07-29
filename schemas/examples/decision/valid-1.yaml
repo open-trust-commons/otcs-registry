@@ -1,0 +1,11 @@
+decision_id: dec-0001
+action_reference: act-7781
+outcome: SHAPE
+constraints:
+  added_latency_ms: 250
+  rate_limit_per_min: 60
+  evidence_required: true
+reason_codes: [environment_degraded, trajectory_cost_rising]
+authority_reference: mandate://fulfillment/2026-07
+expires_at: "2026-07-25T22:00:00-06:00"
+receipt_requirements: [external_anchor]

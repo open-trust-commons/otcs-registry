@@ -1,0 +1,69 @@
+name: Register a project
+description: Add your project to the Open Trust Commons. Registration is not endorsement.
+title: "[Register] "
+labels: ["registration"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Registration means one thing:** this project has made a public, attributable claim about itself.
+        It does not imply endorsement, validation, interoperability, originality, conformance, or membership.
+        You do not need to host on GitHub, be open source, or adopt KTP. See PARTICIPATION.md.
+  - type: input
+    id: name
+    attributes: { label: Project name }
+    validations: { required: true }
+  - type: input
+    id: canonical
+    attributes:
+      label: Canonical public location
+      description: Repository, versioned specification, DOI, or official documentation. A social-media profile alone is not sufficient.
+    validations: { required: true }
+  - type: dropdown
+    id: mode
+    attributes:
+      label: Where is the project maintained?
+      options: [GitHub, Another Git platform, Public website or publication, Private/commercial, I need help]
+    validations: { required: true }
+  - type: checkboxes
+    id: type
+    attributes:
+      label: Project type (check all; note which is primary)
+      options:
+        - label: doctrine
+        - label: research program
+        - label: specification
+        - label: standard proposal
+        - label: open-source implementation
+        - label: commercial product
+        - label: service
+        - label: dataset
+        - label: benchmark
+        - label: evidence system
+        - label: meta-governance
+        - label: community
+  - type: textarea
+    id: problem
+    attributes: { label: What problem does it address? }
+    validations: { required: true }
+  - type: textarea
+    id: non_claims
+    attributes:
+      label: What does your project NOT claim?
+      description: "The most important field. Example: 'Does not provide an identity provider. Has not undergone independent security evaluation.'"
+    validations: { required: true }
+  - type: dropdown
+    id: verification
+    attributes:
+      label: How can we verify you represent this project?
+      options: [Repository control, Domain control, Organization email, Signed statement, Platform account, Existing documentation names me, I need help]
+    validations: { required: true }
+  - type: checkboxes
+    id: consent
+    attributes:
+      label: Consent
+      options:
+        - label: I consent to a public, versioned record, preserved history, OTCS mapping and analysis, and the public correction/dispute process. I understand consent to registration is not consent to every external claim about the project.
+          required: true
+        - label: I understand a record can be corrected or withdrawn, but that withdrawal removes participation, not history.
+          required: true

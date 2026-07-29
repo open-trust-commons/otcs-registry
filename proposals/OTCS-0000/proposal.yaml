@@ -1,0 +1,14 @@
+proposal_id: OTCS-0000
+title: Adopt the OTCS constitutional documents (charter, governance, voting, evidence model, security, communications)
+class: constitutional
+phase: OPERATION
+author: Chris Perkins (nmcitra)
+sponsor: Chris Perkins (nmcitra)
+created: "2026-07-25"
+clock_start: "2026-07-25"
+review_date: "2027-01-25"
+phase_history:
+  - { phase: SEED, date: "2026-07-25" }
+  - { phase: DRAFT, date: "2026-07-25" }
+  - { phase: RATIFICATION, date: "2026-07-25" }
+  - { phase: OPERATION, date: "2026-07-25" }

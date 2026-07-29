@@ -1,0 +1,28 @@
+# Constitutional documents, protocol contracts, and CI require the maintainer's review.
+# GOVERNANCE.md §1 — a maintainer merges after process conditions are met, and may not
+# bypass clocks or ballots. CODEOWNERS makes "someone looked" structural rather than hoped-for.
+
+/CHARTER.md            @nmcitra
+/GOVERNANCE.md         @nmcitra
+/VOTING.md             @nmcitra
+/EVIDENCE-MODEL.md     @nmcitra
+/SECURITY.md           @nmcitra
+/NON-GOALS.md          @nmcitra
+/IPR-POLICY.md         @nmcitra
+/REGISTRY-POLICY.md    @nmcitra
+/PRIVACY.md            @nmcitra
+/SAFETY.md             @nmcitra
+/ANALYSIS-MODEL.md     @nmcitra
+/RELEASE-GOVERNANCE.md @nmcitra
+/COMMONS-STAGES.md     @nmcitra
+/QUALIFYING-PROJECTS.md @nmcitra
+
+/schemas/              @nmcitra
+/interfaces/           @nmcitra
+/roadmap/              @nmcitra
+/governance-log/       @nmcitra
+/.github/workflows/    @nmcitra
+
+# Deliberately NOT owned: /registry/projects/** — project owners control their own records
+# (PARTICIPATION.md). Requiring maintainer ownership of every project record would make the
+# maintainer the author of everyone's self-description, which is the opposite of the design.

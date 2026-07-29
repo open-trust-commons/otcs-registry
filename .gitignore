@@ -1,0 +1,6 @@
+node_modules/
+site/dist/
+.DS_Store
+.tmp-test-ledger.jsonl
+PROGRESS.md
+.claude/

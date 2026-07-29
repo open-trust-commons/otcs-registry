@@ -1,0 +1,9 @@
+- source_project: ktp-demo
+  target_project: ktp
+  relationship_type: IMPLEMENTS
+  asserted_by: ktp-demo maintainer (Chris Perkins/nmcitra — founder edge, stays self_asserted until externally confirmed)
+  evidence:
+    - "README maps sensors/tensor/oracle/enforce/recorder modules to the ktp-sensors/tensors/core/enforce/audit RFCs"
+    - "spec/conformance.md restates the RFC behavioral requirements as falsifiers"
+  date: "2026-07-25"
+  status: self_asserted

@@ -1,0 +1,103 @@
+// Compute Commons stage and gate progress from the LIVE registry.
+// The dashboard reports a measurement, not a claim.
+import { readFileSync, writeFileSync, existsSync } from "node:fs";
+import { join } from "node:path";
+import { parse, stringify } from "yaml";
+import { loadRegistry, ROOT, type Doc } from "./registry-load.js";
+
+const TODAY = process.env.OTCS_TODAY ?? new Date().toISOString().slice(0, 10);
+const monthsSince = (d?: string) =>
+  !d ? Infinity : (Date.parse(TODAY) - Date.parse(d)) / (1000 * 60 * 60 * 24 * 30.44);
+
+/** QUALIFYING-PROJECTS.md — all conditions must hold. */
+export function qualifies(p: Doc, claims: Doc[]): { ok: boolean; failed: string[] } {
+  const failed: string[] = [];
+  const pr = p.project ?? {};
+  if (pr.record_state !== "registered") failed.push(`record_state=${pr.record_state ?? "unset"}`);
+  const v = p.ownership?.verification?.status;
+  if (!v || v === "unverified" || v === "transcribed_by_otcs") failed.push("owner not verified");
+  if (!pr.canonical_url && !pr.canonical_artifact) failed.push("no canonical public artifact");
+  if (!claims.length) failed.push("no evidence record");
+  const substantive = (p.declaration?.problem ?? "").length > 20;
+  if (!substantive) failed.push("no substantive claim declared");
+  const conf = p.freshness?.next_owner_confirmation ?? p.ownership?.verification?.verified_at;
+  if (monthsSince(conf) > 12) failed.push("owner confirmation older than 12 months");
+  if (p.withdrawal?.active_participation === false) failed.push("withdrawn");
+  if (pr.lifecycle === "archived") failed.push("archived");
+  if (p.identity_dispute_open) failed.push("unresolved identity dispute");
+  return { ok: failed.length === 0, failed };
+}
+
+/** Stewards are counted by disclosed affiliation, not by account. */
+export function stewards(qaps: Doc[]): string[] {
+  const s = new Set<string>();
+  for (const p of qaps) {
+    const owners = p.ownership?.owners ?? [];
+    if (!owners.length) { s.add(`unnamed:${p.project.id}`); continue; }
+    for (const o of owners) s.add((o.organization || o.name || "unknown").trim().toLowerCase());
+  }
+  return [...s].sort();
+}
+
+function claimsFor(id: string): Doc[] {
+  const p = join(ROOT, "registry/projects", id, "claims.yaml");
+  return existsSync(p) ? (parse(readFileSync(p, "utf8")) as Doc[]) : [];
+}
+
+export function computeStatus() {
+  const { projects } = loadRegistry();
+  const stagesDoc = parse(readFileSync(join(ROOT, "roadmap/stages.yaml"), "utf8"));
+
+  const evaluated = projects.map((p) => ({ p, ...qualifies(p, claimsFor(p.project.id)) }));
+  const qaps = evaluated.filter((e) => e.ok).map((e) => e.p);
+  const st = stewards(qaps);
+  const classes = new Set(qaps.flatMap((p) => p.project.project_type ?? []));
+
+  const stage = stagesDoc.stages.find((s: any) =>
+    qaps.length >= s.qualifying_projects.min &&
+    (s.qualifying_projects.max === undefined || qaps.length <= s.qualifying_projects.max)) ?? stagesDoc.stages[0];
+
+  const gates: Record<string, unknown> = {};
+  for (const v of ["1.0.0", "2.0.0", "3.0.0", "4.0.0"]) {
+    const f = join(ROOT, "roadmap/releases", `${v}.yaml`);
+    if (!existsSync(f)) continue;
+    const r = parse(readFileSync(f, "utf8"));
+    const eco = r.criteria?.ecosystem ?? {};
+    gates[v] = {
+      name: r.name,
+      commons_stage_required: r.commons_stage_required,
+      qualifying_active_projects: `${qaps.length} / ${eco.qualifying_active_projects?.minimum ?? "—"}`,
+      independent_stewards: `${st.length} / ${eco.independent_stewards?.minimum ?? "—"}`,
+      project_classes: `${classes.size} / ${eco.project_classes?.minimum ?? "—"}`,
+      sustained_days_required: eco.qualifying_active_projects?.sustained_days ?? null,
+    };
+  }
+
+  return {
+    measured_at: TODAY,
+    note: "Computed from the live registry against QUALIFYING-PROJECTS.md. A measurement, not a claim.",
+    commons_stage: { id: stage.id, name: stage.name },
+    qualifying_active_projects: qaps.length,
+    independent_stewards: st.length,
+    steward_list: st,
+    project_classes: [...classes].sort(),
+    registry_records_total: projects.length,
+    non_qualifying: evaluated.filter((e) => !e.ok)
+      .map((e) => ({ id: e.p.project.id, reasons: e.failed })),
+    gates,
+  };
+}
+
+if (process.argv[1]?.endsWith("roadmap-status.ts")) {
+  const s = computeStatus();
+  writeFileSync(join(ROOT, "roadmap/status.yaml"), stringify(s));
+  console.log(`Commons stage: ${s.commons_stage.id} — ${s.commons_stage.name}`);
+  console.log(`  qualifying active projects: ${s.qualifying_active_projects} (of ${s.registry_records_total} records)`);
+  console.log(`  independent stewards: ${s.independent_stewards}`);
+  console.log(`  project classes: ${s.project_classes.length}`);
+  console.log(`\nnon-qualifying records:`);
+  for (const n of s.non_qualifying) console.log(`  ${n.id}: ${n.reasons.join(" · ")}`);
+  console.log(`\nroad to v1.0.0: ${(s.gates as any)["1.0.0"]?.qualifying_active_projects} projects · ` +
+              `${(s.gates as any)["1.0.0"]?.independent_stewards} stewards`);
+  console.log(`→ roadmap/status.yaml`);
+}
