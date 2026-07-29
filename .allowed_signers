@@ -1,0 +1,13 @@
+# Public keys permitted to sign commits and tags in this repository.
+#
+# Verify locally without trusting any forge:
+#     git config gpg.ssh.allowedSignersFile .allowed_signers
+#     git log --show-signature
+#     git verify-tag v0.1.0
+#
+# A forge showing "Verified" is that forge asserting it. This file lets you
+# check the signature yourself against the fingerprint in MAINTAINERS.md §1.
+# Rotations replace the line and are logged (INCIDENT-RESPONSE.md §2); keys
+# retired here stay valid for what they signed before the rotation date.
+
+cperkins@nmcitra.org namespaces="git" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEoV6u3GOH9m19FYjU+xvAofOQ7ZKhHNz88qQI/KaLWA cperkins@nmcitra.org

@@ -9,7 +9,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/). Versioning: VERSIONING.
 >
 > Everything tagged `v0.0.x` below is **internal incubation history**. Those tags exist only in the private staging repository and **are deliberately not pushed to the public repository** — the public history starts at `v0.1.0`, cut fresh. Nothing under `v0.1.0` was ever published, so nothing under `v0.1.0` can have broken anyone's records — see [MIGRATIONS.md](migrations.md) §2.
 
-## [Unreleased] — v0.1.0 First public release
+## [v0.1.0] — 2026-07-29 · First public release
 
 Everything in the incubation sections below ships as one release. The entries are kept separate because they record what was decided when, and collapsing them would erase the order the reasoning arrived in.
 

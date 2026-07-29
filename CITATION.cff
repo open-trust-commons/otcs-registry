@@ -26,6 +26,7 @@ repository-code: "https://github.com/open-trust-commons/otcs-registry"
 # `date-released` and `doi` are set when the release is actually cut
 # (RELEASE-PROCESS.md §2) — a release date written in advance is a guess.
 version: 0.1.0
+date-released: "2026-07-29"
 references:
   - type: software
     title: "Kinetic Trust Protocol (KTP)"
