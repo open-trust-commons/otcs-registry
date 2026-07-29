@@ -13,7 +13,11 @@
 | **Name** | Chris Perkins (`nmcitra`) |
 | **Role** | Founding maintainer · protocol authority |
 | **Since** | 2026-07-25 |
-| **Signing identity** | *To be published with the first signed release* |
+| **Signing identity** | `SHA256:xYmRe0iaVZGTw77FEhx3Ez2/E6K28GL8EO9YuN8/FMM` (SSH ed25519) |
+
+**Check a signature against that fingerprint, not against a name.** The public key is also registered with the forge, but a forge showing "Verified" is that forge's assertion. The fingerprint above is the thing to compare — and comparing it is the reader's job, not something this page can do for them.
+
+**Rotation is annual, and immediately on any suspicion of compromise** (§5). When it rotates, the new fingerprint replaces this one and the transition is a logged event — the old one stays valid for everything it signed before the rotation date ([INCIDENT-RESPONSE.md](INCIDENT-RESPONSE.md) §2).
 
 **Declared conflicts of interest:**
 
