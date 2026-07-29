@@ -4,20 +4,23 @@
     "manifest_file": "governance-log/anchors/anchor-0001.json",
     "manifest_sha256": "bb1050eb1ea4e705e07999316587aad63809ca0dc058a90b5642217160d8469b",
     "created_at": "2026-07-27T00:00:00Z",
-    "status": "ANCHOR_PENDING"
+    "status": "ANCHOR_SUBMITTED",
+    "proof_file": "governance-log/anchors/anchor-0001.json.ots"
   },
   {
     "anchor_id": "anchor-0002",
     "manifest_file": "governance-log/anchors/anchor-0002.json",
     "manifest_sha256": "84ee2f7c44c114ac355a8b0b165dec37798b26f27f73c1962fdae671327947ca",
     "created_at": "2026-07-27T10:46:00-06:00",
-    "status": "ANCHOR_PENDING"
+    "status": "ANCHOR_SUBMITTED",
+    "proof_file": "governance-log/anchors/anchor-0002.json.ots"
   },
   {
     "anchor_id": "anchor-0003",
     "manifest_file": "governance-log/anchors/anchor-0003.json",
     "manifest_sha256": "9035b5547cd1dd9f31ff62010deb0d775d9adb9bca0f74c86cfa711eab92b71b",
     "created_at": "2026-07-29T22:08:30.971Z",
-    "status": "ANCHOR_PENDING"
+    "status": "ANCHOR_SUBMITTED",
+    "proof_file": "governance-log/anchors/anchor-0003.json.ots"
   }
 ]

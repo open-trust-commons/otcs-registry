@@ -60,7 +60,27 @@ npm run anchor:verify     # verify every .ots proof in the repository
 
 > **Nobody needs this project's tooling to check this project's timestamps.** That is the entire point.
 
-## 4. What anchoring does not prove
+## 4. Three states, and only one of them is a timestamp
+
+```text
+ANCHOR_PENDING     the digest is fixed. Nothing has been submitted anywhere
+ANCHOR_SUBMITTED   calendar servers hold the hash. NO Bitcoin block commits it yet
+ANCHOR_CONFIRMED   a Bitcoin block commits it. This is the only state that
+                   proves the bytes existed by a given time
+```
+
+```bash
+npm run anchor:status      # which state each manifest is in
+npm run anchor:verify      # re-check; promotes SUBMITTED to CONFIRMED once a block lands
+```
+
+> **`ANCHOR_SUBMITTED` must never be described as anchored, timestamped, or proven.**
+
+Submission means a calendar server accepted a hash and intends to include it in a future block. That intention is not evidence. Confirmation typically takes hours, because OpenTimestamps batches many hashes into one commitment — and until the block exists, **the only thing that has happened is that this project asked for a timestamp.**
+
+The distinction is easy to blur and expensive to blur, which is why the tooling reports three states rather than "anchored / not anchored".
+
+## 5. What anchoring does not prove
 
 It proves that **a hash existed no later than a block time.** That is all.
 
@@ -77,7 +97,7 @@ Anchoring upgrades exactly one property — *this exact byte sequence existed by
 
 > **Any page or release note describing anchoring has to state these limits.** A Bitcoin proof carries an aura of finality far beyond what it establishes, and trading on that aura would be the same authority inflation this project exists to refuse.
 
-## 5. Why Bitcoin and not something else
+## 6. Why Bitcoin and not something else
 
 Not ideology, and not an endorsement of any asset. Four requirements:
 
@@ -90,7 +110,7 @@ OpenTimestamps on Bitcoin meets them. **So would any equally independent and dur
 
 Nothing about anchoring is purchasable, and a timestamp confers no status on a record. **A timestamped false claim is a precisely dated false claim** ([SUSTAINABILITY.md](sustainability.md)).
 
-## 6. When it fails
+## 7. When it fails
 
 - Calendar servers unavailable → anchoring retries
 - A release may ship marked `ANCHOR_PENDING`, with the proof attached when it completes
