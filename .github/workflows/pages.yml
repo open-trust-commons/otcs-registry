@@ -9,7 +9,10 @@ permissions:
   id-token: write
 concurrency: { group: pages, cancel-in-progress: false }
 jobs:
-  build:
+  # Named pages-build, not build: ci.yml also has a job called build, and two
+  # jobs sharing a name report two status checks with the same context. A
+  # required check on "build" could then be satisfied by the wrong one.
+  pages-build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -31,7 +34,7 @@ jobs:
       - uses: actions/upload-pages-artifact@v3
         with: { path: site/dist }
   deploy:
-    needs: build
+    needs: pages-build
     environment: { name: github-pages, url: '${{ steps.deployment.outputs.page_url }}' }
     runs-on: ubuntu-latest
     steps:

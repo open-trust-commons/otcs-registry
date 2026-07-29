@@ -90,7 +90,26 @@ export function computeStatus() {
 
 if (process.argv[1]?.endsWith("roadmap-status.ts")) {
   const s = computeStatus();
-  writeFileSync(join(ROOT, "roadmap/status.yaml"), stringify(s));
+  /**
+   * `measured_at` is inherited when nothing else changed.
+   *
+   * Writing today's date on every run made the file differ after a command
+   * that discovered nothing — noise in every diff, and permanent drift
+   * between two checkouts of the same commit. Worse, it trains a reader to
+   * ignore a changed status file, which is the one file that should never be
+   * ignored.
+   *
+   * So the date now means "when this measurement last CHANGED", not "when
+   * the command last ran". If the registry has not moved, the measurement is
+   * still true and its date is still the date it became true.
+   */
+  const out = join(ROOT, "roadmap/status.yaml");
+  if (existsSync(out)) {
+    const prev = parse(readFileSync(out, "utf8")) as Record<string, unknown>;
+    const same = stringify({ ...prev, measured_at: null }) === stringify({ ...s, measured_at: null });
+    if (same && typeof prev.measured_at === "string") s.measured_at = prev.measured_at;
+  }
+  writeFileSync(out, stringify(s));
   console.log(`Commons stage: ${s.commons_stage.id} — ${s.commons_stage.name}`);
   console.log(`  qualifying active projects: ${s.qualifying_active_projects} (of ${s.registry_records_total} records)`);
   console.log(`  independent stewards: ${s.independent_stewards}`);
