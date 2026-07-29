@@ -36,7 +36,7 @@ The hardest available case:
 
 It is a document and it stays one.
 
-Bitcoin has no owner to give consent, so the only record state it could ever hold is `observed` — and observed records are deliberately withheld until the correction and right-of-reply processes are mature ([REGISTRY-POLICY.md](registry-policy.md), [ROADMAP.md](roadmap.md) v2.2). **Publishing an analysis of something that cannot answer back is exactly what those safeguards exist for.**
+Bitcoin has no owner to give consent, so the only record state it could ever hold is `observed` — and observed records are deliberately withheld until the correction and right-of-reply processes are mature ([REGISTRY-POLICY.md](registry-policy.md), [PROJECT-LIFECYCLE.md](project-lifecycle.md) §3). **Publishing an analysis of something that cannot answer back is exactly what those safeguards exist for.**
 
 So it ships as prose claiming nothing about participation. **Nothing here says Bitcoin has joined anything.**
 

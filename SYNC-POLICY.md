@@ -25,7 +25,7 @@ Every accepted manifest lives in this repository. Owners open a pull request, or
 
 What that buys: review · stable history · deterministic builds · no remote compromise path · no dependency on anyone else's uptime.
 
-### Version 0.3 — a project-hosted pilot
+### Later — a project-hosted pilot
 
 Projects may publish `/.well-known/otcs.yaml` on their own domain. The registry record then carries where it came from:
 

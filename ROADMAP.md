@@ -12,23 +12,44 @@ We do not rate anything. There are no scores, no rankings, and no badges. A list
 
 ## Where things stand today
 
-Nothing below version 0.1 has been released publicly yet. Versions 0.1 through 0.9 are written in the past tense on purpose: they are the steps to the first stable release, and by the time anyone reads this alongside version 1.0, that is the order they happened in. Until then, treat them as the plan.
+**Version 0.1 is published.** Everything the project has written is in the repository, public, and runnable by anyone who clones it.
 
-*(Delete this section once 1.0 ships.)*
+Two numbers describe this project and they are not the same number:
+
+| | Now |
+|---|---|
+| **Version** — the technical and governance contract | **0.1** |
+| **Stage** — how large and diverse the ecosystem is | **C0 Seed** · 1 qualifying project, 1 steward |
+
+The second one is the honest one. **A registry with one project in it is a format, not a commons**, and only outside participation moves it ([COMMONS-STAGES.md](COMMONS-STAGES.md)).
 
 ---
 
-## Getting to the first stable release
+## There is no numbered plan between here and 1.0
 
-Nine steps, each adding one capability.
+An earlier version of this page listed nine steps, 0.1 through 0.9. **They were removed, because every file all nine of them rested on had already shipped at 0.1.** What was left in each step was not work — it was waiting for somebody outside the project to use a rule for the first time.
 
-Most of the written rules shipped at 0.1, all at once. The steps after it are not new documents appearing — they are each rule being **used for the first time by someone outside the project**. A rule nobody has followed yet is a draft, whatever file it lives in.
+That is a real and important thing to wait for. **It is not a version number.** Adoption is what the Commons stages measure, and using version numbers for it meant the two axes were describing the same thing while claiming not to.
 
-Each step lists the files it rests on. They are filenames now, and become links once the repository is public.
+So:
 
-### 0.1 — The first public listing
+- **Versions happen when something changes** — a schema, an interface, the governance contract. Not on a schedule ([VERSIONING.md](VERSIONING.md) §1)
+- **1.0 arrives when its criteria are met** — 22 of them, in `roadmap/releases/1.0.0.yaml`, each carrying a state and its evidence
+- **Progress is measured, not asserted** — `npm run roadmap:status` computes it from the live registry
 
-A small number of projects, described in the shared vocabulary, published so anyone could read them. Deliberately tiny — the point was to prove the format worked on real projects rather than invented ones.
+```bash
+npm run roadmap:status     # what is actually true today
+```
+
+**The gate is not close.** 1.0 requires 10 qualifying projects and 7 independent stewards, sustained 90 days. There is currently 1 of each, and it is the founder's. No amount of writing moves that number — only other people do.
+
+---
+
+## What shipped at 0.1
+
+The whole corpus, all at once. The table below is an inventory of the release, not a list of the only files in it.
+
+A small number of projects described in the shared vocabulary, published so anyone could read them. Deliberately tiny — the point was to prove the format worked on real projects rather than invented ones.
 
 | What | Files |
 |---|---|
@@ -42,72 +63,6 @@ A small number of projects, described in the shared vocabulary, published so any
 | The tools | `npm run validate`, `npm test`, `npm run ledger:verify` |
 
 Anyone who downloads this runs the same checks we do and gets the same answers.
-
-### 0.2 — Anyone can submit
-
-Until this point, entries were added by hand. From here, the owner of a project submits their own description and corrects it later.
-
-- **Rests on** — [PARTICIPATION.md](PARTICIPATION.md), [OWNER-VERIFICATION.md](OWNER-VERIFICATION.md), [OWNER-RESPONSE-POLICY.md](OWNER-RESPONSE-POLICY.md), the forms in `.github/ISSUE_TEMPLATE/`
-- First time someone outside the project got listed without us doing it for them
-- A refusal leaves a trace, the same as an agreement
-
-### 0.3 — Keeping track of changes
-
-Projects change. Every entry now carries a full history: who changed what, when, and what it said before.
-
-- **Rests on** — [PROJECT-LIFECYCLE.md](PROJECT-LIFECYCLE.md), `governance-log/events.jsonl`, `src/ledger.ts`
-- Nothing gets quietly rewritten
-- Run `npm run ledger:verify` against a copy to check the history has not been tampered with
-
-### 0.4 — Describing how projects connect
-
-A project can say which parts of the job it hands off and which it picks up.
-
-- **Rests on** — `schemas/relationship.schema.json`, the 10 files under `interfaces/`
-- Both sides have to agree before a connection counts as mutual
-- One project claiming a partnership is a claim, not a connection
-
-### 0.5 — Describing when a project acts
-
-Some tools check a request once, before it runs. Others keep watching while it runs and can stop it partway.
-
-- **Rests on** — the `time` section of `schemas/project-manifest.schema.json`
-- A project claiming to watch continuously has to say how
-- The word on its own is not evidence
-
-### 0.6 — Seeing the whole picture at once
-
-The first view showing many projects together rather than one at a time, so the gaps between them become visible.
-
-- **Rests on** — `src/generate.ts`, `computed/graph.json`, `computed/matrix.json`, [ALGORITHM-REGISTRY.md](ALGORITHM-REGISTRY.md)
-- Every view states what it leaves out
-- A summary that hides its own edits is misleading
-
-### 0.7 — Trying it in one field
-
-Everything above is general. This tested whether the vocabulary survives contact with one specific industry, with its own regulators and its own words for things.
-
-- **Rests on** — `profiles/README.md`, `profiles/financial-crime/`, `schemas/domain-profile.schema.json`
-- The first profile covers fraud and financial-crime controls: 13 terms mapped, **6 did not**
-- Published alongside an honest account of what the general vocabulary could not express
-- **Still open** — no practitioner in that field has reviewed the crosswalk, and the profile says so on its first line
-
-### 0.8 — Making the record durable
-
-Backups, copies hosted in more than one place, and a way to prove an entry has not been altered since it was written.
-
-- **Rests on** — [HOSTING-AND-MIRRORS.md](HOSTING-AND-MIRRORS.md), [SYNC-POLICY.md](SYNC-POLICY.md), [INCIDENT-RESPONSE.md](INCIDENT-RESPONSE.md), [BITCOIN-ANCHORING.md](BITCOIN-ANCHORING.md), `src/anchor.ts`
-- The timestamp comes from outside, so the proof does not depend on trusting us
-- A public record nobody can verify is just a website
-
-### 0.9 — Nothing new
-
-A deliberate pause. No features.
-
-- **Rests on** — [VERSION-EXIT-CRITERIA.md](VERSION-EXIT-CRITERIA.md), [RELEASE-PROCESS.md](RELEASE-PROCESS.md), [RUNBOOK.md](RUNBOOK.md)
-- Fix what is broken, finish the documentation, rehearse the whole release from a clean machine
-
----
 
 ## Version 1.0 — the first stable release
 
@@ -123,24 +78,13 @@ Three claims, and nothing more:
 
 ## After 1.0
 
-Nine more steps, alternating on purpose.
+Same rule as before it: **versions happen when something changes.** There is no numbered plan here either.
 
-- **Odd numbers are maintenance** — reliability, tooling, security, documentation. No new capability.
-- **Even numbers add capability** — new information, new views, new ways to use the record.
+One principle survives from the plan that used to sit in this space, because it was doing real work:
 
-Maintenance is the first thing abandoned under pressure, so it gets its own numbers instead of being fitted in around the work that shows.
+> **Maintenance is the first thing abandoned under pressure.** Reliability, tooling, security and documentation get their own releases rather than being fitted in around the work that shows.
 
-| Version | Kind | What it does |
-|---|---|---|
-| **1.1** | maintenance | Fix what 1.0 got wrong — speed, reliability, and the bugs that only appear once real people use something |
-| **1.2** | capability | Grow the list, and improve the entries already in it by asking their owners better questions |
-| **1.3** | maintenance | Make submitting easier. The first version will be clumsy, and every hour of friction costs listings |
-| **1.4** | capability | Collections and comparisons, so a reader can start from a question rather than a list |
-| **1.5** | maintenance | Let people outside the project examine what is here and publish disagreements, as a supported process |
-| **1.6** | capability | Profiles for specific fields, without splintering the shared vocabulary |
-| **1.7** | maintenance | External security review, tested backups, and a rehearsed recovery from nothing |
-| **1.8** | capability | Published analysis — what is well covered, what nobody is working on, what changed. Method attached |
-| **1.9** | maintenance | Hand it over. Not a document saying it is possible; a handover someone actually performs |
+Naming which release that will be, years ahead, was the part that could not be honoured.
 
 ---
 

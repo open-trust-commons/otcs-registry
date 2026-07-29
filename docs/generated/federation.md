@@ -41,7 +41,7 @@ When two instances hold different observations of the same subject, **both persi
 
 A reader sees the divergence and where each side came from.
 
-*This model is previewed for version 0.7 and is not implemented.*
+*This model is designed and not implemented. No version is attached to it.*
 
 ## 5. When to split the repository
 

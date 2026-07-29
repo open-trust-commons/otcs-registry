@@ -61,7 +61,7 @@ Requirements:
 
 **A declining owner is honoured** ([CHARTER.md](charter.md) §10) — the record comes down and the decline is logged. It is never counted as participation and never shown with a verification status it does not have.
 
-> **Deferred until the moderation and legal processes are mature** (roadmap `v0.2.1`). The capability exists in the schema. Using it at scale before the process can support it would be exactly the surveillance failure [SAFETY.md](safety.md) warns about.
+> **Deferred until the moderation and legal processes are mature.** No version is named, because readiness here is a judgement about process maturity rather than a release date. The capability exists in the schema. Using it at scale before the process can support it would be exactly the surveillance failure [SAFETY.md](safety.md) warns about.
 
 ## 4. Disappearance
 

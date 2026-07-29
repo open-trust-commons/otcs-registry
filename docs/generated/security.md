@@ -83,7 +83,7 @@ Each of those needs the surrounding controls — signed identities, outside time
 
 ### Identity is weak
 
-Version 0.1 identity is declared keys and named people. Adequate at this scale, **insufficient against a determined adversary running fake accounts.** Strengthening it is a designated version 0.2 proposal.
+Version 0.1 identity is declared keys and named people. Adequate at this scale, **insufficient against a determined adversary running fake accounts.** Strengthening it is an open proposal. It is not scheduled against a version number, because naming one would promise a date the work does not have.
 
 ### Deep collusion survives
 

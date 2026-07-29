@@ -92,7 +92,7 @@ read the proposal → review the strongest objection → ask one question or mak
 
 Shared employers, funding relationships, shared maintainers and common codebases are **disclosed fields, visible rather than prohibited.** The point is that concentration can be seen, not that it is banned.
 
-Version 0.1 identity is maintainer keys listed in project records plus named humans on ballots. Stronger verification is a version 0.2 proposal — see [SECURITY.md](security.md) §3, which says plainly that this is not enough against a determined adversary.
+Version 0.1 identity is maintainer keys listed in project records plus named humans on ballots. Stronger verification is an open proposal with no scheduled version — see [SECURITY.md](security.md) §3, which says plainly that this is not enough against a determined adversary.
 
 ## 8. What never earns standing
 
