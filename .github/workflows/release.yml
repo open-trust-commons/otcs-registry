@@ -9,7 +9,12 @@ permissions:
 jobs:
   gate:
     runs-on: ubuntu-latest
-    outputs: { decision: ${{ steps.decide.outputs.decision }} }
+    # Block style, not a flow map. Inside `{ }` the `${{` of an Actions
+    # expression parses as a nested map start and the whole file becomes
+    # invalid YAML — GitHub then cannot even read the workflow's name, which
+    # is why a broken run displays as ".github/workflows/release.yml".
+    outputs:
+      decision: ${{ steps.decide.outputs.decision }}
     steps:
       - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
