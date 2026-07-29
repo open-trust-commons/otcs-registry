@@ -1,4 +1,4 @@
-// Bitcoin anchoring via OpenTimestamps — BITCOIN-ANCHORING.md Part II.
+// External timestamp anchoring — ANCHORING.md.
 //
 // An anchor round writes ONE immutable manifest listing the sha256 of each
 // anchored artifact, then stamps that manifest. Stamping the manifest rather
@@ -6,10 +6,10 @@
 // the ledger's bytes would be invalidated by the next event. The manifest never
 // changes after it is written, so its proof stays verifiable forever.
 //
-// The `ots` client is OPTIONAL. Without it a round still produces a complete,
+// A witness client is OPTIONAL. Without one a round still produces a complete,
 // hash-committed manifest marked ANCHOR_PENDING — the digest is fixed now and
 // can be stamped later. Nothing in the release path requires the client to be
-// present (BITCOIN-ANCHORING.md, "Failure and recovery").
+// present (ANCHORING.md §7).
 //
 // CLI: tsx src/anchor.ts round [label] | stamp | verify | status
 import { createHash } from "node:crypto";
@@ -19,6 +19,7 @@ import {
 } from "node:fs";
 import { join, dirname, relative } from "node:path";
 import { fileURLToPath } from "node:url";
+import { WITNESSES, type WitnessState } from "./witnesses.js";
 
 export const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 export const ANCHOR_DIR = join(ROOT, "governance-log", "anchors");
@@ -36,15 +37,33 @@ export type AnchorManifest = {
   proves: string;
   does_not_prove: string[];
 };
+export type WitnessRecord = { state: WitnessState; proofs: string[]; note?: string };
 export type IndexEntry = {
   anchor_id: string;
   manifest_file: string;
   manifest_sha256: string;
   created_at: string;
+  /**
+   * Aggregate, DERIVED from `witnesses` by aggregate() — never set by hand.
+   * CONFIRMED requires at least one witness to have confirmed. One witness
+   * confirming is enough to prove the bytes existed; it is not enough to
+   * claim the record is independent of that witness, which is why the
+   * per-witness map is what gets reported.
+   */
   status: "ANCHOR_PENDING" | "ANCHOR_SUBMITTED" | "ANCHOR_CONFIRMED";
+  witnesses: Record<string, WitnessRecord>;
+  /** Pre-multi-witness entries carried these two. Kept so old rounds still read. */
   proof_file?: string;
   confirmed_note?: string;
 };
+
+/** The aggregate is the strongest state any single witness reached. */
+export function aggregate(w: Record<string, WitnessRecord>): IndexEntry["status"] {
+  const states = Object.values(w).map((x) => x.state);
+  if (states.includes("CONFIRMED")) return "ANCHOR_CONFIRMED";
+  if (states.includes("SUBMITTED")) return "ANCHOR_SUBMITTED";
+  return "ANCHOR_PENDING";
+}
 
 /** Recursively list files under a directory, sorted, excluding dotfiles. */
 function walk(dir: string): string[] {
@@ -78,25 +97,41 @@ function target(p: string): AnchorTarget | null {
   return { path: p, sha256: sha256(buf), bytes: buf.length };
 }
 
-/** Is the reference OpenTimestamps client available? */
-export function otsAvailable(): boolean {
-  try {
-    execFileSync("ots", ["--version"], { stdio: "pipe" });
-    return true;
-  } catch {
-    return false;
-  }
-}
+/** Which registered witnesses have a working client right now. */
+export const availableWitnesses = () => WITNESSES.filter((w) => w.available());
 
-const readIndex = (): IndexEntry[] =>
-  existsSync(INDEX) ? (JSON.parse(readFileSync(INDEX, "utf8")) as IndexEntry[]) : [];
+/** Retained name: any witness at all. Absence is reported, never routed around. */
+export const otsAvailable = (): boolean => availableWitnesses().length > 0;
+
+/**
+ * Read the index, migrating pre-multi-witness entries in memory.
+ *
+ * Rounds written before the witness registry existed recorded one status and
+ * one proof_file, both implicitly OpenTimestamps. Those become a witnesses map
+ * with the same meaning rather than being rewritten on disk — the manifests are
+ * hashed in the index and editing them would break the very check that proves
+ * they were not edited.
+ */
+const readIndex = (): IndexEntry[] => {
+  if (!existsSync(INDEX)) return [];
+  const raw = JSON.parse(readFileSync(INDEX, "utf8")) as IndexEntry[];
+  for (const e of raw) {
+    if (e.witnesses) continue;
+    const state: WitnessState =
+      e.status === "ANCHOR_CONFIRMED" ? "CONFIRMED" : e.status === "ANCHOR_SUBMITTED" ? "SUBMITTED" : "UNKNOWN";
+    e.witnesses = e.proof_file
+      ? { opentimestamps: { state, proofs: [e.proof_file], note: e.confirmed_note } }
+      : {};
+  }
+  return raw;
+};
 
 const writeIndex = (entries: IndexEntry[]) => {
   mkdirSync(ANCHOR_DIR, { recursive: true });
   writeFileSync(INDEX, JSON.stringify(entries, null, 2) + "\n");
 };
 
-/** Default anchor set — BITCOIN-ANCHORING.md "What is anchored". */
+/** Default anchor set — ANCHORING.md §2. */
 export const DEFAULT_TARGETS = [
   "governance-log/events.jsonl",
   "registry",
@@ -146,32 +181,52 @@ export function round(label = "scheduled", paths = DEFAULT_TARGETS): { manifest:
   return { manifest, file };
 }
 
-/** Stamp every pending manifest, if the client is installed. */
-export function stampPending(): { stamped: string[]; skipped: string[]; reason?: string } {
+/**
+ * Submit every manifest to every registered witness that has not seen it.
+ *
+ * Each witness is tried independently and a failure in one never stops
+ * another — the point of holding two is that they do not share a fate.
+ */
+export function stampPending(): {
+  stamped: string[]; skipped: string[]; reason?: string; perWitness: Record<string, number>;
+} {
   const index = readIndex();
-  const pending = index.filter((e) => e.status === "ANCHOR_PENDING");
-  if (!otsAvailable()) {
+  const available = availableWitnesses();
+  const outstanding = index.filter((e) => Object.keys(e.witnesses).length < WITNESSES.length);
+
+  if (!available.length) {
     return {
-      stamped: [],
-      skipped: pending.map((e) => e.anchor_id),
-      reason: "ots client not installed — manifests remain ANCHOR_PENDING and can be stamped later",
+      stamped: [], skipped: outstanding.map((e) => e.anchor_id), perWitness: {},
+      reason: `no witness client installed (${WITNESSES.map((w) => w.id).join(", ")}) — manifests stay ANCHOR_PENDING and can be submitted later`,
     };
   }
-  const stamped: string[] = [];
-  const skipped: string[] = [];
-  for (const e of pending) {
+
+  const stamped = new Set<string>();
+  const skipped = new Set<string>();
+  const perWitness: Record<string, number> = {};
+
+  for (const e of outstanding) {
     const f = join(ROOT, e.manifest_file);
-    try {
-      execFileSync("ots", ["stamp", f], { stdio: "pipe" });
-      e.proof_file = `${e.manifest_file}.ots`;
-      e.status = "ANCHOR_SUBMITTED";
-      stamped.push(e.anchor_id);
-    } catch {
-      skipped.push(e.anchor_id);
+    for (const w of available) {
+      if (e.witnesses[w.id]) continue; // already submitted to this one
+      try {
+        const r = w.submit(f, e.manifest_file);
+        if (!r) { skipped.add(e.anchor_id); continue; }
+        e.witnesses[w.id] = { state: "SUBMITTED", proofs: r.proofs };
+        perWitness[w.id] = (perWitness[w.id] ?? 0) + 1;
+        stamped.add(e.anchor_id);
+      } catch (err) {
+        // Recorded, not swallowed: a witness that refused is information.
+        e.witnesses[w.id] = { state: "UNKNOWN", proofs: [], note: `submission failed: ${(err as Error).message.split("\n")[0]}` };
+        skipped.add(e.anchor_id);
+      }
     }
+    e.status = aggregate(e.witnesses);
+    if (e.witnesses.opentimestamps?.proofs[0]) e.proof_file = e.witnesses.opentimestamps.proofs[0];
   }
+
   writeIndex(index);
-  return { stamped, skipped };
+  return { stamped: [...stamped], skipped: [...skipped], perWitness };
 }
 
 export type VerifyResult = {
@@ -207,25 +262,30 @@ export function verify(): VerifyResult {
     checked++;
   }
 
-  const withProofs = index.filter((e) => e.proof_file);
-  if (!otsAvailable()) {
-    if (withProofs.length) notes.push(`${withProofs.length} proof(s) NOT verified — ots client not installed`);
-  } else {
-    for (const e of withProofs) {
-      const p = join(ROOT, e.proof_file!);
-      if (!existsSync(p)) { problems.push(`${e.anchor_id}: proof file missing`); continue; }
-      try {
-        const out = execFileSync("ots", ["verify", p], { stdio: "pipe" }).toString();
-        if (/Success|attests/i.test(out)) { e.status = "ANCHOR_CONFIRMED"; e.confirmed_note = out.trim().split("\n").pop(); }
-        else notes.push(`${e.anchor_id}: proof not yet confirmed in a block`);
-      } catch {
-        notes.push(`${e.anchor_id}: verification incomplete (pending block confirmation or no network)`);
-      }
+  const available = availableWitnesses();
+  const missing = WITNESSES.filter((w) => !w.available());
+  if (missing.length) notes.push(`not checked by ${missing.map((w) => w.id).join(", ")} — client not installed`);
+
+  for (const e of index) {
+    const f = join(ROOT, e.manifest_file);
+    if (!existsSync(f)) continue; // already reported above
+    for (const w of available) {
+      const rec = e.witnesses[w.id];
+      if (!rec) continue; // never submitted to this witness
+      const r = w.check(f, e.manifest_file);
+      rec.state = r.state;
+      rec.note = r.note;
+      if (r.state !== "CONFIRMED") notes.push(`${e.anchor_id} · ${w.id}: ${r.note ?? r.state}`);
     }
-    writeIndex(index);
+    e.status = aggregate(e.witnesses);
   }
+  writeIndex(index);
 
   const pending = index.filter((e) => e.status === "ANCHOR_PENDING").length;
+  const confirmed = index.filter((e) => e.status === "ANCHOR_CONFIRMED").length;
+  if (confirmed < index.length) {
+    notes.push(`${confirmed}/${index.length} manifest(s) CONFIRMED — the rest are submitted, which proves nothing yet`);
+  }
   return { ok: problems.length === 0, checked, pending, problems, notes };
 }
 
@@ -240,11 +300,17 @@ if (process.argv[1]?.endsWith("anchor.ts")) {
     console.log(`${manifest.anchor_id} — ${manifest.targets.length} targets → ${relative(ROOT, file)}`);
     for (const t of manifest.targets) console.log(`  ${t.sha256.slice(0, 16)}…  ${t.path}`);
     const s = stampPending();
-    if (s.stamped.length) console.log(`stamped: ${s.stamped.join(", ")}`);
+    if (s.stamped.length) console.log(`submitted: ${s.stamped.join(", ")}`);
+    for (const [id, n] of Object.entries(s.perWitness)) console.log(`  → ${id}: ${n}`);
     if (s.reason) console.log(`ANCHOR_PENDING — ${s.reason}`);
   } else if (cmd === "stamp") {
     const s = stampPending();
-    console.log(s.reason ?? `stamped: ${s.stamped.join(", ") || "nothing pending"}`);
+    if (s.reason) console.log(s.reason);
+    else {
+      console.log(`submitted: ${s.stamped.join(", ") || "nothing outstanding"}`);
+      for (const [id, n] of Object.entries(s.perWitness)) console.log(`  → ${id}: ${n}`);
+      if (s.skipped.length) console.log(`  refused/failed: ${s.skipped.join(", ")}`);
+    }
   } else if (cmd === "verify") {
     const r = verify();
     console.log(`anchors: ${r.checked} manifest(s) checked, ${r.pending} pending — ${r.ok ? "records INTACT" : "records ALTERED"}`);
@@ -254,8 +320,17 @@ if (process.argv[1]?.endsWith("anchor.ts")) {
   } else if (cmd === "status") {
     const idx = status();
     if (!idx.length) console.log("no anchor rounds yet");
-    for (const e of idx) console.log(`${e.anchor_id}  ${e.status.padEnd(17)}  ${e.created_at}  ${e.manifest_file}`);
-    console.log(`\nots client: ${otsAvailable() ? "available" : "NOT INSTALLED (rounds still valid, stamping deferred)"}`);
+    for (const e of idx) {
+      console.log(`${e.anchor_id}  ${e.status.padEnd(17)}  ${e.created_at}`);
+      for (const w of WITNESSES) {
+        const r = e.witnesses[w.id];
+        console.log(`    ${w.id.padEnd(15)} ${(r?.state ?? "not submitted").padEnd(14)} ${r?.note ?? ""}`);
+      }
+    }
+    const avail = availableWitnesses().map((w) => w.id);
+    console.log(`\nwitnesses registered: ${WITNESSES.map((w) => `${w.id} (${w.substrate})`).join(" · ")}`);
+    console.log(`clients available:    ${avail.length ? avail.join(", ") : "NONE — rounds still valid, submission deferred"}`);
+    console.log("\nONLY ANCHOR_CONFIRMED proves when bytes existed. SUBMITTED is a request.");
   } else {
     console.error("usage: anchor [round <label> | stamp | verify | status]");
     process.exit(2);

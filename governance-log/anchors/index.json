@@ -4,23 +4,76 @@
     "manifest_file": "governance-log/anchors/anchor-0001.json",
     "manifest_sha256": "bb1050eb1ea4e705e07999316587aad63809ca0dc058a90b5642217160d8469b",
     "created_at": "2026-07-27T00:00:00Z",
-    "status": "ANCHOR_SUBMITTED",
-    "proof_file": "governance-log/anchors/anchor-0001.json.ots"
+    "status": "ANCHOR_CONFIRMED",
+    "proof_file": "governance-log/anchors/anchor-0001.json.ots",
+    "witnesses": {
+      "opentimestamps": {
+        "state": "SUBMITTED",
+        "proofs": [
+          "governance-log/anchors/anchor-0001.json.ots"
+        ],
+        "note": "pending block confirmation, or no network"
+      },
+      "rekor": {
+        "state": "CONFIRMED",
+        "proofs": [
+          "governance-log/anchors/anchor-0001.json.sig",
+          "rekor-index:2284362792",
+          "rekor-uuid:108e9186e8c5677a370d134904351adcdc80daf8d4049edbceda93e146945e1940565aff03c1985f"
+        ],
+        "note": "present in the log"
+      }
+    }
   },
   {
     "anchor_id": "anchor-0002",
     "manifest_file": "governance-log/anchors/anchor-0002.json",
     "manifest_sha256": "84ee2f7c44c114ac355a8b0b165dec37798b26f27f73c1962fdae671327947ca",
     "created_at": "2026-07-27T10:46:00-06:00",
-    "status": "ANCHOR_SUBMITTED",
-    "proof_file": "governance-log/anchors/anchor-0002.json.ots"
+    "status": "ANCHOR_CONFIRMED",
+    "proof_file": "governance-log/anchors/anchor-0002.json.ots",
+    "witnesses": {
+      "opentimestamps": {
+        "state": "SUBMITTED",
+        "proofs": [
+          "governance-log/anchors/anchor-0002.json.ots"
+        ],
+        "note": "pending block confirmation, or no network"
+      },
+      "rekor": {
+        "state": "CONFIRMED",
+        "proofs": [
+          "governance-log/anchors/anchor-0002.json.sig",
+          "rekor-index:2284362873",
+          "rekor-uuid:108e9186e8c5677a5cf07cd7bae18c594b0171a02048412ba5e7dd1e15285b30d4581185e10705c9"
+        ],
+        "note": "present in the log"
+      }
+    }
   },
   {
     "anchor_id": "anchor-0003",
     "manifest_file": "governance-log/anchors/anchor-0003.json",
     "manifest_sha256": "9035b5547cd1dd9f31ff62010deb0d775d9adb9bca0f74c86cfa711eab92b71b",
     "created_at": "2026-07-29T22:08:30.971Z",
-    "status": "ANCHOR_SUBMITTED",
-    "proof_file": "governance-log/anchors/anchor-0003.json.ots"
+    "status": "ANCHOR_CONFIRMED",
+    "proof_file": "governance-log/anchors/anchor-0003.json.ots",
+    "witnesses": {
+      "opentimestamps": {
+        "state": "SUBMITTED",
+        "proofs": [
+          "governance-log/anchors/anchor-0003.json.ots"
+        ],
+        "note": "pending block confirmation, or no network"
+      },
+      "rekor": {
+        "state": "CONFIRMED",
+        "proofs": [
+          "governance-log/anchors/anchor-0003.json.sig",
+          "rekor-uuid:108e9186e8c5677a37c2329747d018fb91b5f5493c69d52cf4cbd2da486cf4c1bdb220e5fc1556c9"
+        ],
+        "note": "present in the log"
+      }
+    }
   }
 ]

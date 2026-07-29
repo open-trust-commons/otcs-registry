@@ -9,5 +9,9 @@
 # check the signature yourself against the fingerprint in MAINTAINERS.md §1.
 # Rotations replace the line and are logged (INCIDENT-RESPONSE.md §2); keys
 # retired here stay valid for what they signed before the rotation date.
+#
+# Two namespaces. "git" covers commits and tags. "file" covers standalone
+# artifacts — anchor manifests are signed as files so an independent
+# transparency log can record who submitted them (ANCHORING.md).
 
-cperkins@nmcitra.org namespaces="git" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEoV6u3GOH9m19FYjU+xvAofOQ7ZKhHNz88qQI/KaLWA cperkins@nmcitra.org
+cperkins@nmcitra.org namespaces="git,file" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEoV6u3GOH9m19FYjU+xvAofOQ7ZKhHNz88qQI/KaLWA cperkins@nmcitra.org

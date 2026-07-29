@@ -1,0 +1,73 @@
+# Keeps anchoring current without a human remembering to run it.
+#
+# WHAT THIS CAN DO WITHOUT SECRETS:
+#   - open a new round (writing a manifest needs no key)
+#   - submit to OpenTimestamps (stamping needs no key)
+#   - upgrade pending proofs, which is what turns a calendar promise into a
+#     Bitcoin block attestation hours later
+#   - re-verify, promoting ANCHOR_SUBMITTED to ANCHOR_CONFIRMED
+#
+# WHAT IT DELIBERATELY CANNOT DO:
+#   - submit to Rekor. That signs the manifest with the maintainer's release
+#     key, and putting that key in CI would mean CI could sign as the
+#     maintainer. A witness proving "who submitted this" is worth nothing if
+#     the answer is "a workflow anyone with push access can trigger".
+#
+# So Bitcoin anchoring is fully automated and Rekor stays a deliberate local
+# act. That asymmetry is the honest one: the witness that records an identity
+# requires the identity's holder.
+name: anchor
+on:
+  schedule:
+    - cron: '23 5 * * *'      # daily — calendars usually commit within hours
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency: { group: anchor, cancel-in-progress: false }
+
+jobs:
+  upgrade:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version-file: '.nvmrc', cache: npm }
+      - run: npm ci
+
+      - name: Install the OpenTimestamps client
+        run: pipx install opentimestamps-client
+
+      - name: Upgrade pending proofs
+        # A proof that has not made it into a block yet exits non-zero. That is
+        # the normal case, not a failure — the run should keep going and report.
+        run: |
+          shopt -s nullglob
+          for f in governance-log/anchors/*.ots; do
+            ots upgrade "$f" || echo "still pending: $f"
+          done
+
+      - name: Re-verify and record state
+        run: npm run anchor:verify || true
+
+      - name: Report
+        run: npm run anchor:status
+
+      - name: Commit any newly confirmed proofs
+        run: |
+          if git diff --quiet; then
+            echo "no anchor state changed"
+            exit 0
+          fi
+          git config user.name  "otcs-anchor[bot]"
+          git config user.email "otcs-anchor[bot]@users.noreply.github.com"
+          git add governance-log/anchors
+          git commit -m "anchor: pull block attestations for confirmed proofs
+
+          Automated. Upgrades OpenTimestamps proofs whose hashes have since been
+          committed to a Bitcoin block, and re-verifies. Adds no new claim — it
+          only replaces a calendar promise with the block that kept it.
+
+          Rekor submission is NOT automated: it signs with the maintainer's
+          release key, and a witness that records who submitted something is
+          worthless if CI can be that someone."
+          git push

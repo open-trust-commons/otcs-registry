@@ -82,4 +82,4 @@ Private channel ([SECURITY.md](security.md) §5). Acknowledged in the log **afte
 
 ---
 
-**See also:** [SECURITY.md](security.md) — the threats and what is admitted to be open · [HOSTING-AND-MIRRORS.md](hosting-and-mirrors.md) — why there is more than one host · [BITCOIN-ANCHORING.md](bitcoin-anchoring.md) — external timestamps that survive a compromise here
+**See also:** [SECURITY.md](security.md) — the threats and what is admitted to be open · [HOSTING-AND-MIRRORS.md](hosting-and-mirrors.md) — why there is more than one host · [ANCHORING.md](anchoring.md) — external timestamps that survive a compromise here

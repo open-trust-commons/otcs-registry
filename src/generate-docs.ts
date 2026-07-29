@@ -43,7 +43,7 @@ const GROUPS: Array<{ title: string; note: string; files: string[] }> = [
   { title: "Releases and versions", note: "How a version comes to exist and what it promises.",
     files: ["ROADMAP.md", "VERSIONING.md", "RELEASE-PROCESS.md", "RELEASE-GOVERNANCE.md", "VERSION-EXIT-CRITERIA.md", "DEPRECATION.md", "MIGRATIONS.md", "CHANGELOG.md", "ROADMAP-CHANGES.md"] },
   { title: "Integrity and operations", note: "Keeping the record verifiable by parties who do not trust us.",
-    files: ["RUNBOOK.md", "SECURITY.md", "BITCOIN-ANCHORING.md", "INCIDENT-RESPONSE.md", "HOSTING-AND-MIRRORS.md", "SYNC-POLICY.md", "FEDERATION.md", "ACCESSIBILITY.md", "SUSTAINABILITY.md", "PREMORTEM.md"] },
+    files: ["RUNBOOK.md", "SECURITY.md", "ANCHORING.md", "INCIDENT-RESPONSE.md", "HOSTING-AND-MIRRORS.md", "SYNC-POLICY.md", "FEDERATION.md", "ACCESSIBILITY.md", "SUSTAINABILITY.md", "PREMORTEM.md"] },
   { title: "Contributing", note: "How to take part.",
     files: ["REGISTERING.md", "CONTRIBUTING.md", "CODE_OF_CONDUCT.md", "DCO.md", "IPR-POLICY.md"] },
 ];

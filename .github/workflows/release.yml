@@ -56,7 +56,7 @@ jobs:
         # Runs after hashing: the manifest commits the hash of the artifact set.
         # The ots client is intentionally not installed in CI — CI produces the
         # committed manifest, a maintainer stamps it. A failed anchor must never
-        # fail a release (BITCOIN-ANCHORING.md, "Failure and recovery").
+        # fail a release (ANCHORING.md, "Failure and recovery").
         continue-on-error: true
         run: |
           cp dist-release/SHA256SUMS.hash SHA256SUMS.hash

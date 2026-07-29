@@ -51,7 +51,7 @@ Run the accessibility verification at this point too. Its failures block a relea
 npm run anchor v<version>
 ```
 
-This runs **after** hashing, because the manifest it stamps commits the hash of the artifact set. If the timestamp servers are unreachable the release still ships, marked `ANCHOR_PENDING`, and the proof attaches later ([BITCOIN-ANCHORING.md](bitcoin-anchoring.md)).
+This runs **after** hashing, because the manifest it stamps commits the hash of the artifact set. If the timestamp servers are unreachable the release still ships, marked `ANCHOR_PENDING`, and the proof attaches later ([ANCHORING.md](anchoring.md)).
 
 > **A missing anchor never blocks a release, and never blocks a security patch.**
 

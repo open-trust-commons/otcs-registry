@@ -2,20 +2,28 @@
 
 *Version 0.1 · Status: EXPERIMENTAL*
 
-**This registry cannot honestly timestamp itself.** Anchoring borrows a witness that nobody here controls.
+**This registry cannot honestly timestamp itself.** Anchoring borrows witnesses that nobody here controls.
 
 No cryptocurrency is held, solicited, endorsed or transacted at any point in what follows.
 
 ---
 
-## Bitcoin does two unrelated jobs here
+## The requirement is not Bitcoin
 
-| Role | What it does | Where |
-|---|---|---|
-| **Calibration** | A permanent worked example testing whether the coordinate vocabulary describes the field or just advertises KTP | [CALIBRATION.md](CALIBRATION.md) |
-| **Anchoring** | Supplies an external timestamp witness | **This document** |
+It is a party this project **cannot influence**, keeping a public record, durable for decades, at no ongoing cost.
 
-They share a subject and nothing else. You can reject either without touching the other.
+Bitcoin satisfies that. So do other things, and **two are registered** — because a single witness is a single point of dependence, which is precisely the shape of problem this registry exists to make visible.
+
+| Witness | What holds the record | Confirms | Fails when |
+|---|---|---|---|
+| **`opentimestamps`** | Bitcoin — proof-of-work, no operator | Hours. Batched into a block | Calendar servers disappear before a block commits |
+| **`rekor`** | A sigstore transparency log — operated, append-only Merkle tree | Immediately, on inclusion | Its operator stops running the log |
+
+**They fail differently on purpose.** If Bitcoin's calendars vanish, Rekor is unaffected. If sigstore's operator stops, Bitcoin is unaffected. Neither shares a failure domain with the other, or with this project.
+
+> **That independence is the property being bought — not the technology.** Bitcoin is one instance of the requirement, and this document is named after the requirement.
+
+Bitcoin has a second, unrelated job here as a calibration case ([CALIBRATION.md](CALIBRATION.md)). The two share a subject and nothing else; you can reject either without touching the other.
 
 ## 1. The problem
 
@@ -43,19 +51,27 @@ A hash committed into the Bitcoin blockchain gets a time **no participant here c
 
 ## 3. How it works
 
-Anchoring uses [OpenTimestamps](https://opentimestamps.org). A hash is aggregated with many others into a tree, one root is committed to Bitcoin, and each participant gets a small `.ots` proof.
+A round writes **one immutable manifest** listing the hash of every anchored artifact, then submits that manifest to every registered witness.
+
+**The manifest is submitted, not the artifacts.** The ledger grows, so a proof bound to the ledger's bytes would be void by the next event. A manifest never changes after it is written, so its proof stays verifiable forever.
 
 ```bash
-npm run anchor            # stamp the log and the current release manifest
-npm run anchor:verify     # verify every .ots proof in the repository
+npm run anchor            # new round, then submit to every available witness
+npm run anchor:stamp      # submit outstanding manifests
+npm run anchor:verify     # re-check every witness; promotes SUBMITTED to CONFIRMED
+npm run anchor:status     # per-witness state for every round
 ```
 
-- **No coin is spent by this project**
-- **No wallet, no account, no ongoing cost**
-- Proofs live in `governance-log/anchors/` and in each release's artifacts
-- A proof verifies against the public chain with the reference OpenTimestamps client
+| | |
+|---|---|
+| **OpenTimestamps** | The hash joins a tree; one root is committed to Bitcoin; a small `.ots` proof verifies against the chain |
+| **Rekor** | The manifest is **signed with the key in [MAINTAINERS.md](MAINTAINERS.md) §1**, and the signature is recorded in a public append-only log — so the entry says *who* submitted *what digest*, and when the log saw it |
 
-> **Nobody needs this project's tooling to check this project's timestamps.** That is the entire point.
+- **No coin is spent by this project. No wallet, no account, no ongoing cost**
+- Proofs live in `governance-log/anchors/` and in each release's artifacts
+- **A witness client missing is reported, never routed around**
+
+> **Nobody needs this project's tooling to check this project's timestamps.** Both proof formats verify with their own reference clients. That is the entire point.
 
 ## 4. Three states, and only one of them is a timestamp
 
@@ -77,7 +93,21 @@ Submission means a calendar server accepted a hash and intends to include it in 
 
 The distinction is easy to blur and expensive to blur, which is why the tooling reports three states rather than "anchored / not anchored".
 
-## 5. What anchoring does not prove
+## 5. What is automated, and what deliberately is not
+
+A daily workflow does the part that needs no identity:
+
+- Upgrades pending OpenTimestamps proofs — **this is the step that turns a calendar promise into a Bitcoin block attestation**, hours after submission
+- Re-verifies and promotes `ANCHOR_SUBMITTED` to `ANCHOR_CONFIRMED`
+- Commits newly confirmed proofs
+
+**Rekor submission is not automated, and will not be.** It signs the manifest with the maintainer's release key. Putting that key in continuous integration would let CI sign as the maintainer — and a witness whose value is recording *who submitted this* is worth nothing if the answer is *"a workflow anyone with push access can trigger."*
+
+> **The witness that records an identity requires the holder of that identity.** The witness that records only a time does not, so that one is automated.
+
+That asymmetry is deliberate. It is also why the two witnesses are worth having together: one can run unattended, and the other cannot be run by anyone else.
+
+## 6. What anchoring does not prove
 
 It proves that **a hash existed no later than a block time.** That is all.
 
@@ -94,20 +124,22 @@ Anchoring upgrades exactly one property — *this exact byte sequence existed by
 
 > **Any page or release note describing anchoring has to state these limits.** A Bitcoin proof carries an aura of finality far beyond what it establishes, and trading on that aura would be the same authority inflation this project exists to refuse.
 
-## 6. Why Bitcoin and not something else
+## 7. What a witness has to satisfy
 
-Not ideology, and not an endorsement of any asset. Four requirements:
+Not ideology, and not an endorsement of any asset or vendor. Four requirements:
 
 - **No dependence on any party this project could influence**
 - A public, verifiable record
 - Durability measured in decades
 - No ongoing cost and no account relationship
 
-OpenTimestamps on Bitcoin meets them. **So would any equally independent and durable public timestamp service**, and nothing in the design prevents adding one.
+Both registered witnesses meet all four. **Anything else that does is welcome**, and adding one means implementing the `Witness` interface in `src/witnesses.ts` — an `available`, a `submit`, and a `check`. Nothing else in the anchoring layer knows what a witness is made of.
+
+**A new witness must fail differently from the existing ones.** Two witnesses that go down together are one witness with extra steps, so a third proof-of-work chain adds far less than something with an unrelated operator and an unrelated technology.
 
 Nothing about anchoring is purchasable, and a timestamp confers no status on a record. **A timestamped false claim is a precisely dated false claim** ([SUSTAINABILITY.md](SUSTAINABILITY.md)).
 
-## 7. When it fails
+## 8. When it fails
 
 - Calendar servers unavailable → anchoring retries
 - A release may ship marked `ANCHOR_PENDING`, with the proof attached when it completes

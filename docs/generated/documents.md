@@ -74,7 +74,7 @@ Keeping the record verifiable by parties who do not trust us.
 
 - [Running this registry](runbook.md)
 - [Security](security.md)
-- [Proving when something was written](bitcoin-anchoring.md)
+- [Proving when something was written](anchoring.md)
 - [When the trust anchors themselves fail](incident-response.md)
 - [Where this is published](hosting-and-mirrors.md)
 - [Keeping records in step, without automating away the review](sync-policy.md)
