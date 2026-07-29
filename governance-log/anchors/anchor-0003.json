@@ -1,0 +1,36 @@
+{
+  "anchor_id": "anchor-0003",
+  "created_at": "2026-07-29T22:08:30.971Z",
+  "label": "v0.1.0",
+  "targets": [
+    {
+      "path": "governance-log/events.jsonl",
+      "sha256": "13a298e4fffbb414898ca215c6836b39ccf3629b0234cce986636e44d1cceb88",
+      "bytes": 6717
+    },
+    {
+      "path": "registry/ (tree digest)",
+      "sha256": "ee2d64068fd7b20545c3eae9e7c593222faab058da471f85956372cdf18d3d1d",
+      "bytes": 1586
+    },
+    {
+      "path": "roadmap/status.yaml",
+      "sha256": "30d02056baef61fcc00d32adbb79cce602702051326f0f0692fccccb871e7acf",
+      "bytes": 2084
+    },
+    {
+      "path": "SHA256SUMS.hash",
+      "sha256": "1442908e29c32b34319b98da04406b128996dfce0acd6dda33ca381dd82a96fa",
+      "bytes": 77
+    }
+  ],
+  "proves": "Each listed byte sequence existed no later than the Bitcoin block time of the attached proof.",
+  "does_not_prove": [
+    "that the content is true",
+    "that the content was authorized",
+    "that no other version existed earlier or concurrently",
+    "that events omitted from the ledger never happened",
+    "who created the content",
+    "that the record is complete"
+  ]
+}

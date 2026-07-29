@@ -12,5 +12,12 @@
     "manifest_sha256": "84ee2f7c44c114ac355a8b0b165dec37798b26f27f73c1962fdae671327947ca",
     "created_at": "2026-07-27T10:46:00-06:00",
     "status": "ANCHOR_PENDING"
+  },
+  {
+    "anchor_id": "anchor-0003",
+    "manifest_file": "governance-log/anchors/anchor-0003.json",
+    "manifest_sha256": "9035b5547cd1dd9f31ff62010deb0d775d9adb9bca0f74c86cfa711eab92b71b",
+    "created_at": "2026-07-29T22:08:30.971Z",
+    "status": "ANCHOR_PENDING"
   }
 ]
