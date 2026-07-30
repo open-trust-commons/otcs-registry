@@ -8,11 +8,11 @@
     "proof_file": "governance-log/anchors/anchor-0001.json.ots",
     "witnesses": {
       "opentimestamps": {
-        "state": "SUBMITTED",
+        "state": "CONFIRMED",
         "proofs": [
           "governance-log/anchors/anchor-0001.json.ots"
         ],
-        "note": "pending block confirmation, or no network"
+        "note": "bitcoin blocks 960160, 960161, 960164 — verify independently with a node"
       },
       "rekor": {
         "state": "CONFIRMED",
@@ -34,11 +34,11 @@
     "proof_file": "governance-log/anchors/anchor-0002.json.ots",
     "witnesses": {
       "opentimestamps": {
-        "state": "SUBMITTED",
+        "state": "CONFIRMED",
         "proofs": [
           "governance-log/anchors/anchor-0002.json.ots"
         ],
-        "note": "pending block confirmation, or no network"
+        "note": "bitcoin blocks 960160, 960161, 960164 — verify independently with a node"
       },
       "rekor": {
         "state": "CONFIRMED",
@@ -60,11 +60,11 @@
     "proof_file": "governance-log/anchors/anchor-0003.json.ots",
     "witnesses": {
       "opentimestamps": {
-        "state": "SUBMITTED",
+        "state": "CONFIRMED",
         "proofs": [
           "governance-log/anchors/anchor-0003.json.ots"
         ],
-        "note": "pending block confirmation, or no network"
+        "note": "bitcoin blocks 960160, 960161, 960164 — verify independently with a node"
       },
       "rekor": {
         "state": "CONFIRMED",

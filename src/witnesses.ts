@@ -59,17 +59,41 @@ export const opentimestamps: Witness = {
   check(absPath) {
     const proof = `${absPath}.ots`;
     if (!existsSync(proof)) return { state: "UNKNOWN", note: "proof file missing" };
+
+    // `ots info` reads the proof itself. It needs no node and no network, and
+    // it names the block any attestation points at.
+    //
+    // `ots verify` is NOT used to decide this. It writes to stderr rather than
+    // stdout — so a stdout-only capture silently never matched, and CONFIRMED
+    // was unreachable for months of wall-clock — and it requires a local
+    // Bitcoin node to check the block header, which no CI runner has. Making
+    // confirmation depend on running a full node would mean this project could
+    // never report its own anchors as confirmed.
+    let info = "";
     try {
-      const out = execFileSync("ots", ["verify", proof], { stdio: "pipe" }).toString();
-      // Only an explicit attestation counts. Anything else is still pending —
-      // a calendar holding a hash is not a block committing it.
-      if (/Success|attests/i.test(out)) {
-        return { state: "CONFIRMED", note: out.trim().split("\n").pop() };
-      }
-      return { state: "SUBMITTED", note: "not yet committed to a block" };
-    } catch {
-      return { state: "SUBMITTED", note: "pending block confirmation, or no network" };
+      info = execFileSync("ots", ["info", proof], { stdio: ["pipe", "pipe", "pipe"] }).toString();
+    } catch (e) {
+      info = ((e as { stdout?: Buffer }).stdout ?? Buffer.from("")).toString();
     }
+
+    const blocks = [...info.matchAll(/BitcoinBlockHeaderAttestation\((\d+)\)/g)].map((m) => m[1]);
+    if (blocks.length) {
+      // The proof is complete: it commits to named blocks, and anyone can check
+      // those block headers themselves. That independence is the whole point,
+      // so it does not become weaker because we lack a node to check it here.
+      // Sorted, not insertion-ordered: this string is written into the index,
+      // which is committed. An unsorted list would churn the file between runs
+      // for no reason, and determinism is a requirement here, not a preference.
+      const seen = [...new Set(blocks)].sort((a, b) => Number(a) - Number(b));
+      return {
+        state: "CONFIRMED",
+        note: `bitcoin ${seen.length > 1 ? "blocks" : "block"} ${seen.join(", ")} — verify independently with a node`,
+      };
+    }
+    if (/PendingAttestation/.test(info)) {
+      return { state: "SUBMITTED", note: "calendars hold it; no block commits it yet — run ots upgrade" };
+    }
+    return { state: "UNKNOWN", note: "proof contains neither a pending nor a block attestation" };
   },
 };
 
