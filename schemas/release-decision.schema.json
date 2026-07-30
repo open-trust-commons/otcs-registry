@@ -1,0 +1,284 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://opentrustcommons.org/schemas/release-decision.schema.json",
+  "title": "Release decision record",
+  "description": "RELEASE-GOVERNANCE.md \u00a76: every release publishes its decision, the criteria it was evaluated against with their evidence, the panel, any narrowing, and any waiver. A release whose decision cannot be reconstructed from its record did not follow the process.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "release",
+    "decision",
+    "recorded",
+    "class",
+    "grounds",
+    "criteria",
+    "panel",
+    "waivers"
+  ],
+  "properties": {
+    "release": {
+      "type": "string",
+      "pattern": "^v[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "decision": {
+      "enum": [
+        "ALLOW",
+        "SHAPE",
+        "DEAUTOMATE",
+        "VETO"
+      ],
+      "description": "RELEASE-GOVERNANCE.md \u00a71. SHAPE proceeds with narrowing; DEAUTOMATE stops automation for human adjudication; VETO does not proceed."
+    },
+    "recorded": {
+      "type": "string",
+      "format": "date"
+    },
+    "class": {
+      "enum": [
+        "patch",
+        "minor",
+        "major"
+      ]
+    },
+    "grounds": {
+      "type": "string",
+      "minLength": 40
+    },
+    "why_not_allow": {
+      "type": "string"
+    },
+    "why_not_veto": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "determination",
+        "conditions_checked"
+      ],
+      "properties": {
+        "determination": {
+          "type": "string"
+        },
+        "conditions_checked": {
+          "type": "array",
+          "minItems": 1,
+          "description": "The veto conditions in \u00a71, each with a result. Listing them is what shows the check was run rather than assumed.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "condition",
+              "result",
+              "evidence"
+            ],
+            "properties": {
+              "condition": {
+                "type": "string"
+              },
+              "result": {
+                "enum": [
+                  "clear",
+                  "not applicable",
+                  "fails"
+                ]
+              },
+              "evidence": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "criteria": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Every criterion evaluated, met or not. An unmet criterion must still carry evidence \u2014 of what is missing.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "state",
+          "evidence"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9_]+$"
+          },
+          "state": {
+            "enum": [
+              "met",
+              "unmet",
+              "in_progress",
+              "regressed",
+              "waived"
+            ]
+          },
+          "evidence": {
+            "type": "string",
+            "minLength": 1,
+            "description": "VERSION-EXIT-CRITERIA.md \u00a71: a criterion that cannot be evidenced is unmet by definition. There is no state meaning \"we believe this is fine\"."
+          }
+        }
+      }
+    },
+    "narrowing_applied": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Required when the decision is SHAPE \u2014 narrowing is what SHAPE means."
+    },
+    "panel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "members",
+        "human_determination"
+      ],
+      "properties": {
+        "members": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "automation_recommendation": {
+          "enum": [
+            "ALLOW",
+            "SHAPE",
+            "DEAUTOMATE",
+            "VETO"
+          ],
+          "description": "An enum, not prose. Why automation said so belongs in limitations_disclosed."
+        },
+        "human_determination": {
+          "enum": [
+            "ALLOW",
+            "SHAPE",
+            "DEAUTOMATE",
+            "VETO"
+          ]
+        },
+        "limitations_disclosed": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "waivers": {
+      "type": "array",
+      "description": "A MUST criterion may be waived only by constitutional proposal, with grounds and expiry published here (\u00a75).",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "criterion",
+          "grounds",
+          "expires",
+          "proposal"
+        ],
+        "properties": {
+          "criterion": {
+            "type": "string"
+          },
+          "grounds": {
+            "type": "string"
+          },
+          "expires": {
+            "type": "string",
+            "format": "date"
+          },
+          "proposal": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "trigger": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "decision": {
+            "const": "SHAPE"
+          }
+        },
+        "required": [
+          "decision"
+        ]
+      },
+      "then": {
+        "required": [
+          "narrowing_applied"
+        ],
+        "properties": {
+          "narrowing_applied": {
+            "type": "array",
+            "minItems": 1
+          }
+        },
+        "description": "SHAPE without stated narrowing is ALLOW wearing a cautious label."
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "panel": {
+            "properties": {
+              "members": {
+                "type": "array",
+                "maxItems": 1
+              }
+            },
+            "required": [
+              "members"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "panel"
+        ]
+      },
+      "then": {
+        "properties": {
+          "panel": {
+            "required": [
+              "limitations_disclosed"
+            ],
+            "properties": {
+              "limitations_disclosed": {
+                "type": "array",
+                "minItems": 1
+              }
+            },
+            "type": "object"
+          }
+        },
+        "description": "A one-person panel must say so in writing. Silence about it would be the authority inflation this project refuses."
+      }
+    }
+  ]
+}

@@ -147,6 +147,16 @@ if (existsSync(profDir)) {
   }
 }
 
+// Release decision records. RELEASE-GOVERNANCE.md §6 says a release whose
+// decision cannot be reconstructed from its record did not follow the process —
+// so the record is checked like everything else rather than trusted as prose.
+const relDir = join(ROOT, "docs", "releases");
+if (existsSync(relDir)) {
+  for (const f of readdirSync(relDir).filter((f) => f.endsWith("-decision.json"))) {
+    check("release-decision", JSON.parse(readFileSync(join(relDir, f), "utf8")) as Doc, true, `docs/releases/${f}`);
+  }
+}
+
 const ledgerFile = join(ROOT, "governance-log", "events.jsonl");
 if (existsSync(ledgerFile)) {
   readFileSync(ledgerFile, "utf8").trim().split("\n").filter(Boolean).forEach((line, i) =>

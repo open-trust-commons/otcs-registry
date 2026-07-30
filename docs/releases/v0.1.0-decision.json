@@ -1,0 +1,148 @@
+{
+  "release": "v0.1.0",
+  "decision": "SHAPE",
+  "recorded": "2026-07-29",
+  "class": "minor",
+  "grounds": "Every required criterion for a minor release passes and no veto condition is met, so the release proceeds. It proceeds as SHAPE rather than ALLOW because material limitations remain that a reader must be told about rather than left to discover: no independent archival identifier, no third-party evaluation of any claim, no external security review, and a coordinate reorganisation shipping as explicitly unratified. RELEASE-GOVERNANCE.md \u00a71 reserves SHAPE for exactly this \u2014 criteria pass, important non-blocking limitations remain, proceed with explicit caveats.",
+  "why_not_allow": "ALLOW asserts that nothing needs qualifying. Four things do. Calling this ALLOW would make the release record less informative than the release notes it accompanies, which would invert the point of having both.",
+  "why_not_veto": {
+    "determination": "no veto condition met",
+    "conditions_checked": [
+      {
+        "condition": "unresolved critical vulnerability",
+        "result": "clear",
+        "evidence": "5 advisories cleared before release; 0 open on the default branch"
+      },
+      {
+        "condition": "invalid process",
+        "result": "clear",
+        "evidence": "proposals/OTCS-0000/decision.json \u2014 process validity VALID, with founder-only participation and a waived clock disclosed rather than laundered"
+      },
+      {
+        "condition": "copyright or rights problem",
+        "result": "clear",
+        "evidence": "LICENSE (Apache-2.0), LICENSE-SPECS (CC BY 4.0), NOTICE; every contribution signed off under DCO.md"
+      },
+      {
+        "condition": "false evidence claim",
+        "result": "clear",
+        "evidence": "0 claims at INDEPENDENTLY_TESTED. Nothing asserts third-party testing, so nothing overstates it"
+      },
+      {
+        "condition": "an affected party not notified",
+        "result": "not applicable",
+        "evidence": "all 3 registered records are the maintainer's own. No third party is described by this release"
+      },
+      {
+        "condition": "broken migration",
+        "result": "clear",
+        "evidence": "no preceding public version exists to migrate from"
+      },
+      {
+        "condition": "compromised release key",
+        "result": "clear",
+        "evidence": "key generated 2026-07-29, passphrase-protected, never present in CI"
+      },
+      {
+        "condition": "environment insufficient for the transition",
+        "result": "clear",
+        "evidence": "v0.1.0 claims no ecosystem threshold. RELEASE-GOVERNANCE.md \u00a74 applies ecosystem gates to major releases only"
+      }
+    ]
+  },
+  "criteria": [
+    {
+      "id": "local_checks_pass",
+      "state": "met",
+      "evidence": "20 tests passed; 75 validations, 0 failed; ledger 22 events, chain INTACT; coherence clean, 0 orphans"
+    },
+    {
+      "id": "ci_matches_local",
+      "state": "met",
+      "evidence": ".github/workflows/ci.yml runs the same five commands CONTRIBUTING.md \u00a71 documents; a coherence job was added when that claim was found to be false"
+    },
+    {
+      "id": "deterministic_build",
+      "state": "met",
+      "evidence": "site build byte-identical across consecutive runs; verified in CI by building twice and diffing"
+    },
+    {
+      "id": "signed_tag",
+      "state": "met",
+      "evidence": "git verify-tag v0.1.0 \u2014 Good signature, SHA256:xYmRe0iaVZGTw77FEhx3Ez2/E6K28GL8EO9YuN8/FMM, published in MAINTAINERS.md \u00a71"
+    },
+    {
+      "id": "independently_verifiable_signature",
+      "state": "met",
+      "evidence": ".allowed_signers ships in the repository, so a reader verifies the tag without trusting the forge"
+    },
+    {
+      "id": "artifact_set_hashed",
+      "state": "met",
+      "evidence": "SHA256SUMS plus SHA256SUMS.hash, so the artifact SET is tamper-evident and not only its members"
+    },
+    {
+      "id": "externally_witnessed",
+      "state": "met",
+      "evidence": "anchor-0003 CONFIRMED by two witnesses with unrelated failure domains: bitcoin blocks 960160, 960161, 960164; and the sigstore transparency log"
+    },
+    {
+      "id": "non_claims_section_present",
+      "state": "met",
+      "evidence": "docs/releases/v0.1.0.md \u2014 the longest section in the notes, as it should be for a first release"
+    },
+    {
+      "id": "governance_decision_referenced",
+      "state": "met",
+      "evidence": "OTCS-0000, RATIFIED, with its limitations named in the release notes rather than only in its own record"
+    },
+    {
+      "id": "archival_identifier",
+      "state": "unmet",
+      "evidence": "no deposit made. This is the single largest gap in the release"
+    },
+    {
+      "id": "independent_evaluation",
+      "state": "unmet",
+      "evidence": "0 claims at INDEPENDENTLY_TESTED; no practitioner has reviewed profiles/financial-crime"
+    },
+    {
+      "id": "external_security_review",
+      "state": "unmet",
+      "evidence": "none conducted. SECURITY.md \u00a73 states what version 0.1 does not defend against"
+    },
+    {
+      "id": "operable_by_a_non_founder",
+      "state": "unmet",
+      "evidence": "RUNBOOK.md exists and nobody except its author has followed it"
+    }
+  ],
+  "narrowing_applied": [
+    "Status ships as EXPERIMENTAL, not stable. The contract may change without a major bump before v1.0.0 (VERSIONING.md \u00a73)",
+    "No DOI. The release is citable by signed tag and content hash, not by an archival identifier",
+    "The observed-record capability exists in the schema and is deliberately unexercised, because publishing an analysis of a project that cannot answer back is the failure mode the right of reply exists to prevent",
+    "CONFORMANCE_TESTED is unreachable by construction \u2014 no conformance suites exist, so no project can truthfully claim that rung",
+    "LAYERS.md ships marked PROPOSED, NOT RATIFIED, NOT IMPLEMENTED. The schema still carries the older single-vector shape",
+    "Calibration cases and domain profiles ship as prose analyses, never as registry records"
+  ],
+  "panel": {
+    "members": [
+      "chris-perkins-nmcitra"
+    ],
+    "automation_recommendation": "ALLOW",
+    "human_determination": "SHAPE",
+    "limitations_disclosed": [
+      "Automation recommended ALLOW \u2014 the release.yml gate job passed every required check. The human determination is SHAPE, because passing checks is not the same as having nothing to disclose.",
+      "The panel is one person.",
+      "That person is the author of every document, schema and tool in the release, and the maintainer of all three registered records.",
+      "RELEASE-GOVERNANCE.md \u00a72 requires that automation may recommend but not publish. That separation held procedurally \u2014 the workflow produced a draft and a human decided \u2014 but it is weak in substance when the recommender and the decider share an author.",
+      "This is the same limitation OTCS-0000 disclosed about its own ratification. It is recorded rather than resolved, because it cannot be resolved from inside a single-maintainer project."
+    ]
+  },
+  "waivers": [],
+  "review": {
+    "trigger": "the first external qualifying registration",
+    "reason": "Every unmet criterion above is unmet for the same reason: nobody outside the project has used it yet. A second participant makes four of them testable at once.",
+    "date": "2027-01-29"
+  }
+}
