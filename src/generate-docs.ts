@@ -390,7 +390,12 @@ ${ungrouped.length ? `## Also published\n\n${ungrouped.map((f) => `- [${(readFil
 ${Object.entries(NOT_PUBLISHED).map(([f, why]) => `- \`${f}\` — ${why}`).join("\n")}
 `);
 
-  return { written: written.sort(), digest: sha(parts.sort().join("\n \n")) };
+  // Separator is \x1f (unit separator), not \0. Both are impossible in the
+  // joined content, so both stop two different file sets hashing alike — but a
+  // NUL byte makes git and grep classify this file as BINARY. Diffs render as
+  // "Binary files differ" and grep silently declines to search it. A source
+  // file nobody can review is worse than a slightly unconventional separator.
+  return { written: written.sort(), digest: sha(parts.sort().join("\n\x1f\n")) };
 }
 
 // ---- CLI -------------------------------------------------------------------
