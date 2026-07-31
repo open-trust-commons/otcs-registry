@@ -1,6 +1,6 @@
 // Compute Commons stage and gate progress from the LIVE registry.
 // The dashboard reports a measurement, not a claim.
-import { readFileSync, writeFileSync, existsSync } from "node:fs";
+import { readFileSync, writeFileSync, existsSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { parse, stringify } from "yaml";
 import { loadRegistry, ROOT, type Doc } from "./registry-load.js";
@@ -73,8 +73,33 @@ export function computeStatus() {
     };
   }
 
+  /**
+   * Non-count criteria, per release, tallied by block.
+   *
+   * VERSION-EXIT-CRITERIA §6: "the counts make the trajectory visible; the
+   * non-count criteria make it honest." Reporting only the counts made this
+   * tool the dishonest half of its own rule — a reader saw 1/10 projects and
+   * nothing about whether the constitutional claim had ever been tested.
+   */
+  const nonCount: Record<string, Record<string, { met: number; total: number; unmet: string[] }>> = {};
+  for (const f of readdirSync(join(ROOT, "roadmap/releases")).filter((f) => f.endsWith(".yaml"))) {
+    const r = parse(readFileSync(join(ROOT, "roadmap/releases", f), "utf8")) as Doc;
+    const per: Record<string, { met: number; total: number; unmet: string[] }> = {};
+    for (const [block, items] of Object.entries((r.criteria ?? {}) as Record<string, Doc>)) {
+      if (block === "ecosystem") continue; // counted above, not here
+      const entries = Object.entries(items ?? {});
+      per[block] = {
+        met: entries.filter(([, v]) => (v as Doc)?.state === "met").length,
+        total: entries.length,
+        unmet: entries.filter(([, v]) => (v as Doc)?.state !== "met").map(([k]) => k),
+      };
+    }
+    nonCount[r.version as string] = per;
+  }
+
   return {
     measured_at: TODAY,
+    non_count_criteria: nonCount,
     note: "Computed from the live registry against QUALIFYING-PROJECTS.md. A measurement, not a claim.",
     commons_stage: { id: stage.id, name: stage.name },
     qualifying_active_projects: qaps.length,
@@ -118,5 +143,17 @@ if (process.argv[1]?.endsWith("roadmap-status.ts")) {
   for (const n of s.non_qualifying) console.log(`  ${n.id}: ${n.reasons.join(" · ")}`);
   console.log(`\nroad to v1.0.0: ${(s.gates as any)["1.0.0"]?.qualifying_active_projects} projects · ` +
               `${(s.gates as any)["1.0.0"]?.independent_stewards} stewards`);
+  const nc = (s as any).non_count_criteria?.["1.0.0"] ?? {};
+  const tot = Object.values(nc).reduce((a: any, b: any) => ({ met: a.met + b.met, total: a.total + b.total }), { met: 0, total: 0 }) as { met: number; total: number };
+  console.log(`non-count criteria for v1.0.0: ${tot.met}/${tot.total} met`);
+  for (const [block, v] of Object.entries(nc) as [string, any][]) {
+    console.log(`  ${block.padEnd(20)} ${v.met}/${v.total}`);
+  }
+  const sov = nc.sovereignty;
+  if (sov && sov.met === 0) {
+    console.log(`\n  none of the ${sov.total} sovereignty criteria has been tested.`);
+    console.log(`  they are what decide whether "no system must surrender its identity`);
+    console.log(`  in order to coordinate" is true or is only written down.`);
+  }
   console.log(`→ roadmap/status.yaml`);
 }

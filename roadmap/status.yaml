@@ -1,4 +1,130 @@
-measured_at: 2026-07-27
+measured_at: 2026-07-31
+non_count_criteria:
+  1.0.0:
+    technical:
+      met: 0
+      total: 4
+      unmet:
+        - stable_schemas
+        - deterministic_dual_host_build
+        - signed_release_and_doi
+        - migration_tooling_from_0_9
+    evidence_and_interop:
+      met: 0
+      total: 5
+      unmet:
+        - mutually_confirmed_relationships
+        - completed_provenance_lifecycles
+        - interfaces_with_two_independent_implementations
+        - independently_reproduced_results
+        - published_failures_or_negative_results
+    governance:
+      met: 1
+      total: 6
+      unmet:
+        - maintainers
+        - non_founder_maintainers
+        - completed_trajectory_proposals
+        - correction_withdrawal_or_transfer_exercised
+        - runbook_followed_by_non_founder
+    sovereignty:
+      met: 0
+      total: 9
+      unmet:
+        - self_hosted_manifest_resolved
+        - identity_survives_deindexing
+        - mapping_disputed_by_owner
+        - disputed_record_remains_complete_and_prominent
+        - second_independent_implementation_agrees
+        - composition_without_absorption
+        - published_non_composition
+        - exit_exercised_without_collateral_loss
+        - foreign_architecture_represented_natively
+    security:
+      met: 1
+      total: 4
+      unmet:
+        - independent_security_review
+        - key_rotation_tested
+        - disaster_recovery_restoration_tested
+  2.0.0:
+    federation:
+      met: 0
+      total: 5
+      unmet:
+        - independent_registry_operators
+        - stable_ids_survive_import_export
+        - conflicting_observations_coexist
+        - inter_registry_conflict_resolved
+        - local_annotations_preserved
+    interoperability:
+      met: 0
+      total: 4
+      unmet:
+        - stable_interfaces
+        - independent_implementations_per_interface
+        - mutually_confirmed_relationships
+        - published_analyses_with_owner_responses
+    governance:
+      met: 0
+      total: 5
+      unmet:
+        - maintainers
+        - non_founder_majority
+        - registry_operators_represented
+        - recusal_recall_succession_fork_exercised
+        - completed_trajectory_proposals
+    security:
+      met: 1
+      total: 6
+      unmet:
+        - external_security_audit
+        - key_rotation_exercised
+        - registry_restoration_exercised
+        - mirror_divergence_detected_and_repaired
+        - federation_abuse_and_malicious_import_tests
+  3.0.0:
+    runtime_interoperability:
+      met: 0
+      total: 4
+      unmet:
+        - stable_runtime_interfaces
+        - implementations_per_runtime_interface
+        - end_to_end_compositions
+        - bounded_operational_domains
+    evidence:
+      met: 1
+      total: 4
+      unmet:
+        - independent_evaluations
+        - published_failures_or_incidents
+        - each_failure_has_remediation_evidence
+    governance:
+      met: 0
+      total: 4
+      unmet:
+        - non_founder_governing_majority
+        - domain_councils_for_runtime_profiles
+        - independent_conflict_and_appeal_process
+        - stable_fiscal_or_institutional_host
+    security:
+      met: 0
+      total: 5
+      unmet:
+        - production_runtime_threat_model
+        - external_penetration_and_architecture_review
+        - incident_response_exercises
+        - privacy_impact_assessment
+        - conformance_revocation_and_recovery
+  4.0.0:
+    durability:
+      met: 0
+      total: 4
+      unmet:
+        - independent_legal_or_fiscal_stewardship
+        - multi_year_transparent_sustainability_plan
+        - documented_succession_beyond_founder
+        - record_survives_organizational_exit
 note: Computed from the live registry against QUALIFYING-PROJECTS.md. A
   measurement, not a claim.
 commons_stage:

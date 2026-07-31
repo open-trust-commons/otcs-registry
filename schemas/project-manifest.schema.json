@@ -101,7 +101,7 @@
             "example",
             "withdrawn"
           ],
-          "description": "registered = project-controlled \u00b7 observed = created from public evidence, not project-controlled, never presented as participation \u00b7 example = fictional demonstration \u00b7 withdrawn = previously registered, no longer actively participating (history preserved)"
+          "description": "registered = project-controlled · observed = created from public evidence, not project-controlled, never presented as participation · example = fictional demonstration · withdrawn = previously registered, no longer actively participating (history preserved)"
         },
         "urn": {
           "type": "string",
@@ -123,7 +123,7 @@
         },
         "localized_name": {
           "type": "object",
-          "description": "BCP-47 tag \u2192 localized name (i18n-permitting; canonical name stays in `name`)",
+          "description": "BCP-47 tag → localized name (i18n-permitting; canonical name stays in `name`)",
           "propertyNames": {
             "type": "string"
           },
@@ -516,7 +516,7 @@
     "mapping": {
       "type": "object",
       "additionalProperties": false,
-      "description": "Status of OTCS's KTP-coordinate mapping of this project. Registration is NOT endorsement of KTP or agreement with any coordinate assignment (CHARTER.md \u00a712).",
+      "description": "Status of OTCS's KTP-coordinate mapping of this project. Registration is NOT endorsement of KTP or agreement with any coordinate assignment (CHARTER.md §11).",
       "properties": {
         "status": {
           "enum": [
@@ -534,7 +534,7 @@
         },
         "project_statement": {
           "type": "string",
-          "description": "the project's own words on the disagreement \u2014 published verbatim"
+          "description": "the project's own words on the disagreement — published verbatim"
         }
       }
     },
@@ -703,7 +703,7 @@
         "preserve_historical_record": {
           "type": "boolean",
           "const": true,
-          "description": "always true \u2014 withdrawal removes participation, not history"
+          "description": "always true — withdrawal removes participation, not history"
         },
         "withdrawn_at": {
           "type": "string",

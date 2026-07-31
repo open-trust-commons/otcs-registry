@@ -30,6 +30,51 @@ criteria:
     runbook_followed_by_non_founder: { required: true, state: unmet }
     process_validity_separated_from_vote_total: { required: true, state: met,
       evidence: ["proposals/OTCS-0000/decision.json"] }
+  # ── Sovereignty ──────────────────────────────────────────────────────
+  #
+  # The constitutional claim is one sentence: NO SYSTEM MUST SURRENDER ITS
+  # IDENTITY IN ORDER TO COORDINATE.
+  #
+  # Everything above this block counts things. These test whether that
+  # sentence is true. A registry can reach every count and still quietly
+  # become the parent architecture of everything it lists, which is the
+  # failure this project would least be able to see from the inside.
+  #
+  # Each is binary and each is currently false.
+  sovereignty:
+    # Identity does not depend on being indexed here.
+    self_hosted_manifest_resolved: { required: true, state: unmet }
+    identity_survives_deindexing: { required: true, state: unmet }
+
+    # A project may reject how it was described and lose nothing.
+    mapping_disputed_by_owner: { required: true, state: unmet }
+    disputed_record_remains_complete_and_prominent: { required: true, state: unmet }
+
+    # The site is replaceable. Two implementations agree on identities,
+    # hashes, versions, relationship states and evidence states.
+    second_independent_implementation_agrees: { required: true, state: unmet }
+
+    # Two systems with different architectures compose, and the composition
+    # is a third artifact neither parent owns alone.
+    composition_without_absorption: { required: true, state: unmet }
+
+    # An attempted composition that could NOT be completed is published,
+    # with the reason preserved. A system that always finds a crosswalk is
+    # not measuring anything.
+    published_non_composition: { required: true, state: unmet }
+
+    # A project leaves. History and provenance survive; active claims stop;
+    # no other project loses identity.
+    exit_exercised_without_collateral_loss: { required: true, state: unmet }
+
+    # The hardest one. A project whose architecture centres on something
+    # other than these coordinates is represented IN ITS OWN WORDS, with a
+    # separate OTCS analysis alongside, and its steward confirms, qualifies
+    # or disputes that analysis. Passing means the vocabulary described a
+    # foreign architecture without converting it into KTP or treating it as
+    # a subordinate implementation.
+    foreign_architecture_represented_natively: { required: true, state: unmet }
+
   security:
     independent_security_review: { required: true, state: unmet }
     key_rotation_tested: { required: true, state: unmet }
