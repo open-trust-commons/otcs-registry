@@ -1,0 +1,97 @@
+otcs_version: "0.1"
+project:
+  id: lifecycle-fixture
+  name: Lifecycle Process Fixture (not a real project)
+  status: research
+  first_public_date: "2026-08-01"
+  license: CC0-1.0
+  record_state: withdrawn
+  maintainers:
+    - name: Chris Perkins (nmcitra)
+      representative: true
+declaration:
+  problem: >
+    This record exists for exactly one purpose: to exercise the registration
+    lifecycle mechanism end to end (registered, ownership transfer, correction,
+    withdrawal) against real tooling, for the v1.0 governance and sovereignty
+    criteria that require the mechanism be demonstrated. It describes no real
+    system and addresses no real problem.
+  governed_object: [institutional_process]
+  primary_users: []
+  threat_or_failure_model: >
+    None. This is a process fixture, not a governed system.
+  decision_outputs: []
+  enforcement_points: []
+  evidence_outputs: []
+  known_limitations: >
+    This is not a real project and never was. It has no canonical public
+    artifact, no substantive claim about any real system, and must never be
+    counted as a qualifying active project under QUALIFYING-PROJECTS.md - it
+    is disqualified by construction (no canonical artifact, no evidence
+    record) so that it cannot accidentally inflate any count even if this
+    note is later lost.
+
+
+    CORRECTION (2026-08-01, record_version 3): `coordinates.functions.record`
+    and `declaration.governed_object: [institutional_process]` were set only
+    to satisfy schema minimums (functions requires minProperties 1;
+    governed_object requires minItems 1), not because this fixture actually
+    governs anything. That distinction - a value present to satisfy the
+    schema versus a value asserting something true - is exactly the kind of
+    gap EVIDENCE-MODEL.md §4b exists to name, and this fixture had fallen
+    into it. Corrected here as a new statement rather than a silent edit,
+    per this project's own rule that a correction is added, not quietly
+    fixed.
+  non_claims:
+    - "Not a real project, system, or piece of software"
+    - "Not intended to remain registered — created to demonstrate withdrawal"
+    - "Never eligible to count as a qualifying active project"
+coordinates:
+  functions:
+    record: 1
+evidence:
+  specification: 0
+  implementation: 0
+  independent_validation: 0
+ownership:
+  owners:
+    - name: Open Trust Commons (steward)
+      organization: open-trust-commons
+      public_contact: cperkins@nmcitra.org
+  verification:
+    status: repository_control_confirmed
+    verified_at: "2026-08-01"
+  ownership_history:
+    - owner: Chris Perkins (nmcitra) — individual
+      from: "2026-08-01"
+      to: "2026-08-01"
+      transfer_evidence: "governance-log/events.jsonl#ev-000030"
+    - owner: Open Trust Commons (steward) — organization
+      from: "2026-08-01"
+      to: null
+      transfer_evidence: "governance-log/events.jsonl#ev-000030"
+  maintainership_transfers:
+    - from: Chris Perkins (nmcitra), individual maintainer
+      to: Open Trust Commons, organizational steward
+      date: "2026-08-01"
+      reason: "Fixture demonstration of PROJECT-LIFECYCLE.md §1 - a real transfer exercised on a disclosed process fixture rather than simulated in prose."
+record:
+  record_version: "4"
+  participation_mode: github_native
+withdrawal:
+  active_participation: false
+  preserve_historical_record: true
+  withdrawn_at: "2026-08-01"
+  reason: >-
+    Fourth and final step of the deliberate lifecycle demonstration this
+    record exists for: registered, transferred, corrected, withdrawn. Full
+    history — including the transfer and the correction above — remains
+    readable in this file and in the governance log. Withdrawal ends
+    participation; it does not retract anything (PROJECT-LIFECYCLE.md §2).
+consent:
+  publication: true
+  metadata_use: true
+  history_preservation: true
+  mapping_and_analysis: true
+  public_correction_process: true
+  consented_at: "2026-08-01"

@@ -29,7 +29,15 @@ criteria:
     migration_tooling_verified: { required: true, state: unmet }
   evidence_and_interop:
     mutually_confirmed_relationships: { minimum: 10, state: unmet }
-    completed_provenance_lifecycles:  { minimum: 1,  state: unmet }
+    # Demonstrated on registry/projects/lifecycle-fixture, a disclosed process
+    # fixture created for exactly this purpose and structurally disqualified
+    # from ever counting as a qualifying project (no canonical artifact, no
+    # evidence record) - not on a real stakeholder. Stated plainly rather
+    # than left to be inferred: a real-participant exercise is stronger
+    # evidence than this, and remains open.
+    completed_provenance_lifecycles:  { minimum: 1,  state: met,
+      evidence: ["registry/projects/lifecycle-fixture/otcs.yaml",
+                 "governance-log/events.jsonl#ev-000029..ev-000032"] }
     interfaces_with_two_independent_implementations: { minimum: 1, state: unmet }
     independently_reproduced_results: { minimum: 1, state: unmet }
     published_failures_or_negative_results: { minimum: 1, state: met,
@@ -38,7 +46,10 @@ criteria:
     maintainers: { minimum: 2, state: unmet }
     non_founder_maintainers: { minimum: 1, state: unmet }
     completed_trajectory_proposals: { minimum: 1, state: unmet }
-    correction_withdrawal_or_transfer_exercised: { required: true, state: unmet }
+    # Same caveat as completed_provenance_lifecycles above: exercised on the
+    # disclosed lifecycle-fixture record, not a real stakeholder.
+    correction_withdrawal_or_transfer_exercised: { required: true, state: met,
+      evidence: ["registry/projects/lifecycle-fixture/otcs.yaml"] }
     # ROADMAP's third v1.0 claim is "someone else can run it". Writing the
     # instructions and having them followed are two claims; only the second
     # one is evidence. Satisfied by a signed handover record, not by the

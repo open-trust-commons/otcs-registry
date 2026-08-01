@@ -10,21 +10,19 @@ non_count_criteria:
         - signed_release_and_doi
         - migration_tooling_verified
     evidence_and_interop:
-      met: 1
+      met: 2
       total: 5
       unmet:
         - mutually_confirmed_relationships
-        - completed_provenance_lifecycles
         - interfaces_with_two_independent_implementations
         - independently_reproduced_results
     governance:
-      met: 1
+      met: 2
       total: 6
       unmet:
         - maintainers
         - non_founder_maintainers
         - completed_trajectory_proposals
-        - correction_withdrawal_or_transfer_exercised
         - runbook_followed_by_non_founder
     sovereignty:
       met: 1
@@ -133,7 +131,7 @@ independent_stewards: 1
 steward_list:
   - chris perkins (nmcitra)
 project_classes: []
-registry_records_total: 7
+registry_records_total: 8
 non_qualifying:
   - id: abt
     reasons:
@@ -169,6 +167,12 @@ non_qualifying:
   - id: ktp-demo
     reasons:
       - no canonical public artifact
+  - id: lifecycle-fixture
+    reasons:
+      - record_state=withdrawn
+      - no canonical public artifact
+      - no evidence record
+      - withdrawn
 gates:
   1.0.0:
     name: Stable Commons Contract

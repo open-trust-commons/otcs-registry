@@ -52,6 +52,10 @@
       {
         "file": "registry/projects/ktp-demo/relationships.yaml",
         "sha256": "ceacebe55a1134b18ee911418eb0e21cb98fe0d94d29794e99d53bda37ab5e00"
+      },
+      {
+        "file": "registry/projects/lifecycle-fixture/otcs.yaml",
+        "sha256": "45f1a042f1551efc326bccf8388aa8ef26c44ed72001f780af6b7f78fc3ebb0e"
       }
     ],
     "generated_at": "2026-07-25T00:00:00Z",
@@ -131,6 +135,12 @@
         "decision": "MANIFEST_VALIDATED",
         "receipt": "MANIFEST_VALIDATED"
       },
+      "consumes": []
+    },
+    {
+      "id": "lifecycle-fixture",
+      "record_state": "withdrawn",
+      "provides": {},
       "consumes": []
     }
   ]

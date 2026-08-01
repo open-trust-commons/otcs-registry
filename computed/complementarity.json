@@ -57,6 +57,10 @@
       {
         "file": "registry/projects/ktp-demo/relationships.yaml",
         "sha256": "ceacebe55a1134b18ee911418eb0e21cb98fe0d94d29794e99d53bda37ab5e00"
+      },
+      {
+        "file": "registry/projects/lifecycle-fixture/otcs.yaml",
+        "sha256": "45f1a042f1551efc326bccf8388aa8ef26c44ed72001f780af6b7f78fc3ebb0e"
       }
     ],
     "generated_at": "2026-07-25T00:00:00Z",
@@ -380,6 +384,29 @@
     {
       "pair": [
         "abt",
+        "lifecycle-fixture"
+      ],
+      "record_states": [
+        "registered",
+        "withdrawn"
+      ],
+      "bands": [
+        "DIFFERENT_CONTROL_FUNCTIONS",
+        "NO_IMPLEMENTATION_EVIDENCE",
+        "LEGAL_COMPATIBILITY_UNKNOWN"
+      ],
+      "_experimental": {
+        "overlap": 0.25,
+        "gamma": 0.0125,
+        "D": 1,
+        "I": 0.25,
+        "L": 0.5,
+        "Q": 0.1
+      }
+    },
+    {
+      "pair": [
+        "abt",
         "ktp-demo"
       ],
       "record_states": [
@@ -556,6 +583,143 @@
         "I": 0.25,
         "L": 0.5,
         "Q": 0.0667
+      }
+    },
+    {
+      "pair": [
+        "ktp-demo",
+        "lifecycle-fixture"
+      ],
+      "record_states": [
+        "registered",
+        "withdrawn"
+      ],
+      "bands": [
+        "DIFFERENT_CONTROL_FUNCTIONS",
+        "NO_IMPLEMENTATION_EVIDENCE",
+        "LEGAL_COMPATIBILITY_UNKNOWN"
+      ],
+      "_experimental": {
+        "overlap": 0.1162,
+        "gamma": 0.0067,
+        "D": 0.5352,
+        "I": 0.25,
+        "L": 0.5,
+        "Q": 0.1
+      }
+    },
+    {
+      "pair": [
+        "ktp",
+        "lifecycle-fixture"
+      ],
+      "record_states": [
+        "registered",
+        "withdrawn"
+      ],
+      "bands": [
+        "DIFFERENT_CONTROL_FUNCTIONS",
+        "NO_IMPLEMENTATION_EVIDENCE",
+        "LEGAL_COMPATIBILITY_UNKNOWN"
+      ],
+      "_experimental": {
+        "overlap": 0.1055,
+        "gamma": 0.0048,
+        "D": 0.5779,
+        "I": 0.25,
+        "L": 0.5,
+        "Q": 0.0667
+      }
+    },
+    {
+      "pair": [
+        "ex-gatekeeper",
+        "lifecycle-fixture"
+      ],
+      "record_states": [
+        "example",
+        "withdrawn"
+      ],
+      "bands": [
+        "DIFFERENT_CONTROL_FUNCTIONS",
+        "NO_IMPLEMENTATION_EVIDENCE",
+        "LEGAL_COMPATIBILITY_UNKNOWN"
+      ],
+      "_experimental": {
+        "overlap": 0.1214,
+        "gamma": 0.0043,
+        "D": 0.5144,
+        "I": 0.25,
+        "L": 0.5,
+        "Q": 0.0667
+      }
+    },
+    {
+      "pair": [
+        "ex-watchtower",
+        "lifecycle-fixture"
+      ],
+      "record_states": [
+        "example",
+        "withdrawn"
+      ],
+      "bands": [
+        "NO_IMPLEMENTATION_EVIDENCE",
+        "LEGAL_COMPATIBILITY_UNKNOWN"
+      ],
+      "_experimental": {
+        "overlap": 0.3887,
+        "gamma": 0.0019,
+        "D": 0.4453,
+        "I": 0.25,
+        "L": 0.5,
+        "Q": 0.0333
+      }
+    },
+    {
+      "pair": [
+        "ex-ledgerline",
+        "lifecycle-fixture"
+      ],
+      "record_states": [
+        "example",
+        "withdrawn"
+      ],
+      "bands": [
+        "HIGH_FUNCTIONAL_OVERLAP",
+        "NO_IMPLEMENTATION_EVIDENCE",
+        "LEGAL_COMPATIBILITY_UNKNOWN"
+      ],
+      "_experimental": {
+        "overlap": 0.75,
+        "gamma": 0,
+        "D": 0,
+        "I": 0.25,
+        "L": 0.5,
+        "Q": 0.0333
+      }
+    },
+    {
+      "pair": [
+        "ex-mendwell",
+        "lifecycle-fixture"
+      ],
+      "record_states": [
+        "example",
+        "withdrawn"
+      ],
+      "bands": [
+        "DIFFERENT_CONTROL_FUNCTIONS",
+        "NO_IMPLEMENTATION_EVIDENCE",
+        "LEGAL_COMPATIBILITY_UNKNOWN"
+      ],
+      "_experimental": {
+        "overlap": 0,
+        "gamma": 0,
+        "D": 1,
+        "I": 0.25,
+        "L": 0.5,
+        "Q": 0
       }
     }
   ]

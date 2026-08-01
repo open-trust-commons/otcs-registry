@@ -25,3 +25,4 @@ no conformance suite exists. Saying so is the point of publishing the ladder at 
 | Example Watchtower (fictional) | `environment` MANIFEST_VALIDATED<br>`observer` MANIFEST_VALIDATED | — |
 | Kinetic Trust Protocol | — | — |
 | KTP Environmental Demo | `environment` MANIFEST_VALIDATED<br>`decision` MANIFEST_VALIDATED<br>`receipt` MANIFEST_VALIDATED | — |
+| Lifecycle Process Fixture (not a real project) | — | — |
