@@ -1,0 +1,13 @@
+proposal_id: OTCS-0005
+title: A sealed claim — provably dated, deliberately undisclosed, never inflated
+class: model_revision
+phase: DRAFT
+author: Chris Perkins (nmcitra)
+sponsor: Chris Perkins (nmcitra)
+created: "2026-07-31"
+clock_start: "2026-07-31"
+review_date: "2027-01-31"
+affected_projects: [ktp, ktp-demo, abt, ex-gatekeeper, ex-watchtower, ex-ledgerline, ex-mendwell]
+phase_history:
+  - { phase: SEED, date: "2026-07-31" }
+  - { phase: DRAFT, date: "2026-07-31" }
