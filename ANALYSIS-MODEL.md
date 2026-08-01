@@ -76,6 +76,20 @@ A project saying *"we accept your Actor and Authority mappings but do not consid
 | `threat` | Bypass, stale authority, replay, escalation, false provenance, cumulative harm, compromised observer, governance capture |
 | `governance_health` | Shared maintainers, commercial ties, circular validation, concentration of review authority |
 
+### The identity triad — a lens within `provenance` and `governance_health`
+
+When a project's claims rest on *who it is* — a constitutional identity, a chartered mandate, a long-lived agent — the analysis separates three things that the word "identity" flattens:
+
+| | Asks |
+|---|---|
+| **Declared identity** | Who does the system say it is, and what does it exist to serve? |
+| **Runtime bearer** | Which process, deployment or party is *currently* acting in that identity's name? |
+| **Continuity evidence** | What supports the claim that the current bearer still embodies the declared identity and authority? |
+
+The gap between the first two is where impersonation, drift, capture and succession disputes live, and continuity evidence is the only thing that closes it. The triad applies far beyond any one architecture: machine identities, organisations, credential rotation, delegated authority, forks and successor projects all decompose the same way.
+
+**This is analysis vocabulary, not schema.** No manifest field asks for it; an analyst uses it to structure a finding, and a project may reject the decomposition in its response like any other analytical claim.
+
 > **A neutral baseline is produced before any KTP mapping is applied.** The order is the point. Map first and every finding comes out KTP-shaped — the analysis plane becomes an opinion engine wearing a coordinate system.
 
 ## 5. Overlap is not complementarity

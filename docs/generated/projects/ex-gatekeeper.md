@@ -17,12 +17,19 @@
 | Owner verification | `unverified` |
 | First public | 2026-01-01 |
 
-## What it says it addresses
+## In its own words
 
 Fictional demonstration record: an enforcement gateway that executes, shapes, or contains actions per decisions it consumes from a decision system.
 
 
-## Coordinates
+
+**Known limitations, as stated by the project:** Fictional demonstration record. Implements nothing.
+
+## Coordinates — the registry's projection, not the project's identity
+
+The section above is the project's voice. What follows is where OTCS locates it in the
+shared vocabulary — a projection the owner may dispute without losing anything
+(the `mapping` block records exactly that).
 
 - **actor** — `service`, `ai_agent`
 - **authority** — `credential`, `capability`

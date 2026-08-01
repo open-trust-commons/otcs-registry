@@ -19,6 +19,36 @@ Three things are true and worth knowing up front:
 - **You do not have to be on GitHub, be open source, or contain any software.** A doctrine, a specification, a research programme, or a closed commercial product can all be listed.
 - **You do not have to adopt KTP or agree with it.** You can be listed while publicly disputing how we described you.
 
+## The questions worth answering before you write anything
+
+The record is a form, but the thinking is not. Five groups of questions, learned from walking real projects through this shape. **Your own words survive into the record — the mapping never replaces them.**
+
+**Who you are, natively**
+
+- What is the canonical project, and what is its central thesis *in your vocabulary*?
+- Which of your terms must remain unchanged — the ones a mapping may reference but never rename?
+- Which artifacts are current, which are predecessors, which are superseded?
+
+**Authority**
+
+- Who has standing to define what the project is trying to preserve?
+- How can that be amended — and what happens when authorities conflict?
+
+**Implementation**
+
+- Where is the decision made? Where is it constrained? Where is it actually **enforced** — and can the governed system bypass that point? ("Nowhere" is an honest and recordable answer; claiming `enforce` without a declared enforcement point is the one thing the validator will not accept)
+
+**Evidence**
+
+- What is published, implemented, tested, independently reproduced?
+- **What would falsify your central claim?** A record that can answer this reads very differently from one that cannot
+
+**Continuity**
+
+- How does the project evolve without losing identity? What establishes that a new implementation is still the same project?
+
+---
+
 ## The five steps
 
 | | Step | Who does it | Roughly |

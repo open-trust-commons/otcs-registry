@@ -17,12 +17,20 @@
 | Owner verification | `repository_control_confirmed` |
 | First public | 2026-07-24 |
 
-## What it says it addresses
+## In its own words
 
 Runnable behavior demonstration of the KTP loop: identical actor, credential, action, and policy across four environments, with verdicts moved only by the environment and by accumulated trajectory cost (the sleeper scenario).
 
 
-## Coordinates
+
+**Known limitations, as stated by the project:** Behavior demo, not production enforcement: tamper-evident rather than tamper-proof; hand-set estimator weights published for attack; DEAUTOMATE not implemented in this demo; single-agent only; not yet published.
+
+
+## Coordinates — the registry's projection, not the project's identity
+
+The section above is the project's voice. What follows is where OTCS locates it in the
+shared vocabulary — a projection the owner may dispute without losing anything
+(the `mapping` block records exactly that).
 
 - **actor** — `ai_agent`, `service`
 - **authority** — `capability`, `situational_approval`

@@ -130,3 +130,11 @@ The clock puts earliest ratification at **2026-09-10**, and v0.1.0 is not yet re
 The clock is a floor and 45 days is defensible for this class. The reason to prefer the floor here is **not** that no external participants exist to object — "nobody is here, so we can move faster" is precisely how a commons becomes one person's project. The reason is that the alternative is worse: launching on a model already known to be changing.
 
 Recorded in `FOR-CHRIS.md`. This is a sequencing decision, not a technical one.
+
+---
+
+## Discussion record
+
+**2026-07-31 — first external exercise of the proposed model (ev-000026).** A constitutional-runtime project with an explicit normative architecture was mapped into the three layers as a design test. It mapped while remaining recognisably itself: Layer 1 held its coordinates without renaming its native architecture, its explicit normativity landed in Layer 2 *because* Layer 2 is free-text — an enum of normative goods would have distorted it immediately — and its eight native functions mapped into Layer 3 without vocabulary replacement.
+
+The subject is unnamed pending consent and the dry-run does not enter the registry. What it contributes to this proposal: the declared-never-enumerated rule for Layer 2 now has a test case where enumeration would have visibly failed, rather than only an argument for why it might.

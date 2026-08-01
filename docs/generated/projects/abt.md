@@ -17,12 +17,20 @@
 | Owner verification | `documentation_naming` |
 | First public | 2026-06-01 |
 
-## What it says it addresses
+## In its own words
 
 Measures an organization's ambiguity load against its resolution capacity (rho = Z/mu) and locates the operating zone, supplying environmental state and repair-capacity measurements that action-governance systems can consume.
 
 
-## Coordinates
+
+**Known limitations, as stated by the project:** Measurement model with first published results; instrumentation is manual; no independent replication yet; calibration is organization-specific.
+
+
+## Coordinates — the registry's projection, not the project's identity
+
+The section above is the project's voice. What follows is where OTCS locates it in the
+shared vocabulary — a projection the owner may dispute without losing anything
+(the `mapping` block records exactly that).
 
 - **actor** — `organization`, `human`
 - **authority** — _not addressed_

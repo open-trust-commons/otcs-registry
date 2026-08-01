@@ -166,11 +166,16 @@ ${byState("example").map((p) => `- \`${p.project.id}\` — ${p.project.name}`).j
 | Owner verification | \`${p.ownership?.verification?.status ?? "unverified"}\` |
 | First public | ${pr.first_public_date ?? "—"} |
 
-## What it says it addresses
+## In its own words
 
 ${p.declaration?.problem ?? "_No declaration recorded._"}
+${p.declaration?.non_claims?.length ? `\n**What it does not claim:** ${p.declaration.non_claims.join(" · ")}\n` : ""}
+${p.declaration?.known_limitations ? `\n**Known limitations, as stated by the project:** ${p.declaration.known_limitations}\n` : ""}
+## Coordinates — the registry's projection, not the project's identity
 
-## Coordinates
+The section above is the project's voice. What follows is where OTCS locates it in the
+shared vocabulary — a projection the owner may dispute without losing anything
+(the \`mapping\` block records exactly that).
 
 ${["actor", "authority", "action", "environment", "function", "time"].map((c) => {
   const v = p.coordinates?.[c];

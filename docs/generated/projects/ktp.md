@@ -17,12 +17,20 @@
 | Owner verification | `repository_control_confirmed` |
 | First public | 2023-08-02 |
 
-## What it says it addresses
+## In its own words
 
 Environment-first authorization for agentic systems: whether the world can afford the action an actor is about to take, evaluated continuously along the actor's trajectory (A(t) <= E(t)) rather than once at the request.
 
 
-## Coordinates
+
+**Known limitations, as stated by the project:** Specification-stage work: no independent second implementation yet; the published estimator is a first calibration; enforcement is defined by the specifications but performed only by implementations, not by KTP itself.
+
+
+## Coordinates — the registry's projection, not the project's identity
+
+The section above is the project's voice. What follows is where OTCS locates it in the
+shared vocabulary — a projection the owner may dispute without losing anything
+(the `mapping` block records exactly that).
 
 - **actor** — `ai_agent`, `service`, `delegated_subagent`, `human`
 - **authority** — `mandate`, `capability`, `delegation`, `situational_approval`
