@@ -1,0 +1,54 @@
+{
+  "id": "urn:otcs:analysis:ktp-baseline:1.0.0",
+  "type": "project_baseline",
+  "subjects": ["ktp"],
+  "lenses": ["evidence", "provenance"],
+  "input_snapshot": {
+    "registry_release": "v0.1.0",
+    "graph_snapshot_sha256": "1bd87943ff692cb75d5940ae4cb26ed2b3ee6c1ca8e02fbe6d88d330707b17bf",
+    "subject_record_versions": { "ktp": "2026-07-25" }
+  },
+  "method": {
+    "specification": "analysis/methods/self-verification-attempt-v1.md"
+  },
+  "findings": [
+    {
+      "id": "ktp-baseline-1",
+      "statement": "KTP claims published IETF-draft-style specifications covering the core loop. This is verifiable by any reader today: the artifact is public, dated, and unambiguous. Requires no further evidence.",
+      "evidence": ["registry/projects/ktp/claims.yaml#STANDARDS"],
+      "status": "source_verified"
+    },
+    {
+      "id": "ktp-baseline-2",
+      "statement": "KTP claims a reference behaviour demonstration with pre-registered falsifiers. The demonstration exists and is public. Whether the falsifiers were genuinely pre-registered (dated before the demonstration ran, not adjusted afterward) is not independently confirmable from the artifact alone — that requires either a timestamped pre-registration record or a party who observed the registration happen. Neither exists yet.",
+      "evidence": ["registry/projects/ktp/claims.yaml#IMPLEMENTATION"],
+      "status": "human_reviewed"
+    },
+    {
+      "id": "ktp-baseline-3",
+      "statement": "KTP's own claims.yaml already records the honest negative result this analysis exists to formalise: 'Independent second implementation reproducing the falsifier suite — sought, not achieved,' at evidence_state SELF_ASSERTED, maturity 0. This analysis attempted to find anything that would move that claim forward and found nothing: no second implementation exists anywhere the analyst could locate, so there is nothing to run the falsifier suite against. The claim cannot honestly move past SELF_ASSERTED until one exists, and no action available to the founder changes that.",
+      "evidence": ["registry/projects/ktp/claims.yaml#VALIDATION"],
+      "status": "human_reviewed"
+    }
+  ],
+  "limitations": [
+    "This analysis was performed by KTP's own founder, who is also OTCS's founder. It cannot be, and does not claim to be, independent.",
+    "It uses a method (self-verification-attempt-v1) authored by and exclusive to the analyst's own project, which is itself a defeater of independence under ANALYST-DISCLOSURE.md §4 — that is the reason the method exists as a named, disclosed object rather than being folded silently into an ordinary review.",
+    "Finding ktp-baseline-2's negative conclusion rests on the absence of a pre-registration timestamp. If one exists and was simply not published, this finding is wrong in a specific and correctable way, and the correction would be an owner response to this same record.",
+    "This record does not, and cannot, resolve finding ktp-baseline-3. It exists to make the gap visible in the registry's own checkable shape rather than leave it stated only in prose."
+  ],
+  "unresolved_questions": [
+    "Does a dated pre-registration artifact for the falsifier suite exist outside the registry, and if so, where?",
+    "What would the first independent implementation attempt need, concretely, to be practical for a third party to undertake?"
+  ],
+  "participants": {
+    "author": "Chris Perkins (nmcitra)",
+    "affiliation": "Founder, KTP and OTCS",
+    "conflicts": [
+      "Founder of the subject project (KTP) and founder of the analysing registry (OTCS) — CHARTER.md §6, MAINTAINERS.md §1",
+      "Method used (self-verification-attempt-v1) is authored by and exclusive to the analyst's own project — ANALYST-DISCLOSURE.md §4"
+    ]
+  },
+  "status": ["human_reviewed"],
+  "freshness": { "state": "CURRENT", "review_date": "2027-08-01" }
+}

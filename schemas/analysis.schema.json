@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "otcs:analysis",
-  "title": "OTCS Analysis Record \u2014 versioned, reproducible, attributable, challengeable, supersedable",
+  "title": "OTCS Analysis Record — versioned, reproducible, attributable, challengeable, supersedable",
   "type": "object",
   "required": [
     "id",
@@ -141,8 +141,7 @@
           "id",
           "statement",
           "evidence",
-          "status",
-          "relationship_state"
+          "status"
         ],
         "additionalProperties": false,
         "properties": {
@@ -176,11 +175,11 @@
               "DOCUMENTED_DERIVATION",
               "MUTUALLY_CONFIRMED_INTEGRATION"
             ],
-            "description": "anti-convergence gate: a finding that cannot answer the structure/behavior/transmission/confirmation questions may not exceed FUNCTIONAL_OVERLAP"
+            "description": "anti-convergence gate: a finding that cannot answer the structure/behavior/transmission/confirmation questions may not exceed FUNCTIONAL_OVERLAP Required whenever the analysis has more than one subject; meaningless for a single-subject project_baseline, which is why it moved out of the unconditional required list on 2026-08-01 after the first project_baseline analysis existed and could not honestly be produced under the old requirement."
           },
           "skeptical_review": {
             "type": "string",
-            "description": "why this finding may be false \u2014 required for anything above FUNCTIONAL_OVERLAP"
+            "description": "why this finding may be false — required for anything above FUNCTIONAL_OVERLAP"
           }
         }
       }
@@ -329,6 +328,37 @@
           }
         }
       }
+    },
+    {
+      "if": {
+        "properties": {
+          "subjects": {
+            "minItems": 2,
+            "type": "array"
+          }
+        },
+        "required": [
+          "subjects"
+        ]
+      },
+      "then": {
+        "properties": {
+          "findings": {
+            "items": {
+              "required": [
+                "id",
+                "statement",
+                "evidence",
+                "status",
+                "relationship_state"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          }
+        }
+      },
+      "description": "A finding about a relationship between two or more subjects must classify that relationship. A finding about one subject alone has nothing to classify."
     }
   ]
 }

@@ -1,4 +1,4 @@
-measured_at: 2026-07-31
+measured_at: 2026-08-01
 non_count_criteria:
   1.0.0:
     technical:
@@ -8,16 +8,15 @@ non_count_criteria:
         - stable_schemas
         - deterministic_dual_host_build
         - signed_release_and_doi
-        - migration_tooling_from_0_9
+        - migration_tooling_verified
     evidence_and_interop:
-      met: 0
+      met: 1
       total: 5
       unmet:
         - mutually_confirmed_relationships
         - completed_provenance_lifecycles
         - interfaces_with_two_independent_implementations
         - independently_reproduced_results
-        - published_failures_or_negative_results
     governance:
       met: 1
       total: 6

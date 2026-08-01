@@ -55,6 +55,9 @@ Each of these defeats independence on its own:
 - Contributing code
 - Commercial dependency
 - Substantial prior collaboration
+- **The evaluation method itself is authored by, and exclusive to, the analyst's own project**
+
+That last one is easy to miss because nothing about it looks like a relationship. An analyst can have no financial tie, no shared founder, no prior contact with a project — and still fail independence, if the yardstick applied to the subject was designed by the analyst's own project to describe its own architecture. A method that only one party could have written is not neutral instrumentation; it is that party's worldview wearing the shape of a test. **A finding produced this way is a `METHOD_OWNER_REVIEWED` finding, never `INDEPENDENTLY_TESTED`** — and a subject reviewed exclusively through someone else's native method is entitled to know that before any comparative conclusion is drawn from it.
 
 > **A separate legal entity is not independence.** Two companies can share every one of the things on that list.
 

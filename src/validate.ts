@@ -157,6 +157,24 @@ if (existsSync(relDir)) {
   }
 }
 
+// Analysis records. ANALYSIS-MODEL.md says nothing is accepted because it was
+// generated; it is accepted through the same validated, versioned path as
+// everything else in the registry — including analysis of the founder's own
+// projects, which gets no exemption from this check.
+function walkAnalysis(dir) {
+  const out = [];
+  if (!existsSync(dir)) return out;
+  for (const name of readdirSync(dir)) {
+    const p = join(dir, name);
+    if (statSync(p).isDirectory()) out.push(...walkAnalysis(p));
+    else if (name.endsWith(".json")) out.push(p);
+  }
+  return out;
+}
+for (const f of walkAnalysis(join(ROOT, "analysis", "projects"))) {
+  check("analysis", JSON.parse(readFileSync(f, "utf8")), true, `analysis/projects/.../${f.split("/").pop()}`);
+}
+
 const ledgerFile = join(ROOT, "governance-log", "events.jsonl");
 if (existsSync(ledgerFile)) {
   readFileSync(ledgerFile, "utf8").trim().split("\n").filter(Boolean).forEach((line, i) =>

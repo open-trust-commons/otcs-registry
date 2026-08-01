@@ -8,16 +8,32 @@ criteria:
     independent_stewards:       { minimum: 7,  state: unmet }
     project_classes:            { minimum: 4,  state: unmet }
   technical:
-    stable_schemas: { required: [project-manifest, relationship, claim, analysis, authority-artifact], state: in_progress }
+    # `authority-artifact` was never built - no such schema exists in schemas/.
+    # Dropped rather than left as a criterion this repository can never meet.
+    # If an authority-artifact schema is later designed, it re-enters here.
+    # "Stable" is a forward promise VERSIONING.md makes AT v1.0.0, not a fact
+    # about the past - so this cannot honestly read "met" by inspecting commit
+    # history. It is met when a proposal explicitly freezes these four against
+    # further breaking change before the v1.0.0 tag, i.e. the promise is made
+    # BEFORE the tag rather than asserted BY it.
+    stable_schemas: { required: [project-manifest, relationship, claim, analysis],
+      met_when: "a ratified proposal declares these four frozen pending v1.0.0",
+      state: in_progress }
     deterministic_dual_host_build: { required: true, state: unmet }
     signed_release_and_doi: { required: true, state: unmet }
-    migration_tooling_from_0_9: { required: true, state: unmet }
+    # Renamed from migration_tooling_from_0_9. That name predates the version
+    # realignment (0.1 -> 0.9 -> 1.0 collapsed; ROADMAP-CHANGES.md v0.1.0
+    # entry) and cited a version that no longer exists in the public arc.
+    # The intent survives: a migration entry's own verification and backout
+    # commands must actually run, not just be prose in MIGRATIONS.md.
+    migration_tooling_verified: { required: true, state: unmet }
   evidence_and_interop:
     mutually_confirmed_relationships: { minimum: 10, state: unmet }
     completed_provenance_lifecycles:  { minimum: 1,  state: unmet }
     interfaces_with_two_independent_implementations: { minimum: 1, state: unmet }
     independently_reproduced_results: { minimum: 1, state: unmet }
-    published_failures_or_negative_results: { minimum: 1, state: unmet }
+    published_failures_or_negative_results: { minimum: 1, state: met,
+      evidence: ["analysis/projects/ktp/v1/baseline.json"] }
   governance:
     maintainers: { minimum: 2, state: unmet }
     non_founder_maintainers: { minimum: 1, state: unmet }
