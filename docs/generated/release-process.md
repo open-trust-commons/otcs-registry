@@ -11,6 +11,14 @@ Nothing becomes canonical because somebody said it in a discussion.
 
 ---
 
+## Before v1.0.0 — published means the repository, not a Release page
+
+**Everything below v1.0.0 is built in the open.** A pre-1.0 version is published the moment its signed tag is on the public repository — the tag, the decision record, the notes and the anchors are all public and independently verifiable from a clone.
+
+**The forge's "Release" page is packaging, and the packaging begins at v1.0.0.** Until then the workflow still builds and hashes the artifact set on every tag, and the set is retained unpublished so its anchored hashes stay resolvable — but no Release is published, because a Releases page implies a cadence of finished products that a version-0 contract has not earned.
+
+This is the same distinction the rest of the process already draws: the repository is the record, and every other surface is a rendering of it.
+
 ## 1. What is in a release
 
 ```text
