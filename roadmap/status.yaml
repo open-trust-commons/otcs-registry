@@ -27,7 +27,7 @@ non_count_criteria:
         - correction_withdrawal_or_transfer_exercised
         - runbook_followed_by_non_founder
     sovereignty:
-      met: 0
+      met: 1
       total: 9
       unmet:
         - self_hosted_manifest_resolved
@@ -36,7 +36,6 @@ non_count_criteria:
         - disputed_record_remains_complete_and_prominent
         - second_independent_implementation_agrees
         - composition_without_absorption
-        - published_non_composition
         - exit_exercised_without_collateral_loss
         - foreign_architecture_represented_natively
     security:

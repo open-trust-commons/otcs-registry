@@ -171,8 +171,8 @@ function walkAnalysis(dir) {
   }
   return out;
 }
-for (const f of walkAnalysis(join(ROOT, "analysis", "projects"))) {
-  check("analysis", JSON.parse(readFileSync(f, "utf8")), true, `analysis/projects/.../${f.split("/").pop()}`);
+for (const dir of ["projects", "pairs"]) for (const f of walkAnalysis(join(ROOT, "analysis", dir))) {
+  check("analysis", JSON.parse(readFileSync(f, "utf8")), true, `analysis/${dir}/.../${f.split("/").pop()}`);
 }
 
 const ledgerFile = join(ROOT, "governance-log", "events.jsonl");

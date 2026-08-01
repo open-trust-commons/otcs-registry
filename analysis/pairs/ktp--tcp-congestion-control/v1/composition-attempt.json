@@ -1,0 +1,73 @@
+{
+  "id": "urn:otcs:analysis:ktp-tcp-composition:1.0.0",
+  "type": "pairwise_composition_review",
+  "subjects": [
+    "ktp",
+    "tcp-congestion-control"
+  ],
+  "lenses": [
+    "interface",
+    "operational_composition",
+    "evidence"
+  ],
+  "input_snapshot": {
+    "registry_release": "v0.1.0",
+    "graph_snapshot_sha256": "1bd87943ff692cb75d5940ae4cb26ed2b3ee6c1ca8e02fbe6d88d330707b17bf",
+    "subject_record_versions": {
+      "ktp": "2026-07-25",
+      "tcp-congestion-control": "calibration/tcp-ip.md v0.1"
+    }
+  },
+  "method": {
+    "specification": "analysis/methods/self-verification-attempt-v1.md",
+    "deterministic_tools": []
+  },
+  "findings": [
+    {
+      "id": "ktp-tcp-1",
+      "statement": "Attempted composition: could KTP's authorization model (A ≤ E, environment-first evaluation at an enforcement point) wrap TCP congestion control, so that a sender's transmission rate is gated by an external KTP decision rather than by the sender's own voluntary restraint? Result: NOT CURRENTLY COMPOSABLE. KTP's model presumes a place to intervene — a decision point external to the actor, where an action is evaluated against environment before it proceeds and can be refused. TCP's congestion control has no such point by design: the calibration case (calibration/tcp-ip.md) already establishes that TCP's authority coordinate is empty and its enforce function scores 0.0 for the same reason — nothing external grants or refuses permission to send, and a host that ignores congestion control is not stopped by anything in the protocol. Composing KTP's model onto TCP would require inserting an external gate into a system whose defining property is having none. That is not a composition of the two systems as they exist; it is a redesign of TCP.",
+      "evidence": [
+        "calibration/tcp-ip.md",
+        "registry/projects/ktp/otcs.yaml"
+      ],
+      "status": "human_reviewed",
+      "relationship_state": "SEMANTIC_SIMILARITY_ONLY",
+      "skeptical_review": "The strongest reason this finding may be false: it treats KTP's model as requiring a single external gate, when a distributed enforcement point spread across many hosts running conforming code might satisfy the same requirement in principle - closer to how TCP's own congestion control is itself enforced, if at all. If KTP's model can be read that broadly, TCP would already BE an instance of it rather than incompatible with it, and this finding's NOT CURRENTLY COMPOSABLE conclusion would be wrong. Nothing in KTP's current specification resolves this reading either way."
+    },
+    {
+      "id": "ktp-tcp-2",
+      "statement": "A narrower composition was also attempted: could KTP treat TCP's own internal state (congestion window, round-trip estimate) as an environment signal feeding a KTP decision at a DIFFERENT enforcement point that does exist — e.g. an application-layer gateway that already has authority to admit or refuse connections? This is more promising and remains unresolved rather than refuted: KTP's environment coordinate has values (system_health, dependency_health, downstream_capacity) that map onto TCP state without strain, per the same calibration case. But no artifact tested whether a real gateway can read TCP congestion state at the granularity KTP's model would need, and no implementation exists to test it against. This finding is NOT_CURRENTLY_PROVABLE rather than INCOMPATIBLE — it differs from finding ktp-tcp-1, which is a structural incompatibility; this one is an open question blocked on missing implementation, not a mismatch in the architectures themselves.",
+      "evidence": [
+        "calibration/tcp-ip.md"
+      ],
+      "status": "human_reviewed",
+      "relationship_state": "POTENTIAL_INTERFACE",
+      "skeptical_review": "The strongest reason this finding may be false: it may not be POTENTIAL_INTERFACE at all, but SEMANTIC_SIMILARITY_ONLY like finding ktp-tcp-1. The environment-value mapping (downstream_capacity onto the receive window) is a vocabulary match, not evidence that a gateway can actually consume TCP state at useful granularity or latency. Calling it a potential interface rather than a mere resemblance assumes the engineering gap is closable; nothing here demonstrates that it is."
+    }
+  ],
+  "limitations": [
+    "This composition was attempted by OTCS's founder, who also authored KTP and the calibration case for TCP. It is not independent, and is disclosed as such under ANALYST-DISCLOSURE.md §3 and §4.",
+    "TCP congestion control is not a registered project and has no owner to confirm or dispute this finding. It is a calibration case, prose only, and this composition attempt does not change that status.",
+    "Finding ktp-tcp-1's conclusion rests on the calibration case's own reading of TCP's architecture. If that reading is wrong, this finding is wrong in the same specific way, for the same reason.",
+    "No composition schema exists yet in this registry (deliberately - see FEDERATION.md and the sovereignty criteria in roadmap/releases/1.0.0.yaml). This record is prose analysis under the existing analysis schema, not a first-class Composition object. If a real, consenting composition is later attempted between two registered projects, that attempt should inform what a composition object needs to contain - this record is evidence toward that design, not a substitute for it."
+  ],
+  "unresolved_questions": [
+    "Does an application-layer gateway exist, or could one be built cheaply, that exposes TCP congestion state at a granularity a KTP decision could consume?",
+    "Is finding ktp-tcp-2 actually testable without a real implementation, or does resolving it require one to exist first — in which case it should be restated as blocked-on-implementation rather than open?"
+  ],
+  "participants": {
+    "author": "Chris Perkins (nmcitra)",
+    "affiliation": "Founder, KTP and OTCS",
+    "conflicts": [
+      "Founder of one composition subject (KTP) and author of the other subject's OTCS analysis (the TCP calibration case) — CHARTER.md §6",
+      "Method used is authored by and exclusive to the analyst's own project — ANALYST-DISCLOSURE.md §4"
+    ]
+  },
+  "status": [
+    "human_reviewed"
+  ],
+  "freshness": {
+    "state": "CURRENT",
+    "review_date": "2027-08-01"
+  }
+}

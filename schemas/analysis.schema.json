@@ -292,10 +292,13 @@
   },
   "allOf": [
     {
-      "if": {
-        "properties": {
-          "findings": {
-            "contains": {
+      "properties": {
+        "findings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "if": {
+              "type": "object",
               "properties": {
                 "relationship_state": {
                   "enum": [
@@ -308,23 +311,15 @@
               },
               "required": [
                 "relationship_state"
-              ],
-              "type": "object"
+              ]
             },
-            "type": "array"
-          }
-        }
-      },
-      "then": {
-        "properties": {
-          "findings": {
-            "items": {
+            "then": {
+              "type": "object",
               "required": [
                 "skeptical_review"
-              ],
-              "type": "object"
+              ]
             },
-            "type": "array"
+            "description": "Per-finding, not per-array: a strong claim needs its own skeptical review. The original form used `contains` at the array level, so one strong finding in a set silently required skeptical_review on every finding in that set, including weak ones with nothing to defend. Found by actually publishing a mixed-strength pairwise review on 2026-08-01."
           }
         }
       }

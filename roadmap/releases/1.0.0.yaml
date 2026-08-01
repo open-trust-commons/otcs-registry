@@ -77,7 +77,8 @@ criteria:
     # An attempted composition that could NOT be completed is published,
     # with the reason preserved. A system that always finds a crosswalk is
     # not measuring anything.
-    published_non_composition: { required: true, state: unmet }
+    published_non_composition: { required: true, state: met,
+      evidence: ["analysis/pairs/ktp--tcp-congestion-control/v1/composition-attempt.json"] }
 
     # A project leaves. History and provenance survive; active claims stop;
     # no other project loses identity.
