@@ -106,5 +106,6 @@ criteria:
   security:
     independent_security_review: { required: true, state: unmet }
     key_rotation_tested: { required: true, state: unmet }
-    disaster_recovery_restoration_tested: { required: true, state: unmet }
+    disaster_recovery_restoration_tested: { required: true, state: met,
+      evidence: ["INCIDENT-RESPONSE.md#9-restoration-tested"] }
     unresolved_critical_findings: { maximum: 0, state: met }

@@ -3,7 +3,7 @@
 
 # Governance ledger
 
-32 events, hash-chained. Run `npm run ledger:verify` against a clone; you do not
+33 events, hash-chained. Run `npm run ledger:verify` against a clone; you do not
 have to take this page's word for it.
 
 ## What the chain proves
@@ -28,7 +28,7 @@ External timestamp anchoring addresses exactly the second of these, and only for
 | `OBJECTION_RAISED` | 1 |
 | `PROPOSAL_CREATED` | 7 |
 | `RECORD_UPDATED` | 4 |
-| `TEST_RESULT_ADDED` | 2 |
+| `TEST_RESULT_ADDED` | 3 |
 | `VERSION_PUBLISHED` | 5 |
 
 | Event | Type | Timestamp |
@@ -65,3 +65,4 @@ External timestamp anchoring addresses exactly the second of these, and only for
 | `ev-000030` | RECORD_UPDATED | 2026-08-01T10:30:00-06:00 |
 | `ev-000031` | RECORD_UPDATED | 2026-08-01T10:45:00-06:00 |
 | `ev-000032` | RECORD_UPDATED | 2026-08-01T11:00:00-06:00 |
+| `ev-000033` | TEST_RESULT_ADDED | 2026-08-01T13:00:00-06:00 |
