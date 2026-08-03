@@ -16,8 +16,19 @@ criteria:
     # history. It is met when a proposal explicitly freezes these four against
     # further breaking change before the v1.0.0 tag, i.e. the promise is made
     # BEFORE the tag rather than asserted BY it.
+    # 2026-08-01 assessment: NOT close to freezable. analysis.schema.json
+    # received two real corrections in this same session - relationship_state
+    # was unconditionally required on every finding (meaningless for a
+    # single-subject project_baseline) and skeptical_review was required
+    # array-wide via a `contains` check instead of per-item - both found by
+    # actually publishing records against the schema for the first time,
+    # not by inspection. Freezing today would freeze defects discovered
+    # today. A freeze proposal needs a bake period first: a stretch of real
+    # use producing no correction, not merely no complaints.
     stable_schemas: { required: [project-manifest, relationship, claim, analysis],
-      met_when: "a ratified proposal declares these four frozen pending v1.0.0",
+      met_when: "a ratified proposal declares these four frozen pending v1.0.0, opened only after a bake period with zero corrections",
+      bake_period_started: "2026-08-01",
+      last_correction: "2026-08-01",
       state: in_progress }
     deterministic_dual_host_build: { required: true, state: unmet }
     signed_release_and_doi: { required: true, state: unmet }
