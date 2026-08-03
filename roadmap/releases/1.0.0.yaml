@@ -105,6 +105,16 @@ criteria:
 
   security:
     independent_security_review: { required: true, state: unmet }
+    # Deliberately not exercised live during the 2026-08-01 DR pass. That
+    # exercise found no offline backup of the current key exists (see
+    # INCIDENT-RESPONSE.md §9) - drilling a rotation before a backup exists
+    # is the wrong order: a mistake mid-drill could lose signing entirely
+    # with nothing to fall back to. Rotating the maintainer's live,
+    # published key is also an irreversible, outward-facing action; the
+    # published fingerprint is already quoted in unsent draft replies to
+    # three prospective registrants, so a rotation right now would
+    # invalidate text nobody has seen yet for no operational reason.
+    # Correct order: back up the current key offline, THEN drill rotation.
     key_rotation_tested: { required: true, state: unmet }
     disaster_recovery_restoration_tested: { required: true, state: met,
       evidence: ["INCIDENT-RESPONSE.md#9-restoration-tested"] }
