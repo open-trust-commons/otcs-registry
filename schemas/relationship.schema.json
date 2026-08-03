@@ -77,7 +77,7 @@
         "type": "string"
       },
       "minItems": 1,
-      "description": "What this edge explicitly does NOT assert \u2014 'no derivation established', 'no equivalence established'. Required on otcs_observed edges: an unbounded registry assertion about a project that has not been asked is the exact harm the observed record state exists to contain."
+      "description": "What this edge explicitly does NOT assert — 'no derivation established', 'no equivalence established'. Required on otcs_observed edges: an unbounded registry assertion about a project that has not been asked is the exact harm the observed record state exists to contain."
     },
     "observed_source": {
       "type": "array",
@@ -109,6 +109,26 @@
           "observed_source"
         ]
       }
+    },
+    {
+      "if": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "const": "mutually_confirmed"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "type": "object",
+        "required": [
+          "counterparty_signoff"
+        ]
+      },
+      "description": "EVIDENCE-MODEL.md §5: reaching mutually_confirmed requires the other party signing off. The counterparty_signoff field already said 'required to reach mutually_confirmed' in its own description, but nothing enforced it - the weaker otcs_observed status was mechanically gated while this stronger one was left to good intentions. A registry whose whole argument is that a claim about someone else needs their agreement cannot leave that to good intentions. Added 2026-08-03 after a prospective registrant made counterparty sign-off an explicit condition of participation; zero existing records used the status, so nothing broke."
     }
   ]
 }
