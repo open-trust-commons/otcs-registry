@@ -288,7 +288,11 @@ const linkedTo = new Set<string>();
 for (const doc of rootDocs)
   for (const m of read(doc).matchAll(/\]\(([A-Za-z0-9._-]+\.md)\)/g)) linkedTo.add(m[1]);
 const orphans = rootDocs.filter(
-  (d) => !linkedTo.has(d) && !["README.md", "CHANGELOG.md", "PROGRESS.md"].includes(d),
+  // CLAUDE.md joins the list for the same reason as the others: it describes how
+  // the repository is worked on, not what it governs, so no governing document
+  // should link to it. A permanent known-good orphan trains a reader to ignore
+  // the check, which is worse than not running it.
+  (d) => !linkedTo.has(d) && !["README.md", "CHANGELOG.md", "PROGRESS.md", "CLAUDE.md"].includes(d),
 );
 
 /* ── report ─────────────────────────────────────────────────────────────── */

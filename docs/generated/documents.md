@@ -105,3 +105,4 @@ How to take part.
 
 - `README.md` — the site's own index page says this, in the site's voice
 - `PROGRESS.md` — working notes, not a governing document
+- `CLAUDE.md` — how this repo is worked on, not what it governs
