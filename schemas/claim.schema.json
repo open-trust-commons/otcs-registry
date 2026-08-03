@@ -16,6 +16,60 @@
     "maturity": { "type": "integer", "minimum": 0, "maximum": 5 },
     "relationship_to_prior": { "type": "string" },
     "evaluator": { "type": "string" },
-    "evaluator_independence_disclosed": { "type": "boolean" }
-  }
+    "evaluator_independence_disclosed": { "type": "boolean" },
+    "evaluator_independence": {
+      "type": "object",
+      "description": "Independence is a condition at a moment, not a permanent property. Two parties independent when an evaluation ran may later enter a funding, employment, advisory, reciprocal-review, code-contribution or commercial relationship. That later relationship does not falsify the historical fact that the evaluation occurred under the earlier conditions, but it does change how the evaluation should be represented now. Recording only one of the two makes independence either falsely permanent or retroactively erased. Both are recorded.",
+      "additionalProperties": false,
+      "required": ["assessed_at", "independent_at_assessment", "current_status", "current_status_as_of"],
+      "properties": {
+        "assessed_at": {
+          "type": "string",
+          "format": "date",
+          "description": "When independence was assessed. This is the date the historical fact attaches to."
+        },
+        "independent_at_assessment": {
+          "type": "boolean",
+          "description": "Whether the evaluator met the independence test in EVIDENCE-MODEL.md at assessed_at. This value is historical and is never edited; a later relationship creates a new current_status, it does not rewrite this."
+        },
+        "current_status": {
+          "enum": ["UNCHANGED", "RELATIONSHIP_FORMED_SINCE", "UNREVIEWED"],
+          "description": "Standing now. UNCHANGED: re-checked, no qualifying relationship has formed. RELATIONSHIP_FORMED_SINCE: a qualifying relationship exists now that did not exist at assessment - the claim keeps its historical state and displays this alongside it. UNREVIEWED: not re-checked since assessment, which is an honest default and not a synonym for UNCHANGED."
+        },
+        "current_status_as_of": {
+          "type": "string",
+          "format": "date",
+          "description": "When current_status was last determined. Required so that UNCHANGED cannot silently age into a claim nobody has verified for years."
+        },
+        "relationship_note": {
+          "type": "string",
+          "description": "Required when current_status is RELATIONSHIP_FORMED_SINCE: what the relationship is, in plain words. A status with no description is not a disclosure."
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "type": "object",
+            "properties": { "current_status": { "const": "RELATIONSHIP_FORMED_SINCE" } },
+            "required": ["current_status"]
+          },
+          "then": { "type": "object", "required": ["relationship_note"] }
+        }
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "$comment": "INDEPENDENTLY_TESTED is the strongest state this model can express and the one most worth inflating. It may not be claimed without saying who evaluated, when independence was assessed, and where that independence stands today.",
+      "if": {
+        "type": "object",
+        "properties": { "evidence_state": { "const": "INDEPENDENTLY_TESTED" } },
+        "required": ["evidence_state"]
+      },
+      "then": {
+        "type": "object",
+        "required": ["evaluator", "evaluator_independence"]
+      }
+    }
+  ]
 }

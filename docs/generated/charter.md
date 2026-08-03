@@ -36,6 +36,25 @@ Three separate areas of control. **None may absorb another.**
 
 Listed projects do not become part of KTP. They describe themselves in a vocabulary it defines.
 
+### 2a. Custody is not interpretive authority
+
+The boundary above says what each party controls. This says what holding the record does **not** confer. Stated by Richard Lynes of Genesis AiX, during architectural review, better than this project had stated it:
+
+> **Institutional custody must not become interpretive authority over the registered architecture.**
+
+OTCS holds records. Holding a record grants no authority to decide what the architecture it describes *means*, which of a project's internal documents belong to it, or whether something undisclosed satisfies a category beyond what the registered evidence establishes.
+
+**Two determinations, permanently separate records.** This is the operative rule, and the one most likely to be violated by accident:
+
+| Determination | Who makes it | What it is about |
+|---|---|---|
+| *"This record does not satisfy the requirements of this OTCS state"* | This project, by validating structure against a published schema | The **record** |
+| *"The owner's architectural claim is false"* | Not this project. A dispute record, an analysis, or a named challenger — each carrying its own evidence and its own author | The **architecture** |
+
+A validation failure is a statement about a record's structure. It is never a finding about the substance of what the record describes, and it must never be published in a way that reads as one. Where a reader could mistake the first for the second, the record says which it is.
+
+**The registry's right to enforce its own schema is not in question.** A record that fails validation does not enter, and that is not censorship — it is the schema doing its only job. What the enforcement never becomes is a verdict on the project.
+
 ## 3. The three kinds of authority inside OTCS
 
 - **A project's authority over itself.** Maintainers control their own description, releases, roadmap, licence, and what they claim to be compatible with.

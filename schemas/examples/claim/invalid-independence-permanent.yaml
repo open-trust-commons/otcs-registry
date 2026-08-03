@@ -1,0 +1,13 @@
+# INVALID: claims INDEPENDENTLY_TESTED with no evaluator and no independence
+# record. This was the schema's actual state until 2026-08-03: independence was
+# a bare boolean with no date and no current standing, so a claim could assert
+# the model's strongest state and leave independence permanently unqualified.
+# Raised in architectural review by Richard Lynes (Genesis AiX): independence
+# decays, and a record carrying only one moment makes it either falsely
+# permanent or retroactively erased.
+project: ktp
+class: VALIDATION
+content: An outside party reproduced the falsifier suite in full.
+date: "2026-07-25"
+evidence_state: INDEPENDENTLY_TESTED
+maturity: 4

@@ -210,3 +210,7 @@ Four things come up nearly every time:
 | Someone else claims your project's identity | The dispute process, decided on dated evidence |
 | Someone lists a connection to you that you reject | Reject it. It cannot rise above one-sided without your sign-off |
 | You want out entirely | `UNLIST`. No explanation required |
+
+---
+
+Questions this page did not answer are probably in [FAQ.md](faq.md), which starts at "what is this" and works down to the detail.

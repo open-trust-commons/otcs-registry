@@ -32,6 +32,8 @@ const NOT_PUBLISHED: Record<string, string> = {
 
 /** Grouping for the document index. Order is deliberate: what governs, then what constrains. */
 const GROUPS: Array<{ title: string; note: string; files: string[] }> = [
+  { title: "Start here", note: "The questions people actually ask, plainest first. Every answer points at the document that governs it.",
+    files: ["FAQ.md"] },
   { title: "Constitution", note: "What OTCS is, who decides, and how a decision becomes binding.",
     files: ["CHARTER.md", "GOVERNANCE.md", "VOTING.md", "MAINTAINERS.md", "PARTICIPATION.md", "COMMUNICATIONS.md", "MINORITY-REPORTS.md"] },
   { title: "What the record means", note: "The rules that decide what a record does and does not assert.",

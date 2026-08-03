@@ -1,0 +1,19 @@
+# VALID: the evaluation was independent when it ran, and a commercial
+# relationship has formed since. Both facts are recorded. The claim keeps the
+# state its evidence earned at the time; the current relationship travels
+# alongside it rather than erasing it.
+project: ktp
+class: VALIDATION
+content: An outside party reproduced the falsifier suite in full.
+date: "2026-07-25"
+evidence_state: INDEPENDENTLY_TESTED
+maturity: 4
+evaluator: An outside laboratory
+evaluator_independence:
+  assessed_at: "2026-01-10"
+  independent_at_assessment: true
+  current_status: RELATIONSHIP_FORMED_SINCE
+  current_status_as_of: "2026-08-03"
+  relationship_note: >-
+    The laboratory has since taken a paid support contract with the project.
+    The evaluation predates the contract and was unpaid.

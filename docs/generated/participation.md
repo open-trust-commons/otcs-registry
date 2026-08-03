@@ -145,3 +145,7 @@ This registry is open to projects that implement KTP, projects that complement i
 **You control the project. You do not control every fact about the project.**
 
 Withdrawal removes your participation. It does not remove the history.
+
+---
+
+If you are still deciding whether any of this applies to you, [FAQ.md](faq.md) covers the same ground in question form.

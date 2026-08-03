@@ -71,6 +71,27 @@ Applied **per claim**, never per project.
 
 Fail any one of them and the evaluation is `DOCUMENTED`, not `INDEPENDENTLY_TESTED` — **with the relationship stated.**
 
+### Independence is a condition at a moment, not a property
+
+The list above is a test applied on a date. Any of those relationships can form *after* an evaluation: a laboratory takes a support contract, a reviewer joins an advisory board, an evaluator's employer is acquired by a funder.
+
+**That later relationship does not falsify the evaluation.** It happened, under the conditions that held at the time, and the record says so permanently. What it changes is how the evaluation should be read *now*.
+
+Recording only one of the two moments gets it wrong in one of two directions:
+
+| Recording only… | Produces |
+|---|---|
+| The assessment | Independence that is **falsely permanent** — a decade-old evaluation still presenting as arm's-length |
+| The present | Independence **retroactively erased** — a genuine past evaluation deleted by a relationship that formed afterwards |
+
+So both are carried, in `evaluator_independence` on every `INDEPENDENTLY_TESTED` claim: `independent_at_assessment` with its `assessed_at` date, and a `current_status` — `UNCHANGED`, `RELATIONSHIP_FORMED_SINCE`, or `UNREVIEWED` — with the date it was last determined. A relationship formed since must say what it is; a status with no description is not a disclosure. `UNREVIEWED` is the honest default and is never a synonym for `UNCHANGED`.
+
+The claim keeps the state its evidence earned. The current relationship travels beside it.
+
+**Historical validity and current standing are different questions, and the record answers both separately.** That principle is not confined to independence — it applies wherever an upstream fact can change under a record that has already been published.
+
+**What is not built:** there is no mechanical dependency graph. When an evidence source is withdrawn, a witness loses independence, an evaluation method is shown defective, or an artifact is superseded, nothing automatically walks the dependent records and marks them stale, disputed or review-required. Today that is a human job done through the correction process, which means it can be missed. Naming it here rather than in a roadmap because a reader deciding whether to rely on this needs to know it is a gap and not a feature. The seam was identified in architectural review by Richard Lynes (Genesis AiX).
+
 ## 4. The maturity scale
 
 Scored **separately for each kind of claim**. A project's conceptual, implementation and validation maturity routinely differ, and the record keeps them apart.

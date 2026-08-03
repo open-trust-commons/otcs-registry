@@ -34,7 +34,8 @@ Every claim carries how well established it is, and every stated connection betw
 
 | | |
 |---|---|
-| **Start here** | [ROADMAP.md](ROADMAP.md) — where this is going, in plain language |
+| **Start here** | [FAQ.md](FAQ.md) — the questions people actually ask, plainest first |
+| **Where this is going** | [ROADMAP.md](ROADMAP.md) — in plain language |
 | **Getting listed** | [REGISTERING.md](REGISTERING.md) — what happens, step by step |
 | **The rules** | [CHARTER.md](CHARTER.md), [GOVERNANCE.md](GOVERNANCE.md), [VOTING.md](VOTING.md) |
 | **What gets listed** | [REGISTRY-POLICY.md](REGISTRY-POLICY.md), [EVIDENCE-MODEL.md](EVIDENCE-MODEL.md), [QUALIFYING-PROJECTS.md](QUALIFYING-PROJECTS.md) |

@@ -7,6 +7,7 @@ import { createHash } from "node:crypto";
 import { readFileSync, existsSync, appendFileSync, mkdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { createRequire } from "node:module";
 import { parse } from "yaml";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -22,6 +23,44 @@ export const readLedger = (path = LEDGER): LedgerEvent[] =>
     ? readFileSync(path, "utf8").trim().split("\n").filter(Boolean).map((l) => JSON.parse(l) as LedgerEvent)
     : [];
 
+/**
+ * Refuse to write an event the schema rejects.
+ *
+ * `append` used to write whatever it was handed and leave validation to a later
+ * `npm run validate`. That is the wrong order everywhere, and worst here: an
+ * append is hash-chained the moment it lands, so the cheap fix for a bad record
+ * — edit it — is the one thing the chain exists to make detectable. A note
+ * exceeding the 2000-character limit was written and only caught afterwards.
+ *
+ * Validation is best-effort by design: if ajv or the schema cannot be loaded,
+ * the append proceeds rather than blocking the ledger on a tooling problem.
+ * A schema that loads and rejects is fatal.
+ */
+function assertValidEvent(full: LedgerEvent): void {
+  let validate: ((d: unknown) => boolean) & { errors?: unknown[] };
+  try {
+    const schemaPath = join(ROOT, "schemas", "governance-event.schema.json");
+    if (!existsSync(schemaPath)) return;
+    const require_ = createRequire(import.meta.url);
+    const Ajv2020 = require_("ajv/dist/2020.js");
+    const addFormats = require_("ajv-formats");
+    const ajv = new Ajv2020({ allErrors: true, strict: false });
+    addFormats(ajv);
+    validate = ajv.compile(JSON.parse(readFileSync(schemaPath, "utf8")));
+  } catch {
+    return; // tooling unavailable — do not block the ledger on it
+  }
+  if (!validate(full)) {
+    const detail = (validate.errors ?? [])
+      .map((e: any) => `  ${e.instancePath || "/"} ${e.message}`)
+      .join("\n");
+    throw new Error(
+      `ledger: refusing to append ${full.event_id} — event fails governance-event.schema.json:\n${detail}\n` +
+        `Nothing was written. Fix the event and re-run.`,
+    );
+  }
+}
+
 export function appendEvent(fields: LedgerEvent, path = LEDGER): LedgerEvent {
   const events = readLedger(path);
   const prev = events.length ? String(events[events.length - 1].content_hash) : "GENESIS";
@@ -32,6 +71,7 @@ export function appendEvent(fields: LedgerEvent, path = LEDGER): LedgerEvent {
   };
   const content_hash = createHash("sha256").update(canonical(body)).digest("hex");
   const full = { ...body, content_hash };
+  assertValidEvent(full);
   mkdirSync(dirname(path), { recursive: true });
   appendFileSync(path, JSON.stringify(full) + "\n");
   return full;

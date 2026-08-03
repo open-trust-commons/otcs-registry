@@ -1,0 +1,16 @@
+# INVALID: says a qualifying relationship has formed since the evaluation, but
+# does not say what it is. A status with no description is not a disclosure —
+# a reader learns only that something changed, which is worse than silence
+# because it looks like transparency.
+project: ktp
+class: VALIDATION
+content: An outside party reproduced the falsifier suite in full.
+date: "2026-07-25"
+evidence_state: INDEPENDENTLY_TESTED
+maturity: 4
+evaluator: An outside laboratory
+evaluator_independence:
+  assessed_at: "2026-01-10"
+  independent_at_assessment: true
+  current_status: RELATIONSHIP_FORMED_SINCE
+  current_status_as_of: "2026-08-03"

@@ -3,7 +3,7 @@
 
 # Governance ledger
 
-37 events, hash-chained. Run `npm run ledger:verify` against a clone; you do not
+40 events, hash-chained. Run `npm run ledger:verify` against a clone; you do not
 have to take this page's word for it.
 
 ## What the chain proves
@@ -20,14 +20,14 @@ External timestamp anchoring addresses exactly the second of these, and only for
 | Event type | Count |
 |---|---|
 | `BALLOT_CAST` | 2 |
-| `COMMENT_SUBMITTED` | 1 |
+| `COMMENT_SUBMITTED` | 2 |
 | `CONFLICT_DISCLOSED` | 2 |
 | `DECISION_RECORDED` | 4 |
 | `EVIDENCE_ANCHORED` | 5 |
 | `OBJECTION_ANSWERED` | 1 |
 | `OBJECTION_RAISED` | 1 |
 | `PROPOSAL_CREATED` | 7 |
-| `RECORD_UPDATED` | 6 |
+| `RECORD_UPDATED` | 8 |
 | `TEST_RESULT_ADDED` | 3 |
 | `VERSION_PUBLISHED` | 5 |
 
@@ -70,3 +70,6 @@ External timestamp anchoring addresses exactly the second of these, and only for
 | `ev-000035` | DECISION_RECORDED | 2026-08-01T13:30:00-06:00 |
 | `ev-000036` | RECORD_UPDATED | 2026-08-03T09:00:00-06:00 |
 | `ev-000037` | RECORD_UPDATED | 2026-08-03T10:00:00-06:00 |
+| `ev-000038` | COMMENT_SUBMITTED | 2026-08-03T14:00:00-06:00 |
+| `ev-000039` | RECORD_UPDATED | 2026-08-03T14:30:00-06:00 |
+| `ev-000040` | RECORD_UPDATED | 2026-08-03T14:45:00-06:00 |

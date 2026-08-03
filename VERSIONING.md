@@ -40,6 +40,26 @@ Through `v0.x` the repository release coordinates all four.
 
 Breaking any of those after `v1.0.0` needs a major bump **and** a deprecation period ([DEPRECATION.md](DEPRECATION.md), [GOVERNANCE.md](GOVERNANCE.md) §9).
 
+## 4. A record keeps the meaning it was written under
+
+Everything above versions the *artifact*. This versions the *meaning*, which is a separate promise and the one a registrant is actually relying on.
+
+> **A record means what its coordinates meant under the `otcs_version` it declares. A later version of the vocabulary never reaches back and reinterprets it.**
+
+Carrying `otcs_version` on every manifest is what makes this checkable, but the field alone does not settle it — a reader has to know that the field *governs*, not merely labels.
+
+**The three rules that follow from it:**
+
+| | |
+|---|---|
+| **Migration creates, never rewrites** | When a coordinate changes meaning, migration produces a new record or an explicit mapping between the old sense and the new one. It does not edit the prior record's semantic basis. The old record stays readable under the old meaning |
+| **Renders declare their basis** | Any view that displays records written under different versions says which version each was written under. Silently rendering a `v1` record through `v2` vocabulary is a misquotation, even when every field validates |
+| **A changed meaning is a breaking change** | Renaming a coordinate value is obvious. *Keeping the name and changing what it denotes* is worse, because nothing fails. It takes the same major bump, the same deprecation period, and a [MIGRATIONS.md](MIGRATIONS.md) entry stating both senses |
+
+**This has already happened once.** `commit` → `commit_point` and `repair` → `repair_window` were genuine changes of meaning ([CHANGELOG.md](CHANGELOG.md), `v0.1.0`). They were harmless only because they landed before any record existed to be reinterpreted. That accident of timing is not a policy, and it does not repeat.
+
+The seam was named in architectural review by Richard Lynes (Genesis AiX): version identity alone does not settle interpretation.
+
 ---
 
 **See also:** [RELEASE-PROCESS.md](RELEASE-PROCESS.md) — how a version actually ships · [MIGRATIONS.md](MIGRATIONS.md) — every breaking change, with steps · [VERSION-EXIT-CRITERIA.md](VERSION-EXIT-CRITERIA.md) — what has to be true before a major version

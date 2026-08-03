@@ -6,6 +6,12 @@
 Everything that governs OTCS, in full. Nothing here is a summary; the summaries are elsewhere
 and they are not the record.
 
+## Start here
+
+The questions people actually ask, plainest first. Every answer points at the document that governs it.
+
+- [Questions people actually ask](faq.md)
+
 ## Constitution
 
 What OTCS is, who decides, and how a decision becomes binding.

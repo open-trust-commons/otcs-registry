@@ -27,9 +27,17 @@ criteria:
     # use producing no correction, not merely no complaints.
     stable_schemas: { required: [project-manifest, relationship, claim, analysis],
       met_when: "a ratified proposal declares these four frozen pending v1.0.0, opened only after a bake period with zero corrections",
-      bake_period_started: "2026-08-01",
-      last_correction: "2026-08-01",
+      bake_period_started: "2026-08-03",
+      last_correction: "2026-08-03",
       state: in_progress }
+    # Bake period reset 2026-08-03 by a correction to claim.schema.json:
+    # evaluator_independence_disclosed was a bare boolean, so INDEPENDENTLY_TESTED
+    # - the strongest state the model can express - could be claimed with no
+    # evaluator, no assessment date, and no current standing. Independence was
+    # therefore permanent by construction. Found in architectural review by
+    # Richard Lynes (Genesis AiX), not by inspection from inside.
+    # The reset is the cost of the fix and is not negotiable: a bake period
+    # that survives its own corrections would be measuring nothing.
     deterministic_dual_host_build: { required: true, state: unmet }
     signed_release_and_doi: { required: true, state: unmet }
     # Renamed from migration_tooling_from_0_9. That name predates the version

@@ -191,6 +191,39 @@ for (const { label, values, doc } of VOCAB) {
   }
 }
 
+/* ── 4e. a document calling a proposal "open" must be telling the truth ──── */
+{
+  // FAQ.md, REGISTERING.md and PARTICIPATION.md each tell a reader that a
+  // proposal is still open and cannot be decided before a date. Those
+  // statements are the most perishable in the corpus: the moment a proposal
+  // ratifies, every page saying "open" is lying to exactly the people it was
+  // written to protect.
+  //
+  // Checked per PARAGRAPH, not per N characters. The first version used a
+  // 160-char window after the id and caught one document of three, because
+  // the other two put the id and the claim at opposite ends of a long
+  // sentence. A silent partial check is worse than none.
+  const OPEN_PHASES = new Set(["SEED", "DISCOVERY", "DRAFT", "DELIBERATION", "TRIAL", "RATIFICATION"]);
+  const OPEN_LANG = /\b(is open|open now|cannot be decided|clock runs|clock is running|still running|mid-repair|currently open|open proposal|is now an open)\b/i;
+  const phaseOf = (id: string): string | null => {
+    const f = join(ROOT, "proposals", id, "proposal.yaml");
+    if (!existsSync(f)) return null;
+    return readFileSync(f, "utf8").match(/^phase:\s*(\S+)/m)?.[1] ?? null;
+  };
+  for (const doc of rootDocs) {
+    for (const para of read(doc).split(/\n\s*\n/)) {
+      if (!OPEN_LANG.test(para)) continue;
+      for (const m of para.matchAll(/\b(OTCS-\d{4})\b/g)) {
+        const id = m[1];
+        const phase = phaseOf(id);
+        if (phase === null) { flag("PROPOSAL", doc, `cites ${id}, which has no proposal.yaml`); continue; }
+        if (!OPEN_PHASES.has(phase))
+          flag("PROPOSAL", doc, `describes ${id} as open, but its phase is ${phase}`);
+      }
+    }
+  }
+}
+
 /* ── 5. counted claims still match what is being counted ────────────────── */
 const WORDS: Record<string, number> = {
   one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8,
@@ -260,7 +293,7 @@ const orphans = rootDocs.filter(
 
 /* ── report ─────────────────────────────────────────────────────────────── */
 const byKind = (k: string) => findings.filter((f) => f.kind === k);
-for (const kind of ["LINK", "SECTION", "VOCAB", "VERSION", "UNTRACKED", "COUNT"]) {
+for (const kind of ["LINK", "SECTION", "VOCAB", "VERSION", "UNTRACKED", "PROPOSAL", "COUNT"]) {
   const hits = byKind(kind);
   console.log(`${kind.padEnd(8)} ${hits.length === 0 ? "ok" : `${hits.length} finding(s)`}`);
   for (const h of hits) console.log(`         ${h.where}: ${h.what}`);
