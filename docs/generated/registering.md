@@ -11,6 +11,18 @@ Related: [PARTICIPATION.md](participation.md) (whether your kind of project fits
 
 ---
 
+> ### One unresolved question, before you spend any time on this
+>
+> **What licence your entry carries is currently ambiguous, and the ambiguity works against you.** [DCO.md](dco.md) §2 defines two licence categories — code and schemas under Apache-2.0, specification and documentation text under CC BY 4.0. **A project's own registry entry is neither of those things**, so today it falls into CC BY 4.0 by default, which permits derivative works and commercial reuse by anyone. That is broader than this registry needs and broader than [PARTICIPATION.md](participation.md) implies when it promises you never have to assign copyright.
+>
+> **OTCS-0004** fixes it: you declare your entry's licence, `all-rights-reserved` is a first-class choice, and registration grants only a stated operating minimum — store, validate, publish verbatim, mirror, archive, derive registry views, and nothing else. It is open now and cannot be decided before **2026-09-14** ([GOVERNANCE.md](governance.md) §3 sets the clock; it is not being shortened for convenience).
+>
+> **Until it ratifies, registration is open but not recommended.** Anything submitted now is governed by whatever OTCS-0004 decides, which means terms could change under you after you have committed to them. That is the exact harm the proposal exists to prevent, so it would be strange to let it happen to the first person who walks in.
+>
+> **What you can do meanwhile, with nothing at stake:** publish your `otcs.yaml` at your own URL and have it validated against the live schema. Your copy stays canonical, nothing enters the registry, and you find out where the vocabulary breaks against your architecture before committing to anything. The record format already supports this — `source_mode: project_hosted` and `canonical_manifest_url` exist today, though the automated refresh loop does not yet ([SYNC-POLICY.md](sync-policy.md) §2).
+>
+> This notice is removed when OTCS-0004 is decided, whichever way it goes.
+
 ## Before you start
 
 Three things are true and worth knowing up front:

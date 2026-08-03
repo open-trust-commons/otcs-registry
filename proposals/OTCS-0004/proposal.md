@@ -85,3 +85,13 @@ All three registered records are the founder's. Each will have `entry_license` a
 - **Draft a bespoke registry licence.** Rejected: untested text nobody has relied on, in every jurisdiction at once, is weaker than declared standard licences plus a stated operating minimum.
 - **Require CC0 for entries.** Rejected: forcing surrender of rights to be listed would contradict PARTICIPATION.md's core promise.
 - **Do nothing and answer registrants case-by-case.** Rejected: the first honest answer would still be "the documents contradict each other."
+
+## On decision — required cleanup
+
+This proposal has visible consequences outside its own file, and they must be resolved when it is decided, whichever way it goes:
+
+1. **Remove the registration-hold notice** from REGISTERING.md (the block above "Before you start") and the paragraph in PARTICIPATION.md's "What is never required" section. Both name this proposal and its date; leaving either in place after a decision would tell registrants a resolved question is still open.
+2. **If ratified:** add `entry_license` to the manifest schema, add the third category to DCO.md §2 and CONTRIBUTING.md §2, define the five consent scopes in PARTICIPATION.md, and add `entry_license` to the three existing registered records.
+3. **If rejected:** the defect stands and the notices must be rewritten, not deleted — a registrant is still entitled to know their entry defaults into CC BY 4.0.
+
+A hold notice that outlives its proposal is its own small dishonesty, so the removal condition lives here rather than in someone's memory.

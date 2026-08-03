@@ -107,6 +107,8 @@ Not now, not later, not as a condition of anything:
 - Implementing any connection point
 - Agreeing with any other listed project
 
+> **One item on that list is currently promised but not implemented.** *Assigning copyright* is never required — but [DCO.md](dco.md) §2 recognises only two licence categories, and a project's own entry is neither, so today it defaults into CC BY 4.0. That is not copyright assignment, and it is broader than this list implies. **OTCS-0004** closes the gap and cannot be decided before **2026-09-14**. Registration is open until then and not recommended; [REGISTERING.md](registering.md) explains what to do instead. Stated here rather than only in the proposal, because this is the page that makes the promise.
+
 This registry is open to projects that implement KTP, projects that complement it, **projects that disagree with it**, and projects being compared against it.
 
 **A map containing informed disagreement is more credible than one that does not.**
