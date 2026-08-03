@@ -6,6 +6,8 @@ project: ktp
 class: VALIDATION
 content: An outside party reproduced the falsifier suite in full.
 date: "2026-07-25"
+evidence:
+  - urn:otcs:evidence:lab-report-2026-01
 evidence_state: INDEPENDENTLY_TESTED
 maturity: 4
 evaluator: An outside laboratory

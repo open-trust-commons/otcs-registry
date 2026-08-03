@@ -2,6 +2,7 @@
   class: STANDARDS
   content: Engineering specifications published in IETF-draft style covering the core loop (sensors, tensors, core, enforce, audit, emergency and related documents).
   date: "2026-07-25"
+  otcs_version: "0.1"
   source_artifact: https://github.com/nmcitra/ktp-rfc
   evidence_state: DOCUMENTED
   maturity: 1
@@ -9,11 +10,13 @@
   class: IMPLEMENTATION
   content: A reference behavior demonstration (ktp-demo) exists with pre-registered falsifiers and published estimator parameters.
   date: "2026-07-25"
+  otcs_version: "0.1"
   evidence_state: DOCUMENTED
   maturity: 2
 - project: ktp
   class: VALIDATION
   content: Independent second implementation reproducing the falsifier suite — sought, not achieved.
   date: "2026-07-25"
+  otcs_version: "0.1"
   evidence_state: SELF_ASSERTED
   maturity: 0

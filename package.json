@@ -1,7 +1,7 @@
 {
   "name": "otcs",
   "version": "0.1.0",
-  "description": "Open Trust Coordination System — protocol, registry, and site",
+  "description": "Open Trust Coordination System \u2014 protocol, registry, and site",
   "private": true,
   "type": "module",
   "license": "Apache-2.0",
@@ -19,7 +19,8 @@
     "anchor:status": "tsx src/anchor.ts status",
     "anchor:stamp": "tsx src/anchor.ts stamp",
     "generate:docs": "tsx src/generate-docs.ts",
-    "coherence": "tsx src/coherence.ts"
+    "coherence": "tsx src/coherence.ts",
+    "standing": "tsx src/standing.ts"
   },
   "devDependencies": {
     "ajv": "^8.17.0",

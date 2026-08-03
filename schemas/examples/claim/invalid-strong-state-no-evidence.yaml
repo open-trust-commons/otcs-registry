@@ -1,0 +1,18 @@
+# INVALID: asserts INDEPENDENTLY_TESTED with an empty evidence list. Any state
+# above DOCUMENTED claims that something outside the record supports it, so it
+# must point at something. Found by running an external reviewer's break test:
+# withdrawing the evidence source left the claim reading INDEPENDENTLY_TESTED
+# at maturity 4 with nothing behind it.
+project: ktp
+class: VALIDATION
+content: An outside laboratory reproduced the falsifier suite in full.
+date: "2026-07-25"
+evidence_state: INDEPENDENTLY_TESTED
+maturity: 4
+evaluator: An outside laboratory
+evidence: []
+evaluator_independence:
+  assessed_at: "2026-01-10"
+  independent_at_assessment: true
+  current_status: UNCHANGED
+  current_status_as_of: "2026-08-03"

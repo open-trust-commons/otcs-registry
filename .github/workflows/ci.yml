@@ -42,6 +42,18 @@ jobs:
       - run: npm ci
       - name: Verify governance ledger chain
         run: npm run ledger:verify
+  standing:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version-file: '.nvmrc', cache: npm }
+      - run: npm ci
+      # Advisory: reports what each claim's evidence state is worth today.
+      # Never fails the build - making standing binding is a model change and
+      # belongs in a proposal, not in a CI file.
+      - name: Recompute standing (advisory)
+        run: npm run standing
   build:
     runs-on: ubuntu-latest
     steps:

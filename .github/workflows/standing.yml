@@ -1,0 +1,48 @@
+# A commit is not a clock.
+#
+# Standing decays because the world moves, not because the founder pushed. If
+# this only ran on push, the corpus would age at exactly the rate its author
+# happens to be working — which is the governance-at-rest failure the check was
+# written to catch, arriving through the side door.
+#
+# So it also runs nightly, and commits the log. The log is the only history a
+# pull model produces: standing itself is recomputed from scratch every time and
+# never stored on a record, so without this there would be no way to answer
+# "when did this claim go stale, and why".
+#
+# Advisory. It never fails the build and never edits a record.
+name: standing
+on:
+  schedule:
+    - cron: '17 9 * * *'   # 09:17 UTC daily — off the hour, cron is busiest there
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: standing
+  cancel-in-progress: false
+jobs:
+  recompute:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version-file: '.nvmrc', cache: npm }
+      - run: npm ci
+      - name: Recompute standing for every claim
+        run: npm run standing | tee /tmp/standing.txt
+      - name: Commit the log if it changed
+        run: |
+          git config user.name  "otcs-standing"
+          git config user.email "kinetic-trust@proton.me"
+          if git diff --quiet -- computed/standing-log.jsonl; then
+            echo "no change to the standing log"
+            exit 0
+          fi
+          git add computed/standing-log.jsonl
+          git commit -m "standing: nightly recompute $(date -u +%Y-%m-%d)
+
+          $(tail -c 2000 /tmp/standing.txt)"
+          git push
+      - name: Summary
+        run: cat /tmp/standing.txt >> "$GITHUB_STEP_SUMMARY"

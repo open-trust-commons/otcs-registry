@@ -3,25 +3,84 @@
   "$id": "otcs:claim",
   "title": "OTCS Claim Record",
   "type": "object",
-  "required": ["project", "class", "content", "date", "evidence_state", "maturity"],
+  "required": [
+    "project",
+    "class",
+    "content",
+    "date",
+    "evidence_state",
+    "maturity"
+  ],
   "additionalProperties": false,
   "properties": {
-    "project": { "type": "string" },
-    "class": { "enum": ["ORIGINALITY", "IMPLEMENTATION", "PERFORMANCE", "SECURITY", "INTEROPERABILITY", "STANDARDS", "DERIVATION", "ATTRIBUTION", "VALIDATION"] },
-    "content": { "type": "string", "minLength": 10 },
-    "date": { "type": "string", "format": "date" },
-    "source_artifact": { "type": "string" },
-    "evidence": { "type": "array", "items": { "type": "string" } },
-    "evidence_state": { "enum": ["SELF_ASSERTED", "DOCUMENTED", "REPRODUCIBLE", "INDEPENDENTLY_TESTED", "FIELD_OBSERVED", "DISPUTED", "RETRACTED"] },
-    "maturity": { "type": "integer", "minimum": 0, "maximum": 5 },
-    "relationship_to_prior": { "type": "string" },
-    "evaluator": { "type": "string" },
-    "evaluator_independence_disclosed": { "type": "boolean" },
+    "project": {
+      "type": "string"
+    },
+    "class": {
+      "enum": [
+        "ORIGINALITY",
+        "IMPLEMENTATION",
+        "PERFORMANCE",
+        "SECURITY",
+        "INTEROPERABILITY",
+        "STANDARDS",
+        "DERIVATION",
+        "ATTRIBUTION",
+        "VALIDATION"
+      ]
+    },
+    "content": {
+      "type": "string",
+      "minLength": 10
+    },
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "source_artifact": {
+      "type": "string"
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "evidence_state": {
+      "enum": [
+        "SELF_ASSERTED",
+        "DOCUMENTED",
+        "REPRODUCIBLE",
+        "INDEPENDENTLY_TESTED",
+        "FIELD_OBSERVED",
+        "DISPUTED",
+        "RETRACTED"
+      ]
+    },
+    "maturity": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 5
+    },
+    "relationship_to_prior": {
+      "type": "string"
+    },
+    "evaluator": {
+      "type": "string"
+    },
+    "evaluator_independence_disclosed": {
+      "type": "boolean"
+    },
     "evaluator_independence": {
       "type": "object",
       "description": "Independence is a condition at a moment, not a permanent property. Two parties independent when an evaluation ran may later enter a funding, employment, advisory, reciprocal-review, code-contribution or commercial relationship. That later relationship does not falsify the historical fact that the evaluation occurred under the earlier conditions, but it does change how the evaluation should be represented now. Recording only one of the two makes independence either falsely permanent or retroactively erased. Both are recorded.",
       "additionalProperties": false,
-      "required": ["assessed_at", "independent_at_assessment", "current_status", "current_status_as_of"],
+      "required": [
+        "assessed_at",
+        "independent_at_assessment",
+        "current_status",
+        "current_status_as_of"
+      ],
       "properties": {
         "assessed_at": {
           "type": "string",
@@ -33,7 +92,11 @@
           "description": "Whether the evaluator met the independence test in EVIDENCE-MODEL.md at assessed_at. This value is historical and is never edited; a later relationship creates a new current_status, it does not rewrite this."
         },
         "current_status": {
-          "enum": ["UNCHANGED", "RELATIONSHIP_FORMED_SINCE", "UNREVIEWED"],
+          "enum": [
+            "UNCHANGED",
+            "RELATIONSHIP_FORMED_SINCE",
+            "UNREVIEWED"
+          ],
           "description": "Standing now. UNCHANGED: re-checked, no qualifying relationship has formed. RELATIONSHIP_FORMED_SINCE: a qualifying relationship exists now that did not exist at assessment - the claim keeps its historical state and displays this alongside it. UNREVIEWED: not re-checked since assessment, which is an honest default and not a synonym for UNCHANGED."
         },
         "current_status_as_of": {
@@ -50,12 +113,27 @@
         {
           "if": {
             "type": "object",
-            "properties": { "current_status": { "const": "RELATIONSHIP_FORMED_SINCE" } },
-            "required": ["current_status"]
+            "properties": {
+              "current_status": {
+                "const": "RELATIONSHIP_FORMED_SINCE"
+              }
+            },
+            "required": [
+              "current_status"
+            ]
           },
-          "then": { "type": "object", "required": ["relationship_note"] }
+          "then": {
+            "type": "object",
+            "required": [
+              "relationship_note"
+            ]
+          }
         }
       ]
+    },
+    "otcs_version": {
+      "type": "string",
+      "description": "The vocabulary version this record was written under. VERSIONING.md section 4 says a record means what its coordinates meant under the otcs_version it declares, and a later vocabulary never reaches back. That rule was unenforceable for claims until this field existed: only the project manifest carried a version, so a claim had no way to declare which dictionary governed it. Found by running an external reviewer's break test against the live schema."
     }
   },
   "allOf": [
@@ -63,12 +141,51 @@
       "$comment": "INDEPENDENTLY_TESTED is the strongest state this model can express and the one most worth inflating. It may not be claimed without saying who evaluated, when independence was assessed, and where that independence stands today.",
       "if": {
         "type": "object",
-        "properties": { "evidence_state": { "const": "INDEPENDENTLY_TESTED" } },
-        "required": ["evidence_state"]
+        "properties": {
+          "evidence_state": {
+            "const": "INDEPENDENTLY_TESTED"
+          }
+        },
+        "required": [
+          "evidence_state"
+        ]
       },
       "then": {
         "type": "object",
-        "required": ["evaluator", "evaluator_independence"]
+        "required": [
+          "evaluator",
+          "evaluator_independence"
+        ]
+      }
+    },
+    {
+      "$comment": "States above DOCUMENTED assert that something outside the claim itself supports it. That assertion requires at least one evidence pointer.",
+      "if": {
+        "type": "object",
+        "properties": {
+          "evidence_state": {
+            "enum": [
+              "REPRODUCIBLE",
+              "INDEPENDENTLY_TESTED",
+              "FIELD_OBSERVED"
+            ]
+          }
+        },
+        "required": [
+          "evidence_state"
+        ]
+      },
+      "then": {
+        "type": "object",
+        "required": [
+          "evidence"
+        ],
+        "properties": {
+          "evidence": {
+            "type": "array",
+            "minItems": 1
+          }
+        }
       }
     }
   ]

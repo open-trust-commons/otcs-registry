@@ -1,12 +1,26 @@
+# Both claims were REPRODUCIBLE at maturity 2 with no evidence pointers, caught
+# 2026-08-03 when strong states began requiring at least one.
+#
+# The pointers could not be supplied. EVIDENCE-MODEL defines REPRODUCIBLE as
+# "an outsider can re-derive it from published material", and this project's own
+# manifest says "local repository; NOT yet published - no public canonical
+# artifact exists". Nothing an outsider could re-derive from exists, so the state
+# was inflated by one level and had been since the record was written.
+#
+# Downgraded to SELF_ASSERTED at maturity 1. The checks are real and they run;
+# what is missing is anyone outside being able to confirm that. If ktp-demo is
+# published, both claims can move back up in the same commit that adds the URL.
 - project: ktp-demo
   class: IMPLEMENTATION
   content: 22 automated checks including 7 pre-registered falsifiers pass, covering environment-only causation, trajectory accumulation (sleeper), monotone resistance, conservative uncertainty, silent containment, and record integrity.
   date: "2026-07-25"
-  evidence_state: REPRODUCIBLE
-  maturity: 2
+  otcs_version: "0.1"
+  evidence_state: SELF_ASSERTED
+  maturity: 1
 - project: ktp-demo
   class: SECURITY
   content: The decision record is tamper-evident (hash-chained); it is not tamper-proof, and cryptographic non-bypassability is out of scope.
   date: "2026-07-25"
-  evidence_state: REPRODUCIBLE
-  maturity: 2
+  otcs_version: "0.1"
+  evidence_state: SELF_ASSERTED
+  maturity: 1
