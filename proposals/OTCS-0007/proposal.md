@@ -4,7 +4,7 @@
 
 ## Provenance
 
-[PREMORTEM.md](../../PREMORTEM.md) §2 fails this project if there is *"no evidence that anyone uses the data to make a decision"*, evaluated 2027-07-29. The phrase is defined nowhere — it appears once in canonical text, restated in [FAQ.md](../../FAQ.md) §27.
+PREMORTEM.md §2 fails this project if there is *"no evidence that anyone uses the data to make a decision"*, evaluated 2027-07-29. The phrase is defined nowhere — it appears once in canonical text, restated in FAQ.md §27.
 
 This proposal defines it now, while the outcome is unknown. Amending a test in advance is legitimate; reinterpreting it in July 2027 is not, and the date is the entire defence. The grounds were prepared, the decisions made, and the draft adversarially pressure-tested on the public record in issue #6.
 
@@ -21,7 +21,7 @@ Four problems, all created by the missing definition:
 
 ### 1. Three separately-reported lines
 
-Criterion 3 is evaluated against three lines, counted and reported apart. [EVIDENCE-MODEL.md](../../EVIDENCE-MODEL.md) §4b already makes this move for a different pair — *"never use one to grade the other"* — and the vocabulary coordinate and the registry record are the same kind of pair.
+Criterion 3 is evaluated against three lines, counted and reported apart. EVIDENCE-MODEL.md §4b already makes this move for a different pair — *"never use one to grade the other"* — and the vocabulary coordinate and the registry record are the same kind of pair.
 
 | Line | Definition | Force |
 |---|---|---|
@@ -31,7 +31,7 @@ Criterion 3 is evaluated against three lines, counted and reported apart. [EVIDE
 
 Entry use excludes the founder's own records deliberately: reading `ktp`'s entry is reading the founder, and the founder can author entries designed to be depended on. The exclusion also makes the coupling in §4 literal rather than assumed.
 
-None of these lines is ever collapsed into a score or a rank ([NON-GOALS.md](../../NON-GOALS.md) §2, §5). They are counts of qualifying instances, reported side by side.
+None of these lines is ever collapsed into a score or a rank (NON-GOALS.md §2, §5). They are counts of qualifying instances, reported side by side.
 
 ### 2. Qualifying evidence — imported from issue #14's resolution
 
@@ -48,7 +48,7 @@ An instance never qualifies if it is:
 
 - the founder's paraphrase or summary of private correspondence, however substantive;
 - from a party contacted about evidence, unless the contact-log entry (below) predates the party's artifact;
-- from a party disqualified under [EVIDENCE-MODEL.md](../../EVIDENCE-MODEL.md) §3 independence — applied **pairwise**: the parties counted toward the two-party bar must be independent of the project *and of each other*, or RFC 6410's number imports without the property that made it worth importing. Stated plainly, because the discipline of this document is stating costs: a party with an advisory or collaborative relationship to this project fails §3 for these purposes, and that includes the parties closest to the project today.
+- from a party disqualified under EVIDENCE-MODEL.md §3 independence — applied **pairwise**: the parties counted toward the two-party bar must be independent of the project *and of each other*, or RFC 6410's number imports without the property that made it worth importing. Stated plainly, because the discipline of this document is stating costs: a party with an advisory or collaborative relationship to this project fails §3 for these purposes, and that includes the parties closest to the project today.
 
 **The founder is never the source and never the judge.** The founder may point at evidence; a complete contact log — every party contacted about evidence of use, dates and outcomes, identity redacted — is committed to the public record, and each entry must predate any artifact it could have produced, so selection is auditable. The instances themselves live in a public, challengeable file; the counts are computed from it and published, on the same pull-model pattern as the participation recompute (issue #14 §3), so the criterion can be found **met** — a finding of no qualifying evidence — without the founder's cooperation. Qualification rulings on contested instances belong to the evaluator; who that is remains issue #7's subject and is not decided here.
 
@@ -75,19 +75,19 @@ Instrument decisions are reported alongside whatever row obtains, and change not
 - **Choose the evaluator.** Issue #7. This proposal only requires that the counts be computable from a public instances file and that a finding of *no qualifying evidence* — the criterion met — needs nobody's permission.
 - **Recalibrate the clock or the 2-of-4 structure.** Issue #16, which this definition unblocks and sharpens.
 - **Grade anyone.** No individual is told, here or anywhere, whether their artifact or decision "counts" — the recompute makes the counts readable without anyone being told their standing (issue #17's rule).
-- **Score anything.** Three lines, kept apart, never a headline number ([NON-GOALS.md](../../NON-GOALS.md) §2, §5).
+- **Score anything.** Three lines, kept apart, never a headline number (NON-GOALS.md §2, §5).
 
 ## Impact on existing documents
 
-- [PREMORTEM.md](../../PREMORTEM.md) §2: criterion 3 gains a pointer to this definition; the criterion's wording is otherwise unchanged.
-- [FAQ.md](../../FAQ.md) §27: restates the criterion with the pointer.
+- PREMORTEM.md §2: criterion 3 gains a pointer to this definition; the criterion's wording is otherwise unchanged.
+- FAQ.md §27: restates the criterion with the pointer.
 - No schema change. No registry change. No effect on any project's record.
 
 **Review date.** This proposal's review date is set to 2027-08-01 — *after* the evaluation it governs — rather than the sibling convention of created + 6 months. Deliberate: a definition of the test coming up for revision while the recompute is publishing running counts would be amendment under partial outcome knowledge, the exact thing this proposal exists to prevent.
 
 ## Alternatives considered
 
-- **Entries-only (strict).** Rejected: converts the 2-of-4 threshold into 1-of-1 silently, on a ~318-day effective clock (OTCS-0004's ratification is held until 2026-09-14, and [REGISTERING.md](../../REGISTERING.md) recommends against registering before it).
+- **Entries-only (strict).** Rejected: converts the 2-of-4 threshold into 1-of-1 silently, on a ~318-day effective clock (OTCS-0004's ratification is held until 2026-09-14, and REGISTERING.md recommends against registering before it).
 - **Vocabulary counts toward survival (permissive).** Rejected: makes the prescribed failure response satisfy the survival test — the narrowing trap in full.
 - **Founder-collected attestations.** Rejected: selection precedes attestation; a quoted party is not independent evidence if the quoter chose the quotes.
 - **Named parties required.** Rejected: retroactively discards most of the existing parties, and issue #14 already rejected this shape for standing.
