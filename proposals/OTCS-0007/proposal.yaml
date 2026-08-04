@@ -1,0 +1,13 @@
+proposal_id: OTCS-0007
+title: What "uses the data to make a decision" means — three lines, counted apart
+class: constitutional
+phase: DRAFT
+author: Chris Perkins (nmcitra)
+sponsor: Chris Perkins (nmcitra)
+created: "2026-08-03"
+clock_start: "2026-08-03"
+review_date: "2027-08-01"
+affected_projects: []
+phase_history:
+  - { phase: SEED, date: "2026-08-03" }
+  - { phase: DRAFT, date: "2026-08-03" }
