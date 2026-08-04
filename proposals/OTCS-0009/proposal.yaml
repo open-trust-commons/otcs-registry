@@ -1,0 +1,13 @@
+proposal_id: OTCS-0009
+title: When the kill criteria are read — the recalibrated clock
+class: constitutional
+phase: DRAFT
+author: Chris Perkins (nmcitra)
+sponsor: Chris Perkins (nmcitra)
+created: "2026-08-04"
+clock_start: "2026-08-04"
+review_date: "2028-08-01"
+affected_projects: []
+phase_history:
+  - { phase: SEED, date: "2026-08-04" }
+  - { phase: DRAFT, date: "2026-08-04" }

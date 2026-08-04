@@ -4,7 +4,7 @@
 
 ## Provenance
 
-PREMORTEM.md §2 says the kill-criteria evaluation happens *"in the open"* and never says by whom. With no named party, the founder decides whether the founder succeeded — the self-grading this project exists to refuse, arriving at the one moment it is least defensible. The gap was worked as issue #7; the coverage list this proposal answers — who performs the evaluation, what standing they possess, what conflicts defeat independence, what evidence they must examine, what happens when evaluators disagree, the determination states and the challenge procedure — was supplied in architectural review, with the instruction that all of it be fixed **before the outcome becomes visible**. This proposal fixes it now, while the outcome is unknown. Amending a test in advance is legitimate; choosing an examiner in July 2027, when the answer is already visible, is not.
+PREMORTEM.md §2 says the kill-criteria evaluation happens *"in the open"* and never says by whom. With no named party, the founder decides whether the founder succeeded — the self-grading this project exists to refuse, arriving at the one moment it is least defensible. The gap was worked as issue #7; the coverage list this proposal answers — who performs the evaluation, what standing they possess, what conflicts defeat independence, what evidence they must examine, what happens when evaluators disagree, the determination states and the challenge procedure — was supplied in architectural review, with the instruction that all of it be fixed **before the outcome becomes visible**. This proposal fixes it now, while the outcome is unknown. Amending a test in advance is legitimate; choosing an examiner at evaluation time, when the answer is already visible, is not.
 
 ## The defect being repaired
 
@@ -56,7 +56,7 @@ Stated cost: a hostile, wrong determination also governs until its dispute resol
 
 ### 5. The failure-to-appear rule
 
-Silence must not default to a pass. On 2027-07-29:
+Silence must not default to a pass. At each evaluation date — the interim reading of 2027-07-29 and the final evaluation of 2028-07-29 (OTCS-0009):
 
 | Situation | Outcome |
 |---|---|
@@ -64,7 +64,7 @@ Silence must not default to a pass. On 2027-07-29:
 | Computed counts land on **survived**, no qualified determination filed | **`HELD`** — it never passes by default (CHARTER.md §12). The hold runs a 90-day clock |
 | The hold reaches 90 days with still no qualified determination | **The narrow executes** |
 
-The rationale, stated so it cannot be reinterpreted: fifteen months after first release, if nobody independent will even attest the public scoreboard, that absence is itself the no-community finding — made checkable instead of arguable. Survival is deliberately hostage to at least one outsider existing, because that is what §2 was always measuring.
+The rationale, stated so it cannot be reinterpreted: if, this long after first release, nobody independent will even attest the public scoreboard, that absence is itself the no-community finding — made checkable instead of arguable. Survival is deliberately hostage to at least one outsider existing, because that is what §2 was always measuring. At the interim date the computed outcomes are OTCS-0009's all-dark tripwire — narrow on total silence, continue otherwise — and this table applies to them unchanged; a continue extends nothing and needs no attestation, because it grants nothing.
 
 ### 6. The founder's role, bounded
 
@@ -74,7 +74,7 @@ The founder may point at evidence, must publish every filed determination verbat
 
 - **Accredit anyone.** No seat, no roster, no credential (NON-GOALS.md §12). Qualification is a disclosed fact per determination.
 - **Re-decide what counts as evidence.** OTCS-0007 owns the lines, the bar, and the matrix. This proposal only says who reads them.
-- **Recalibrate the clock or the criteria's structure.** Issue #16, which this proposal unblocks: recalibration now knows who reads the clock, and the hold-then-narrow rule means extending the clock never extends an unevaluated authority.
+- **Recalibrate the clock or the criteria's structure.** Issue #16, which this proposal unblocked — resolved as OTCS-0009, ratifying alongside this proposal: the final evaluation moves to 2028-07-29, the original date becomes an interim all-dark reading, and this proposal's machinery reads both.
 - **Tell anyone their standing.** No individual is approached about the role or told they would qualify (#17). The rule is published; whoever arrives, arrives.
 
 ## Impact on existing documents
@@ -83,7 +83,7 @@ The founder may point at evidence, must publish every filed determination verbat
 - FAQ.md §27: restates with the pointer.
 - No schema change to any project record. No registry change.
 
-**Review date.** 2027-08-01 — after the evaluation this proposal governs, for OTCS-0007's stated reason: the rules of a test must not come up for revision while the test is being scored.
+**Review date.** 2028-08-01 — after the final evaluation this proposal governs (2028-07-29, OTCS-0009), for OTCS-0007's stated reason: the rules of a test must not come up for revision while the test is being scored.
 
 ## Alternatives considered
 

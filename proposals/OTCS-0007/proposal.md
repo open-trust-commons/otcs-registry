@@ -4,7 +4,7 @@
 
 ## Provenance
 
-PREMORTEM.md §2 fails this project if there is *"no evidence that anyone uses the data to make a decision"*, evaluated 2027-07-29. The phrase is defined nowhere — it appears once in canonical text, restated in FAQ.md §27.
+PREMORTEM.md §2 fails this project if there is *"no evidence that anyone uses the data to make a decision"*, evaluated at the final kill-criteria evaluation — 2028-07-29 under OTCS-0009's recalibration (originally 2027-07-29, now the interim reading date). The phrase is defined nowhere — it appears once in canonical text, restated in FAQ.md §27.
 
 This proposal defines it now, while the outcome is unknown. Amending a test in advance is legitimate; reinterpreting it in July 2027 is not, and the date is the entire defence. The grounds were prepared, the decisions made, and the draft adversarially pressure-tested on the public record in issue #6.
 
@@ -58,7 +58,7 @@ An instance never qualifies if it is:
 
 The threshold is imported, not invented: **two qualifying instances from two parties independent of the project and of each other** (RFC 6410 §2.2's number — *"at least two independent interoperating implementations"*). A bar already written down cannot be quietly lowered later for a particular person.
 
-| Observable on 2027-07-29 | Criterion 3 | Pre-registered reading |
+| Observable at the final evaluation (2028-07-29, OTCS-0009) | Criterion 3 | Pre-registered reading |
 |---|---|---|
 | Entry use: ≥ 2 instances from ≥ 2 independent parties | **Defeated** | The registry's data is being used to decide things |
 | Entry use below bar · vocabulary use at the same bar | **Met** | **"Instrument works, registry unused"** — feeds §2's unchanged 2-of-4 / 3-of-4 arithmetic; *if* that arithmetic lands on narrow, the vocabulary evidence selects **which** narrow: the coordinate vocabulary as the published instrument, per §2's own prescription |
@@ -68,12 +68,12 @@ The matrix never overrides the arithmetic: three criteria met is a stop whatever
 
 Instrument decisions are reported alongside whatever row obtains, and change nothing in it.
 
-**The coupling, made explicit instead of silent:** this definition does not free criterion 3 from criterion 1 — it makes the dependency literal. With no external registrations there are no externally self-registered entries, entry use is impossible, and criterion 3 is met alongside criterion 1: two of four, an automatic narrow. What the matrix changes is that this arrives *visibly and pre-labelled*, not as a reinterpretation. Whether the criteria's structure or clock should change in light of the coupling is issue #16's question, deliberately left to it.
+**The coupling, made explicit instead of silent:** this definition does not free criterion 3 from criterion 1 — it makes the dependency literal. With no external registrations there are no externally self-registered entries, entry use is impossible, and criterion 3 is met alongside criterion 1: two of four, an automatic narrow. What the matrix changes is that this arrives *visibly and pre-labelled*, not as a reinterpretation. Whether the criteria's structure or clock should change in light of the coupling was issue #16's question — resolved as OTCS-0009: the coupled pair counts once toward the thresholds when zero external self-registrations exist, and the final evaluation moves to 2028-07-29 with an all-dark interim tripwire on the original date.
 
 ## What this proposal does not do
 
 - **Choose the evaluator.** Issue #7. This proposal only requires that the counts be computable from a public instances file and that a finding of *no qualifying evidence* — the criterion met — needs nobody's permission.
-- **Recalibrate the clock or the 2-of-4 structure.** Issue #16, which this definition unblocks and sharpens.
+- **Recalibrate the clock or the 2-of-4 structure.** Issue #16, which this definition unblocked and sharpened — resolved as OTCS-0009, ratifying alongside this proposal.
 - **Grade anyone.** No individual is told, here or anywhere, whether their artifact or decision "counts" — the recompute makes the counts readable without anyone being told their standing (issue #17's rule).
 - **Score anything.** Three lines, kept apart, never a headline number (NON-GOALS.md §2, §5).
 
@@ -83,7 +83,7 @@ Instrument decisions are reported alongside whatever row obtains, and change not
 - FAQ.md §27: restates the criterion with the pointer.
 - No schema change. No registry change. No effect on any project's record.
 
-**Review date.** This proposal's review date is set to 2027-08-01 — *after* the evaluation it governs — rather than the sibling convention of created + 6 months. Deliberate: a definition of the test coming up for revision while the recompute is publishing running counts would be amendment under partial outcome knowledge, the exact thing this proposal exists to prevent.
+**Review date.** This proposal's review date is set to 2028-08-01 — *after* the final evaluation it governs (2028-07-29, OTCS-0009) — rather than the sibling convention of created + 6 months. Deliberate: a definition of the test coming up for revision while the recompute is publishing running counts would be amendment under partial outcome knowledge, the exact thing this proposal exists to prevent.
 
 ## Alternatives considered
 
