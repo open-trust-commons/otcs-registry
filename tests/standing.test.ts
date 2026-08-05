@@ -138,6 +138,75 @@ describe("standing — the break test", () => {
     expect(reasons.length + defects.length).toBeGreaterThanOrEqual(3);
   });
 
+  // --- the fifth degradation: a referenced artifact superseded elsewhere ----
+  // Four of five were caught when this suite was written. The fifth could not
+  // be, because nothing in the corpus declared the dependency — a recompute
+  // only sees declared facts. `depends_on` is the declaration; these prove
+  // standing reads it.
+
+  const dep = {
+    identifier: "urn:example:falsifier-suite",
+    version: "2.1.0",
+    basis_hash: "sha256:" + "ab".repeat(32),
+  };
+
+  it("catches a declared dependency superseded elsewhere", () => {
+    const { state, reasons } = degrade({
+      depends_on: [{ ...dep, status: "SUPERSEDED", superseded_by: "urn:example:falsifier-suite@3.0.0" }],
+    });
+    expect(state).toBe("STALE");
+    expect(reasons.join(" ")).toMatch(/superseded by urn:example:falsifier-suite@3\.0\.0/);
+  });
+
+  it("catches a declared dependency retracted by its owner", () => {
+    const { state, reasons } = degrade({ depends_on: [{ ...dep, status: "RETRACTED" }] });
+    expect(state).toBe("STALE");
+    expect(reasons.join(" ")).toMatch(/retracted/i);
+  });
+
+  it("lets 'still CURRENT' age like every other positive assertion", () => {
+    const { state, reasons } = degrade({
+      depends_on: [{ ...dep, status: "CURRENT", status_as_of: "2024-01-01" }],
+    });
+    expect(state).toBe("POTENTIALLY_STALE");
+    expect(reasons.join(" ")).toMatch(/last verified \d+d ago/);
+  });
+
+  it("does not punish declaring — a fresh or unreviewed dependency stays clean", () => {
+    expect(degrade({ depends_on: [{ ...dep, status: "CURRENT", status_as_of: "2026-07-25" }] }).state).toBe("UNREVIEWED");
+    expect(degrade({ depends_on: [{ ...dep, status: "UNREVIEWED" }] }).state).toBe("UNREVIEWED");
+    expect(degrade({ depends_on: [dep] }).state).toBe("UNREVIEWED");
+  });
+
+  it("THE BREAK TEST GOES FIVE FOR FIVE", () => {
+    // Richard's full sequence: relationship formed, evidence withdrawn,
+    // referenced artifact superseded, coordinate meaning changed, nothing
+    // re-reviewed. Every degradation must surface — none may read clean.
+    const { state, reasons, defects } = assess(
+      {
+        ...structuredClone(strongest),
+        evidence: [],                                    // 2: evidence source withdrawn  → DEFECT
+        otcs_version: "0.0.9",                           // 4: meaning changed underneath → reason
+        depends_on: [{ ...dep, status: "SUPERSEDED" }],  // 3: artifact superseded        → reason (NEW)
+        evaluator_independence: {
+          ...strongest.evaluator_independence,
+          current_status: "RELATIONSHIP_FORMED_SINCE",   // 1: relationship formed        → reason
+          relationship_note: "paid contract",
+          current_status_as_of: "2025-01-01",            // 5: re-reviewed nothing        → reason
+        },
+      },
+      manifest,
+    );
+    expect(state).toBe("STALE"); // the supersession is the deepest cut
+    const all = reasons.join(" | ") + " || " + defects.join(" | ");
+    expect(all).toMatch(/relationship formed since/i);   // 1
+    expect(all).toMatch(/never supported/i);             // 2
+    expect(all).toMatch(/superseded/i);                  // 3
+    expect(all).toMatch(/differs from manifest/);        // 4
+    expect(all).toMatch(/independence last determined/i); // 5
+    expect(reasons.length + defects.length).toBeGreaterThanOrEqual(5);
+  });
+
   it("never raises standing — a weak declared state is not promoted", () => {
     // The machine only ever lowers. A SELF_ASSERTED claim with everything in
     // order still comes back UNREVIEWED, not something stronger.

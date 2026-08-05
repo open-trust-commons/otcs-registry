@@ -1,0 +1,13 @@
+# INVALID: a dependency without a basis hash. Identifier and version alone
+# name a moving target; the hash is what makes "the same artifact" checkable
+# rather than asserted (the in-toto/SLSA lesson the field imports).
+project: ktp
+class: VALIDATION
+content: The falsifier suite passes against the published reference vectors.
+date: "2026-07-25"
+otcs_version: "0.1.0"
+evidence_state: DOCUMENTED
+maturity: 2
+depends_on:
+  - identifier: urn:example:reference-vectors
+    version: "1.4.0"
