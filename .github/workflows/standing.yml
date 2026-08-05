@@ -31,18 +31,22 @@ jobs:
       - run: npm ci
       - name: Recompute standing for every claim
         run: npm run standing | tee /tmp/standing.txt
-      - name: Commit the log if it changed
+      - name: Commit the log to the standing-log branch
+        # main refuses bot commits (GH013 repository rules), discovered when the
+        # first nightly run failed. The log therefore lives on an unprotected
+        # data branch; main's copy advances when the maintainer's own runs
+        # commit it. History is preserved on the branch either way.
         run: |
           git config user.name  "otcs-standing"
           git config user.email "kinetic-trust@proton.me"
-          if git diff --quiet -- computed/standing-log.jsonl; then
+          git fetch origin standing-log:standing-log 2>/dev/null || true
+          git checkout -B standing-log
+          git add computed/standing-log.jsonl
+          if git diff --cached --quiet; then
             echo "no change to the standing log"
             exit 0
           fi
-          git add computed/standing-log.jsonl
-          git commit -m "standing: nightly recompute $(date -u +%Y-%m-%d)
-
-          $(tail -c 2000 /tmp/standing.txt)"
-          git push
+          git commit -m "standing: nightly recompute $(date -u +%Y-%m-%d)"
+          git push origin standing-log
       - name: Summary
         run: cat /tmp/standing.txt >> "$GITHUB_STEP_SUMMARY"
