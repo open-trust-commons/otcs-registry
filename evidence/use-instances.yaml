@@ -1,0 +1,18 @@
+# Use-evidence instances — the public, challengeable file behind PREMORTEM.md §2
+# criterion 3, as defined by OTCS-0007.
+#
+# Each item is one CANDIDATE instance of entry use, vocabulary use, or an
+# instrument decision, with the facts a qualification ruling needs. Anyone may
+# add a candidate by pull request, including against the project's interest.
+# Rulings belong to a qualified standing determination (OTCS-0008) — never to
+# whoever recorded the instance, and never to the founder.
+#
+# The recompute (npm run use-evidence) publishes CONSERVATIVE counts: an
+# instance counts only when ruled QUALIFIED, an instance never ruled on counts
+# as not qualifying, and a contested instance is excluded until ruled. Every
+# evidence line starts at zero — including this file, which starts empty.
+# The external accounts that existed before this file was created do not
+# qualify as they stand (OTCS-0007 §2, stated cost) and are not seeded here.
+#
+# Schema: schemas/use-instance.schema.json
+[]

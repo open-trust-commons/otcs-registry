@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://opentrustcommons.org/schemas/use-instance.schema.json",
+  "title": "Use-evidence instance (OTCS-0007)",
+  "description": "One candidate instance of entry use, vocabulary use, or an instrument decision, with the facts a qualification ruling needs. The file is public and challengeable; rulings on contested instances belong to a qualified standing determination (OTCS-0008), never to this schema. Conservative counting is the recompute's job: an instance counts only when ruled QUALIFIED, and an instance never ruled on counts as not qualifying.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["instance_id", "line", "party", "party_artifact_url", "artifact_date", "claim", "recorded", "ruling"],
+  "properties": {
+    "instance_id": {
+      "type": "string",
+      "pattern": "^UI-[0-9]{4}$",
+      "description": "Stable id, assigned in file order, never reused."
+    },
+    "line": {
+      "type": "string",
+      "enum": ["entry_use", "vocabulary_use", "instrument_decision"],
+      "description": "The OTCS-0007 line this instance is a candidate for. Lines are counted apart and never collapsed (NON-GOALS.md §2, §5)."
+    },
+    "party": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The party as they publicly identify — a handle is fine, a name is not required (issue #14)."
+    },
+    "party_artifact_url": {
+      "type": "string",
+      "format": "uri",
+      "description": "The party's own published artifact, on their own infrastructure or a public record under their own account. The founder's paraphrase of correspondence never qualifies (OTCS-0007 §2)."
+    },
+    "artifact_date": {
+      "type": "string",
+      "format": "date",
+      "description": "The artifact's own published date."
+    },
+    "claim": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 2000,
+      "description": "What this instance claims happened, stated so a stranger can check it against the artifact."
+    },
+    "registry_entry": {
+      "type": "string",
+      "description": "entry_use only: the registry entry the decision turned on. Must be an externally self-registered project — the founder's own entries are excluded as targets (OTCS-0007 §1)."
+    },
+    "entry_dependence_evidence": {
+      "type": "string",
+      "description": "entry_use only: the party's dated statement published before the outcome was known, or the diff in their artifact traceable to the entry — 'would have differed' is otherwise unfalsifiable (OTCS-0007 §2)."
+    },
+    "independence_status": {
+      "type": "string",
+      "enum": ["ASSERTED_INDEPENDENT", "RELATIONSHIP_DISCLOSED", "UNASSESSED"],
+      "default": "UNASSESSED",
+      "description": "EVIDENCE-MODEL.md §3, applied pairwise at ruling time. This field records the disclosed starting point; the ruling decides."
+    },
+    "contact_ref": {
+      "type": ["string", "null"],
+      "pattern": "^UC-[0-9]{4}$",
+      "description": "If the party was ever contacted about evidence of use: the contact-log entry. The recompute excludes any instance whose contact entry does not predate the party's artifact."
+    },
+    "recorded": { "type": "string", "format": "date" },
+    "recorded_by": { "type": "string" },
+    "ruling": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["UNRULED", "QUALIFIED", "NOT_QUALIFIED", "CONTESTED"],
+          "description": "UNRULED and CONTESTED both count as not qualifying — every ambiguity resolves against the project (OTCS-0008)."
+        },
+        "by": { "type": "string", "description": "The determination that ruled, by reference — never the founder (OTCS-0007 §2)." },
+        "date": { "type": "string", "format": "date" },
+        "reasons": { "type": "string" }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "line": { "const": "entry_use" } } },
+      "then": { "required": ["registry_entry", "entry_dependence_evidence"] }
+    }
+  ]
+}
