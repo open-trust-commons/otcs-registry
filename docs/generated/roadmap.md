@@ -3,7 +3,7 @@
 
 # Roadmap
 
-!!! note "Measured 2026-08-03, not asserted"
+!!! note "Measured 2026-08-05, not asserted"
     Commons stage **C0 — Seed**.
     **1** qualifying active project(s) of 8 records ·
     **1** independent steward(s) · 0 project class(es).

@@ -25,7 +25,7 @@ urn:otcs:claim:ktp:zeroth-law:1
 urn:otcs:relationship:tameautonomy-builds-on-ktp:1
 urn:otcs:proposal:0002
 urn:otcs:decision:0002:1
-urn:otcs:object:nc25-evolution-domain:1
+urn:otcs:object:ex-ledgerline-scope:1
 ```
 
 Once a domain exists these resolve as `https://<domain>/id/project/ktp`.
