@@ -48,7 +48,7 @@ const GROUPS: Array<{ title: string; note: string; files: string[] }> = [
   { title: "Integrity and operations", note: "Keeping the record verifiable by parties who do not trust us.",
     files: ["RUNBOOK.md", "SECURITY.md", "ANCHORING.md", "INCIDENT-RESPONSE.md", "HOSTING-AND-MIRRORS.md", "SYNC-POLICY.md", "FEDERATION.md", "ACCESSIBILITY.md", "SUSTAINABILITY.md", "PREMORTEM.md"] },
   { title: "Contributing", note: "How to take part.",
-    files: ["REGISTERING.md", "CONTRIBUTING.md", "CODE_OF_CONDUCT.md", "DCO.md", "IPR-POLICY.md"] },
+    files: ["BOUNDARY-STATEMENTS.md", "REGISTERING.md", "CONTRIBUTING.md", "CODE_OF_CONDUCT.md", "DCO.md", "IPR-POLICY.md"] },
 ];
 
 /**
