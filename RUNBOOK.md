@@ -29,6 +29,8 @@ npm run build:site       # deterministic — same input, byte-identical output
 
 **All five must pass on a fresh clone.** If any fails on an untouched checkout, stop and fix that before doing operator work — you cannot tell your own changes from a pre-existing fault otherwise.
 
+**`main` is pull-request-only.** The branch ruleset bounces direct pushes — including the operator's. Every change, however small, arrives as a branch and a pull request with the checks green.
+
 ## 2. The recurring work
 
 ### Someone wants their project listed
@@ -54,6 +56,17 @@ issue or pull request → does it meet the record rules? → checks pass? → me
 
 Corrections are **new records**. Nothing is edited in place, and history is annotated rather than rewritten ([PRIVACY.md](PRIVACY.md) §3, [OWNER-RESPONSE-POLICY.md](OWNER-RESPONSE-POLICY.md) §5).
 
+### A collaborator acts on an open invitation
+
+Open invitations exist — a validate-first offer, questions asked in correspondence. When someone acts on one, the response path is fixed in advance so nothing is improvised:
+
+| Question | Answer |
+|---|---|
+| Who runs what | **They do.** The gate in §1 runs on any clone with no credentials — `npm run validate`, `npm test`, `npm run ledger:verify`, `npm run coherence`, `npm run build:site`. Nothing they can verify requires the operator's participation, and the operator running it for them would defeat the point |
+| What gets recorded | **Their own words, published by them** — an issue on this repository, or an artifact on their own infrastructure, under their name or a handle. What they publish is the record; a summary written here of what they privately said is not one ([COMMUNICATIONS.md](COMMUNICATIONS.md) §7) |
+| What stays out of the record | Everything that arrived in correspondence and was never published by its author. It has no governance force, is not paraphrased into any record, and is not counted as evidence of anything |
+| What they are told | The same sentence everyone is told: a claim, objection, agreement or decision carries no force until it enters the public record; here is where it goes; a handle is fine. **Nothing about their standing** — the recomputes make standing readable without anyone being told their position |
+
 ### A project has gone quiet
 
 ```bash
@@ -68,7 +81,7 @@ A lapsed confirmation shows `OWNER_CONFIRMATION_STALE`. **The record stays publi
 draft → its clock starts → discussion → ballots → decision record → merge
 ```
 
-- The clock is set by consequence class ([GOVERNANCE.md](GOVERNANCE.md) §3)
+- The clock is set by consequence class ([GOVERNANCE.md](GOVERNANCE.md) §3); every open proposal's clock and next transition are tabulated in `proposals/CALENDAR.md`
 - **You cannot shorten a clock by merging.** Nor can you decide a proposal was valid when the process says otherwise ([MAINTAINERS.md](MAINTAINERS.md) §3)
 - Every ballot is a signed file, not a click ([VOTING.md](VOTING.md) §9)
 - **Process validity is determined separately from the vote total.** A proposal can pass and still be invalid

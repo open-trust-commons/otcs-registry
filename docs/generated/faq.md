@@ -85,7 +85,9 @@ A project's own registry entry currently falls into a broader licence than inten
 
 ### 14. What can I do meanwhile?
 
-Publish your `otcs.yaml` at your own URL and have it validated against the live schema. Nothing enters the registry, your copy stays canonical, and you find out where the vocabulary breaks against your architecture before committing to anything. [REGISTERING.md](registering.md) walks through the record itself.
+The smallest act is a **boundary statement** — a few lines of prose in vocabulary terms saying what your system does and where it stops, published on your own infrastructure, entering nothing anywhere. [BOUNDARY-STATEMENTS.md](boundary-statements.md) teaches it in one page, including what to do when the vocabulary cannot hold your architecture.
+
+Beyond that: publish your `otcs.yaml` at your own URL and have it validated against the live schema. Nothing enters the registry, your copy stays canonical, and you find out where the vocabulary breaks against your architecture before committing to anything. [REGISTERING.md](registering.md) walks through the record itself.
 
 ### 15. What happens after I submit?
 
