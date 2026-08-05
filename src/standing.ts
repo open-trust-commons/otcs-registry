@@ -145,6 +145,25 @@ export function assess(claim: Doc, manifest: Doc): { state: State; reasons: stri
       drop("POTENTIALLY_STALE", `${claim.evidence_state} but the project declares no public canonical artifact`);
   }
 
+  // --- declared dependencies (the fifth break) -------------------------------
+  // A recompute can only see declared facts. Before `depends_on` existed, a
+  // claim resting on an artifact superseded elsewhere read as current forever
+  // — four of the break test's five degradations were caught, and this one was
+  // not, because nothing in the corpus said the dependency existed. The
+  // declaration gives the supersession somewhere to land; this reads it.
+  for (const dep of (claim.depends_on ?? []) as Doc[]) {
+    const id = dep.identifier ?? "unnamed dependency";
+    if (dep.status === "SUPERSEDED")
+      drop("STALE", `dependency ${id} superseded${dep.superseded_by ? ` by ${dep.superseded_by}` : ""} — claim not re-reviewed against the successor`);
+    if (dep.status === "RETRACTED")
+      drop("STALE", `dependency ${id} was retracted by its owner`);
+    if (dep.status === "CURRENT" && daysSince(dep.status_as_of) > interval)
+      drop("POTENTIALLY_STALE", `dependency ${id} last verified ${daysSince(dep.status_as_of)}d ago`);
+    // UNREVIEWED or absent: the honest default. It neither lowers nor
+    // launders — the claim's clean floor is already UNREVIEWED, and punishing
+    // a declaration would teach records not to declare.
+  }
+
   // --- the project underneath the claim -------------------------------------
   const rs = manifest.project?.record_state;
   if (rs && rs !== "registered") drop("STALE", `project record_state is ${rs}`);

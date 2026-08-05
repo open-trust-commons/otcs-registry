@@ -1,0 +1,15 @@
+# INVALID: status CURRENT without status_as_of. "Still current" is a positive
+# assertion someone checked; without its date it is UNREVIEWED wearing a
+# better label, and the schema refuses the shape.
+project: ktp
+class: VALIDATION
+content: The falsifier suite passes against the published reference vectors.
+date: "2026-07-25"
+otcs_version: "0.1.0"
+evidence_state: DOCUMENTED
+maturity: 2
+depends_on:
+  - identifier: urn:example:reference-vectors
+    version: "1.4.0"
+    basis_hash: sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    status: CURRENT

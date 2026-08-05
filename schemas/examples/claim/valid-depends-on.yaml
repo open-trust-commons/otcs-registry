@@ -1,0 +1,23 @@
+# VALID: the claim declares what it rests on — identifier, version, basis
+# hash — and records where each dependency stands today. The supersession is
+# recorded, not hidden; standing (not the schema) decides what it costs.
+project: ktp
+class: VALIDATION
+content: The falsifier suite passes against the published reference vectors.
+date: "2026-07-25"
+otcs_version: "0.1.0"
+evidence:
+  - urn:otcs:evidence:suite-run-2026-07
+evidence_state: DOCUMENTED
+maturity: 2
+depends_on:
+  - identifier: urn:example:reference-vectors
+    version: "1.4.0"
+    basis_hash: sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    status: CURRENT
+    status_as_of: "2026-07-25"
+  - identifier: https://example.invalid/spec
+    version: "2.0"
+    basis_hash: sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+    status: SUPERSEDED
+    superseded_by: https://example.invalid/spec/v3

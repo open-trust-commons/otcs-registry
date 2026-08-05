@@ -64,6 +64,18 @@ npm run validate     # a stale value now fails the enum; 0 failures means done
 
 Every other change during incubation was additive. **No other record changed meaning.**
 
+### v0.1.x — claims gain an optional `depends_on` declaration *(additive)*
+
+**Affected:** `schemas/claim.schema.json` (new optional field), `src/standing.ts` (reads it). No existing record changes and none needs to.
+
+**Why:** an external break test degraded the strongest claim in the corpus five ways; four were caught and the fifth — a referenced artifact superseded elsewhere — was not, because nothing in the corpus declared the dependency and a recompute can only see declared facts. A claim may now declare what it rests on by identifier, version, and basis hash (the in-toto/SLSA shape, per the prior-art research on `research/vocabulary-adoption`), and `standing` reads the declaration: `SUPERSEDED`/`RETRACTED` lower standing to STALE, an aged `CURRENT` decays like every other positive assertion, and an undeclared or unreviewed dependency neither lowers nor launders.
+
+**Steps:** none required. Additive optional field — a minor change under [VERSIONING.md](VERSIONING.md) §2, recorded here anyway because `claim` is one of the four schemas named in the `stable_schemas` v1.0 criterion, whose bake period this resets (see `roadmap/releases/1.0.0.yaml`).
+
+**Verification:** `npm run validate` (fixtures cover the field both directions) and `npm test` (the break test now goes five for five in `tests/standing.test.ts`).
+
+**Backout:** remove the field from the schema and the `depends_on` block from `src/standing.ts`. No record depends on it until someone declares a dependency; after that, backing out re-opens the fifth break and should be flagged as doing so.
+
 ## 3. Pending
 
 | Version | What it carries |

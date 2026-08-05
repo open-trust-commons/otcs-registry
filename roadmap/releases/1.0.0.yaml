@@ -27,15 +27,23 @@ criteria:
     # use producing no correction, not merely no complaints.
     stable_schemas: { required: [project-manifest, relationship, claim, analysis],
       met_when: "a ratified proposal declares these four frozen pending v1.0.0, opened only after a bake period with zero corrections",
-      bake_period_started: "2026-08-03",
-      last_correction: "2026-08-03",
+      bake_period_started: "2026-08-05",
+      last_correction: "2026-08-05",
       state: in_progress }
-    # Bake period reset 2026-08-03 by a correction to claim.schema.json:
-    # evaluator_independence_disclosed was a bare boolean, so INDEPENDENTLY_TESTED
-    # - the strongest state the model can express - could be claimed with no
-    # evaluator, no assessment date, and no current standing. Independence was
-    # therefore permanent by construction. Found in architectural review by
-    # Richard Lynes (Genesis AiX), not by inspection from inside.
+    # Bake period reset 2026-08-05 by an addition to claim.schema.json: the
+    # optional depends_on declaration (identifier, version, basis_hash), which
+    # closes the fifth break from the same external review - a referenced
+    # artifact superseded elsewhere was invisible to standing because nothing
+    # in the corpus declared the dependency. Additive and optional, so no
+    # record changes - but claim is one of the four schemas this criterion
+    # names, and a bake period that ignores additions to the very schemas it
+    # is baking would be measuring only part of the surface.
+    # Prior reset 2026-08-03, same review: evaluator_independence_disclosed
+    # was a bare boolean, so INDEPENDENTLY_TESTED - the strongest state the
+    # model can express - could be claimed with no evaluator, no assessment
+    # date, and no current standing. Independence was therefore permanent by
+    # construction. Found in architectural review by Richard Lynes
+    # (Genesis AiX), not by inspection from inside.
     # The reset is the cost of the fix and is not negotiable: a bake period
     # that survives its own corrections would be measuring nothing.
     deterministic_dual_host_build: { required: true, state: unmet }
