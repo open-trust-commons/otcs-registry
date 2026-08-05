@@ -1,0 +1,12 @@
+# Invalid: entry_use without entry_dependence_evidence — "would have differed"
+# is unfalsifiable without it (OTCS-0007 §2), so the schema refuses the shape.
+instance_id: UI-0002
+line: entry_use
+party: example-handle
+party_artifact_url: https://example.invalid/decision-post
+artifact_date: "2027-03-01"
+claim: They picked a dependency because of a registry entry, allegedly.
+registry_entry: some-external-project
+recorded: "2027-03-02"
+ruling:
+  status: UNRULED

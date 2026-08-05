@@ -1,0 +1,17 @@
+# Contact log — every party contacted about evidence of use, before any
+# approach ever happens. That ordering is the point (OTCS-0007 §2): an
+# instance from a contacted party qualifies only if its log entry predates
+# the party's artifact, so evidence selection is auditable after the fact.
+#
+# This file was created EMPTY, before any approach about evidence of use had
+# been made. If an approach is ever made without an entry landing here first,
+# any instance it produces is excluded by the recompute — mechanically, not
+# as a judgment call.
+#
+# Identity is redacted by construction: parties appear as opaque refs
+# (P-0001, …), never as names or handles. A party who later publishes an
+# instance themselves names themselves however they choose, in their own
+# artifact; this log never does it for them.
+#
+# Schema: schemas/use-contact.schema.json
+[]

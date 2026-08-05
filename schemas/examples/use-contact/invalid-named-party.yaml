@@ -1,0 +1,9 @@
+# Invalid: party_ref must be an opaque P-NNNN reference, never a name or
+# handle — identity is redacted in this log by construction.
+contact_id: UC-0002
+date: "2026-09-02"
+channel: email
+party_ref: jane-doe-at-example
+initiated_by: project
+about: Asked about evidence of use.
+outcome: Declined.
