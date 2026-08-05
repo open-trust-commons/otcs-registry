@@ -93,6 +93,7 @@ Keeping the record verifiable by parties who do not trust us.
 
 How to take part.
 
+- [Stating where your thing stops](boundary-statements.md)
 - [How to get your project listed](registering.md)
 - [How to take part](contributing.md)
 - [Code of conduct](code-of-conduct.md)
