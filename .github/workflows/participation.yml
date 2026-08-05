@@ -1,0 +1,50 @@
+# The trigger the destination depends on, watched by a machine.
+#
+# CHARTER.md §7's stage-2 trigger is sustained public participation, and issue
+# #14 resolved that it is COMPUTED rather than noticed — the founder cannot be
+# the party who decides whether it fired, cannot fail to notice, and cannot
+# delay noticing. A recompute that only ran when someone remembered would put
+# the noticing back in a person's hands. So it runs nightly, like standing.
+#
+# Advisory. It never fails the build, never edits a record, and appoints
+# nobody. It reports each actor's public trail against the published bar.
+name: participation
+on:
+  schedule:
+    - cron: '43 9 * * *'   # daily, off the hour, offset from standing's 09:17
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: participation
+  cancel-in-progress: false
+jobs:
+  recompute:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version-file: '.nvmrc', cache: npm }
+      - run: npm ci
+      - name: Recompute each actor's public trail
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run participation | tee /tmp/participation.txt
+      - name: Commit the log to the participation-log branch
+        # Same pattern as standing.yml, same reason: main refuses bot commits
+        # (GH013), so the log lives on an unprotected data branch and main's
+        # copy advances when the maintainer's own runs commit it.
+        run: |
+          git config user.name  "otcs-participation"
+          git config user.email "kinetic-trust@proton.me"
+          git fetch origin participation-log:participation-log 2>/dev/null || true
+          git checkout -B participation-log
+          git add computed/participation-log.jsonl
+          if git diff --cached --quiet; then
+            echo "no change to the participation log"
+            exit 0
+          fi
+          git commit -m "participation: nightly recompute $(date -u +%Y-%m-%d)"
+          git push origin participation-log
+      - name: Summary
+        run: cat /tmp/participation.txt >> "$GITHUB_STEP_SUMMARY"

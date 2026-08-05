@@ -134,6 +134,59 @@
     "otcs_version": {
       "type": "string",
       "description": "The vocabulary version this record was written under. VERSIONING.md section 4 says a record means what its coordinates meant under the otcs_version it declares, and a later vocabulary never reaches back. That rule was unenforceable for claims until this field existed: only the project manifest carried a version, so a claim had no way to declare which dictionary governed it. Found by running an external reviewer's break test against the live schema."
+    },
+    "depends_on": {
+      "type": "array",
+      "description": "What this claim rests on, declared by identifier, version, and basis hash — the shape in-toto and SLSA use for the same problem (research/vocabulary-adoption, and the external reviewer's principle: every governed object declares its authoritative dependencies by identifier, version, and basis hash). Optional and additive: a claim without it validates exactly as before. The point of declaring is that standing can then read the declaration — a superseded or retracted dependency has somewhere to be recorded, and a recompute can see it. Without a declaration, a claim resting on an artifact superseded elsewhere reads as current forever, which was the one break of five the corpus could not catch.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["identifier", "version", "basis_hash"],
+        "properties": {
+          "identifier": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The artifact this claim rests on — a URL, URN, or other stable name a stranger can resolve or recognise."
+          },
+          "version": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The exact version relied on. 'Latest' is not a version; the claim rested on something specific."
+          },
+          "basis_hash": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$",
+            "description": "sha256 of the artifact as relied upon. The hash is what makes 'the same artifact' checkable rather than asserted."
+          },
+          "status": {
+            "enum": ["CURRENT", "SUPERSEDED", "RETRACTED", "UNREVIEWED"],
+            "description": "Where the dependency stands now. CURRENT: re-checked, still the governing version. SUPERSEDED: a successor exists — the claim's standing decays until re-reviewed against it. RETRACTED: the artifact was withdrawn by its owner. UNREVIEWED: never re-checked since declaration, which is an honest default and not a synonym for CURRENT. Updating this field is a new fact about the world, not an edit to history — the declaration itself never changes."
+          },
+          "status_as_of": {
+            "type": "string",
+            "format": "date",
+            "description": "When status was last determined. Required alongside CURRENT so that 'still current' cannot silently age into a claim nobody has verified for years."
+          },
+          "superseded_by": {
+            "type": "string",
+            "description": "The successor's identifier, when known. Lets a re-review start from the right place."
+          },
+          "note": {
+            "type": "string"
+          }
+        },
+        "allOf": [
+          {
+            "$comment": "CURRENT is a positive assertion someone checked. It requires its date, or it is UNREVIEWED wearing a better label.",
+            "if": {
+              "type": "object",
+              "properties": { "status": { "const": "CURRENT" } },
+              "required": ["status"]
+            },
+            "then": { "type": "object", "required": ["status_as_of"] }
+          }
+        ]
+      }
     }
   },
   "allOf": [
