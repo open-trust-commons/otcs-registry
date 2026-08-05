@@ -147,6 +147,19 @@ if (existsSync(profDir)) {
   }
 }
 
+// Use-evidence records (OTCS-0007). Both files are lists and both start
+// empty — an empty file is the honest state and validates. The recompute
+// (src/use-evidence.ts) does the counting; this only proves the shapes.
+for (const [file, schema] of [
+  ["evidence/use-instances.yaml", "use-instance"],
+  ["evidence/contact-log.yaml", "use-contact"],
+] as const) {
+  const p = join(ROOT, file);
+  if (!existsSync(p)) continue;
+  const items = (parse(readFileSync(p, "utf8")) as Doc[]) ?? [];
+  items.forEach((item, i) => check(schema, item, true, `${file}[${i}]`));
+}
+
 // Release decision records. RELEASE-GOVERNANCE.md §6 says a release whose
 // decision cannot be reconstructed from its record did not follow the process —
 // so the record is checked like everything else rather than trusted as prose.

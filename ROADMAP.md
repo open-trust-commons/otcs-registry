@@ -57,7 +57,7 @@ A small number of projects described in the shared vocabulary, published so anyo
 | What gets listed | [REGISTRY-POLICY.md](REGISTRY-POLICY.md), [EVIDENCE-MODEL.md](EVIDENCE-MODEL.md), [QUALIFYING-PROJECTS.md](QUALIFYING-PROJECTS.md) |
 | What we refuse to do | [NON-GOALS.md](NON-GOALS.md), [BADGE-AND-CLAIMS-POLICY.md](BADGE-AND-CLAIMS-POLICY.md), [ACCEPTABLE-USE.md](ACCEPTABLE-USE.md) |
 | The vocabulary | `docs/coordinate-system.md`, [LAYERS.md](LAYERS.md) |
-| Checkable formats | 10 files under `schemas/`, plus 3 under `schemas/wire/` |
+| Checkable formats | 12 files under `schemas/`, plus 3 under `schemas/wire/` |
 | Handoff points | 10 files under `interfaces/` |
 | The first entries | 7 under `registry/projects/` — 3 real, 4 written as examples |
 | The tools | `npm run validate`, `npm test`, `npm run ledger:verify` |

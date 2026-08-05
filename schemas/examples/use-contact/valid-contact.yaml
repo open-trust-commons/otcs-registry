@@ -1,0 +1,8 @@
+# A contact-log entry: opaque party ref, kind of channel, no identity.
+contact_id: UC-0001
+date: "2026-09-01"
+channel: direct message
+party_ref: P-0001
+initiated_by: project
+about: Asked whether their published integration notes constitute an artifact they would want recorded.
+outcome: No reply.

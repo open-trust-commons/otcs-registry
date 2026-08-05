@@ -1,0 +1,17 @@
+# A qualifying-shaped vocabulary-use candidate: the party's own artifact,
+# dated, ruled by a determination. Fictional throughout.
+instance_id: UI-0001
+line: vocabulary_use
+party: example-handle
+party_artifact_url: https://example.invalid/spec
+artifact_date: "2027-01-10"
+claim: Their published specification binds its scope in OTCS coordinates and names the registry as the term source.
+independence_status: UNASSESSED
+contact_ref: null
+recorded: "2027-01-11"
+recorded_by: anyone-at-all
+ruling:
+  status: QUALIFIED
+  by: determination-2027-001
+  date: "2027-02-01"
+  reasons: Own artifact, own infrastructure, dated, names OTCS.
