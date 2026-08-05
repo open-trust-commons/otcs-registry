@@ -54,6 +54,20 @@ jobs:
       # belongs in a proposal, not in a CI file.
       - name: Recompute standing (advisory)
         run: npm run standing
+  participation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version-file: '.nvmrc', cache: npm }
+      - run: npm ci
+      # Advisory: each actor's public trail against the #14 bar. Never fails
+      # the build and appoints nobody - applying the result is a governance
+      # act, not a CI step.
+      - name: Recompute participation (advisory)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run participation
   build:
     runs-on: ubuntu-latest
     steps:

@@ -20,7 +20,8 @@
     "anchor:stamp": "tsx src/anchor.ts stamp",
     "generate:docs": "tsx src/generate-docs.ts",
     "coherence": "tsx src/coherence.ts",
-    "standing": "tsx src/standing.ts"
+    "standing": "tsx src/standing.ts",
+    "participation": "tsx src/participation.ts"
   },
   "devDependencies": {
     "ajv": "^8.17.0",
