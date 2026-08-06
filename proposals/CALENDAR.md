@@ -9,7 +9,7 @@ Nobody owns advancing the proposals unless a page says who and when. This page m
 | Proposal | Class | Phase | Next transition | Earliest legal decision |
 |---|---|---|---|---|
 | OTCS-0000 — constitutional documents | constitutional | OPERATION | REVIEW at its review date | 2027-01-25 (review) |
-| OTCS-0001 — v0.1 registry seed records | registry_update | RATIFICATION | **Decision record — overdue.** Clock (3–7 days from 2026-07-25) elapsed by 2026-08-01 | elapsed |
+| OTCS-0001 — v0.1 registry seed records | registry_update | **OPERATION** | Decision recorded 2026-08-05 (late, disclosed): RATIFIED / ALLOW | review 2026-10-25 |
 | OTCS-0002 — lifecycle, typing, legend, evidence classes | model_revision | DRAFT | DELIBERATION → RATIFICATION | 2026-09-09 |
 | OTCS-0003 — three-layer split of the coordinate vector | model_revision | DRAFT | DELIBERATION → RATIFICATION | 2026-09-10 |
 | OTCS-0004 — entry licensing | model_revision | DRAFT | DELIBERATION → RATIFICATION | 2026-09-14 |
@@ -31,7 +31,7 @@ Dates are computed as `clock_start` + the floor of the proposal's `GOVERNANCE.md
 
 **Per-proposal notes.**
 
-- **OTCS-0001** is the only proposal past its clock with no decision record. Producing one is founder work — it requires the ballots already in `proposals/OTCS-0001/ballots/` to be read against process validity, and the outcome recorded, not assumed.
+- **OTCS-0001** decision recorded 2026-08-05 after ballot verification — four days past its window, disclosed in the record itself rather than backdated. The pipeline currently has no overdue decisions.
 - **OTCS-0003** revises the coordinate vector through the OTCS process while `CHARTER.md` §2 places the vocabulary in KTP's custody. That ownership seam should be named inside 0003's deliberation record rather than discovered after ratification.
 - **OTCS-0007, 0008 and 0009** reform the same test (`PREMORTEM.md` §2) and reference each other while amendable. OTCS-0009 carries in-DRAFT date amendments to 0007 and 0008 so the three ratify as one dated set. Deciding them piecemeal would leave the test half-reformed; the calendar treats 2026-09-17/18 as one window.
 
