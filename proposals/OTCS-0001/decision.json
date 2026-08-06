@@ -1,0 +1,14 @@
+{
+  "proposal_id": "OTCS-0001",
+  "outcome": "RATIFIED",
+  "governance_outcome": "ALLOW",
+  "individual_result": { "qualified": 1, "support": 1, "object": 0, "abstain": 0 },
+  "project_result": { "affected": 7, "ballots": 0 },
+  "process_validity": {
+    "determination": "VALID",
+    "grounds": "Stage 1 founder-led incubation, declared in CHARTER.md §7. Participant set = founder only. The registry_update clock (3-7 days from 2026-07-25) made this decidable 2026-07-28 through 2026-08-01; it was recorded 2026-08-05 — late, disclosed here as a process fact rather than backdated. One self-raised objection (objections/objection-001.md, founder-only seed registry) answered and carried on the record. project_result.ballots is 0 because both ballot files are the founder's individual A/B pair; no project cast a ballot, and counting the pair here would inflate exactly the number this registry refuses to inflate.",
+    "limitations_disclosed": ["founder-only participant set", "decision recorded after its due window"]
+  },
+  "review_date": "2026-10-25",
+  "recorded": "2026-08-05"
+}

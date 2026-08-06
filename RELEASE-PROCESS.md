@@ -48,6 +48,8 @@ Run the accessibility verification at this point too. Its failures block a relea
 
 **5 · Sign the tag.** Verified signatures are required for release tags, governance decisions, maintainer merges, interface adoptions and emergency actions. **They are not required from ordinary contributors** — onboarding friction is a real cost ([DCO.md](DCO.md)).
 
+While the key is out: run the offline-backup restoration verification ([INCIDENT-RESPONSE.md](INCIDENT-RESPONSE.md) §8) — §1 of that document promises it at every release, and this is the step where the promise is either kept or skipped.
+
 **6 · Hash.** Publish `SHA256SUMS` covering every artifact, **plus a hash of the manifest itself**, so the artifact *set* is tamper-evident and not only its members.
 
 **7 · Anchor.**
