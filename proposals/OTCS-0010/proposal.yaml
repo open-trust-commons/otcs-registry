@@ -1,0 +1,13 @@
+proposal_id: OTCS-0010
+title: Temporal validity — reassessment mode, invalidation logic, authority lifespan, and the constructability ladder
+class: model_revision
+phase: DRAFT
+author: Chris Perkins (nmcitra)
+sponsor: Chris Perkins (nmcitra)
+created: "2026-08-10"
+clock_start: "2026-08-10"
+review_date: "2027-02-10"
+affected_projects: [ktp, ktp-demo, abt]
+phase_history:
+  - { phase: SEED, date: "2026-08-10" }
+  - { phase: DRAFT, date: "2026-08-10" }

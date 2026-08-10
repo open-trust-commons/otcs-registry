@@ -18,6 +18,7 @@ Nobody owns advancing the proposals unless a page says who and when. This page m
 | OTCS-0007 — "uses the data to make a decision" | constitutional | DRAFT | DELIBERATION → RATIFICATION | 2026-09-17 |
 | OTCS-0008 — who evaluates the kill criteria | constitutional | DRAFT | DELIBERATION → RATIFICATION | 2026-09-17 |
 | OTCS-0009 — when the kill criteria are read | constitutional | DRAFT | DELIBERATION → RATIFICATION | 2026-09-18 |
+| OTCS-0010 — temporal validity + constructability ladder | model_revision | DRAFT | Deliberation window open; sequenced after OTCS-0003 | earliest 2026-09-24 |
 
 Dates are computed as `clock_start` + the floor of the proposal's `GOVERNANCE.md` §3 class: 45 days for constitutional and vocabulary-touching model revisions, 3–7 days for a registry listing update. The clock is a floor, not a target; a proposal may sit in deliberation as long as the deliberation needs.
 
