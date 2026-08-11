@@ -97,6 +97,15 @@ at each consequential transition; non-constructability requires that predicate
 demands atomic check-and-commit, no time-of-check/time-of-use gap, no bypass
 path, and fail-closed behaviour.
 
+**The field is optional, and absence means "does not gate."**
+
+Omitting `constructability` reads as *does not address*, never *fails to* — the
+same rule that governs every other coordinate (`docs/coordinate-system.md` §1).
+A specification, a measurement model, a doctrine or a research programme has
+nothing to gate, and must not be placed on this ladder at all. Only a project
+that claims `enforce` above 0 declares a rung; for everything else the field is
+absent and that absence is informative rather than damning.
+
 **Evidence rules, so the top rung cannot be reached by assertion:**
 
 - `COMMIT_GATED` and above require a declared enforcement point (the existing
@@ -133,6 +142,27 @@ Every field is optional and additive; no existing record becomes invalid.
 `ktp`, `ktp-demo` and `abt` are listed as affected because they are the records
 that would gain `constructability` values — and on present evidence none of
 them reaches above `COMMIT_GATED`.
+
+### Amendment 1 — 2026-08-10, in DRAFT
+
+The four rungs were tested against all three registered records the day the
+proposal opened. The result changed the design:
+
+| Record | Result |
+|---|---|
+| `ktp` | **Not on the ladder.** No `enforce` key at all; its own limitations say enforcement "is defined by the specifications but performed only by implementations, not by KTP itself" |
+| `abt` | **Not on the ladder.** `sense` and `interpret` only — a measurement model |
+| `ktp-demo` | **`COMMIT_GATED`**, demo scope. Declared enforcement point; `decide → enforce → record` with no path to actuation without a decision. It stops short of the top rung because `enforce()` *returns a description* (`executed: false`) rather than removing the capability to act — nothing prevents a caller constructing an actuation directly. That is exactly the line between rungs three and four |
+
+Two of three records are not weak at enforcement; they are **not enforcement
+systems**. As first drafted, this proposal would have forced them onto a scale
+they have no business on and made them look deficient for being what they are —
+the failure mode `CALIBRATION.md` exists to catch. The optionality rule above
+was added in response, before the clock ran a single day.
+
+Recorded rather than silently patched, because the finding is the useful part:
+a vocabulary change should be tested against real records before it is proposed,
+and this one was tested an hour after.
 
 **Cost, stated:** this resets the `stable_schemas` bake period
 (`roadmap/releases/1.0.0.yaml`). That is the correct price and is not
