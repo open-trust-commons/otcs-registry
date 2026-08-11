@@ -1,0 +1,13 @@
+proposal_id: OTCS-0011
+title: Evidence efficacy — what a record can cause, and what cryptography does not establish
+class: model_revision
+phase: DRAFT
+author: Chris Perkins (nmcitra)
+sponsor: Chris Perkins (nmcitra)
+created: "2026-08-11"
+clock_start: "2026-08-11"
+review_date: "2027-02-11"
+affected_projects: [ktp, ktp-demo, abt]
+phase_history:
+  - { phase: SEED, date: "2026-08-11" }
+  - { phase: DRAFT, date: "2026-08-11" }
