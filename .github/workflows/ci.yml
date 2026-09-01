@@ -10,8 +10,8 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with: { node-version-file: '.nvmrc', cache: npm }
       - run: npm ci
       - name: Validate schemas, records, and cross-references
@@ -19,16 +19,16 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with: { node-version-file: '.nvmrc', cache: npm }
       - run: npm ci
       - run: npm test
   coherence:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with: { node-version-file: '.nvmrc', cache: npm }
       - run: npm ci
       - name: Do the documents still agree with each other?
@@ -36,8 +36,8 @@ jobs:
   ledger:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with: { node-version-file: '.nvmrc', cache: npm }
       - run: npm ci
       - name: Verify governance ledger chain
@@ -45,8 +45,8 @@ jobs:
   standing:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with: { node-version-file: '.nvmrc', cache: npm }
       - run: npm ci
       # Advisory: reports what each claim's evidence state is worth today.
@@ -57,8 +57,8 @@ jobs:
   participation:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with: { node-version-file: '.nvmrc', cache: npm }
       - run: npm ci
       # Advisory: each actor's public trail against the #14 bar. Never fails
@@ -71,8 +71,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with: { node-version-file: '.nvmrc', cache: npm }
       - run: npm ci
       - name: Deterministic build check (build twice, compare)

@@ -22,8 +22,8 @@ jobs:
   recompute:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with: { node-version-file: '.nvmrc', cache: npm }
       - run: npm ci
       - name: Recompute each actor's public trail
@@ -33,17 +33,28 @@ jobs:
       - name: Commit the log to the participation-log branch
         # Same pattern as standing.yml, same reason: main refuses bot commits
         # (GH013), so the log lives on an unprotected data branch and main's
-        # copy advances when the maintainer's own runs commit it.
+        # copy advances when the maintainer's own runs commit it. And the same
+        # fix as standing.yml: the recompute appended today's entry to main's
+        # copy, so carry that entry over to the branch tip rather than
+        # rebuilding the branch from main — rebuilding is what made every push
+        # after the first non-fast-forward once main advanced.
         run: |
           git config user.name  "otcs-participation"
           git config user.email "kinetic-trust@proton.me"
-          git fetch origin participation-log:participation-log 2>/dev/null || true
-          git checkout -B participation-log
-          git add computed/participation-log.jsonl
-          if git diff --cached --quiet; then
+          git show HEAD:computed/participation-log.jsonl > /tmp/log-at-head.jsonl 2>/dev/null || : > /tmp/log-at-head.jsonl
+          tail -n +"$(( $(wc -l < /tmp/log-at-head.jsonl) + 1 ))" computed/participation-log.jsonl > /tmp/new-entries.jsonl
+          if ! [ -s /tmp/new-entries.jsonl ]; then
             echo "no change to the participation log"
             exit 0
           fi
+          git checkout -- computed/participation-log.jsonl
+          if git fetch origin participation-log 2>/dev/null; then
+            git checkout -B participation-log FETCH_HEAD
+          else
+            git checkout -B participation-log
+          fi
+          cat /tmp/new-entries.jsonl >> computed/participation-log.jsonl
+          git add computed/participation-log.jsonl
           git commit -m "participation: nightly recompute $(date -u +%Y-%m-%d)"
           git push origin participation-log
       - name: Summary
