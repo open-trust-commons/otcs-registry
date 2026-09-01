@@ -25,8 +25,8 @@ jobs:
   recompute:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with: { node-version-file: '.nvmrc', cache: npm }
       - run: npm ci
       - name: Recompute standing for every claim
@@ -36,16 +36,31 @@ jobs:
         # first nightly run failed. The log therefore lives on an unprotected
         # data branch; main's copy advances when the maintainer's own runs
         # commit it. History is preserved on the branch either way.
+        #
+        # The recompute ran on main, so today's entry was appended to MAIN's
+        # copy of the log — the branch's copy is longer. Rebuilding the branch
+        # from main (`checkout -B` at main's HEAD) made every push after the
+        # first non-fast-forward the moment main advanced, which is how the
+        # nightly failed silently from 08-06 to 08-31. Carry today's entry over
+        # to the branch tip instead; the push is fast-forward by construction.
         run: |
           git config user.name  "otcs-standing"
           git config user.email "kinetic-trust@proton.me"
-          git fetch origin standing-log:standing-log 2>/dev/null || true
-          git checkout -B standing-log
-          git add computed/standing-log.jsonl
-          if git diff --cached --quiet; then
+          # The log is append-only: today's entry is whatever follows HEAD's copy.
+          git show HEAD:computed/standing-log.jsonl > /tmp/log-at-head.jsonl 2>/dev/null || : > /tmp/log-at-head.jsonl
+          tail -n +"$(( $(wc -l < /tmp/log-at-head.jsonl) + 1 ))" computed/standing-log.jsonl > /tmp/new-entries.jsonl
+          if ! [ -s /tmp/new-entries.jsonl ]; then
             echo "no change to the standing log"
             exit 0
           fi
+          git checkout -- computed/standing-log.jsonl
+          if git fetch origin standing-log 2>/dev/null; then
+            git checkout -B standing-log FETCH_HEAD
+          else
+            git checkout -B standing-log
+          fi
+          cat /tmp/new-entries.jsonl >> computed/standing-log.jsonl
+          git add computed/standing-log.jsonl
           git commit -m "standing: nightly recompute $(date -u +%Y-%m-%d)"
           git push origin standing-log
       - name: Summary
