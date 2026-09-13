@@ -1,7 +1,7 @@
 proposal_id: OTCS-0004
 title: A registry entry is licensed by its author, not by the contribution licences
 class: model_revision
-phase: DRAFT
+phase: DELIBERATION
 author: Chris Perkins (nmcitra)
 sponsor: Chris Perkins (nmcitra)
 created: "2026-07-31"
@@ -11,3 +11,4 @@ affected_projects: [ktp, ktp-demo, abt, ex-gatekeeper, ex-watchtower, ex-ledgerl
 phase_history:
   - { phase: SEED, date: "2026-07-31" }
   - { phase: DRAFT, date: "2026-07-31" }
+  - { phase: DELIBERATION, date: "2026-09-12" }
