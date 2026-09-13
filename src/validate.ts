@@ -194,6 +194,20 @@ if (existsSync(ledgerFile)) {
     check("governance-event", JSON.parse(line) as Doc, true, `governance-log/events.jsonl[${i}]`));
 }
 
+// The clock (src/clock.ts). Every finding here is something RUNBOOK.md already
+// forbids in prose — a clock shortened by merging, a decision before its date,
+// a pin that does not say what it amends. Reported as warnings until OTCS-0012
+// ratifies; CLOCK_ENFORCE=1 makes them failures, which is what the decision
+// record for 0012 switches on.
+{
+  const { clockFindings } = await import("./clock.js");
+  const enforce = process.env.CLOCK_ENFORCE === "1";
+  for (const f of clockFindings()) {
+    if (enforce) { fail++; problems.push(`clock: ${f.proposal_id}: ${f.msg}`); }
+    else console.log(`  ⚠ clock: ${f.proposal_id}: ${f.msg}`);
+  }
+}
+
 // ---- report ----------------------------------------------------------------
 console.log(`\nvalidate: ${pass} passed, ${fail} failed (${validators.size} schemas)`);
 if (registryIds.length)
