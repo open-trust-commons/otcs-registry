@@ -19,8 +19,8 @@ describe("the window for OTCS-0004 is generated from the record", () => {
     expect(w.body).toContain("### Where objections land");
     expect(w.body).toContain("Nothing in it was typed by a person.");
   });
-  it("is the only window due today", () => {
-    expect(dueWindows().map((x) => x.proposal_id)).toEqual(["OTCS-0004"]);
+  it("is due alongside OTCS-0003, which entered DELIBERATION on 2026-09-13", () => {
+    expect(dueWindows().map((x) => x.proposal_id)).toEqual(["OTCS-0003", "OTCS-0004"]);
   });
 });
 

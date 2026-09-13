@@ -24,7 +24,24 @@ Two of those fields do the real work:
 
 ## 2. Entries
 
-*None affecting a published record. **`v0.1.0` is the first public release**, so nothing before it can have broken anyone's data ([VERSIONING.md](VERSIONING.md) §1).*
+### v0.2.0 — the coordinate vector split into three layers *(pending OTCS-0003's decision; published here at trial so the note exists before the tag)*
+
+**Affected:** `schemas/project-manifest.schema.json`; every record declaring `coordinates.verbs`, `coordinates.custom_verbs`, or `coordinates.functions`; the function name `sense`
+
+**Why:** OTCS-0003. Six coordinates describe the situation being governed; `functions` described the governing project itself. They are different subjects and now live in different layers. Values are unchanged throughout.
+
+**Steps:**
+1. Rename `coordinates.verbs` → `coordinates.action` and `coordinates.custom_verbs` → `coordinates.custom_action` (inner key `verb` → `action`). Values unchanged.
+2. Move `coordinates.functions` to a top-level `functions` block. Rename `sense` → `observe`. Other function names unchanged; `coordinate` and `learn` are newly available and nothing forces you to declare them.
+3. Optionally add a top-level `governance_intent` (free text). Leaving it out is a complete record.
+
+**Verification:** `npm run validate` — no `deprecated by OTCS-0003` warning on your record. Then `npm run generate`: `computed/complementarity.json` and `computed/matrix.json` must change **only** in their input `sha256` stamps. That is the proof that a rename changed no assertion; the trial reproduced it on all eight records on 2026-09-13.
+
+**Backout:** reverse the three steps. The old paths validate (with a warning) until ratification + 6 months, error until + 12, and are removed at + 12; the dates are fixed by 0003's decision record.
+
+**Deprecation window — the four extras GOVERNANCE.md §11 requires are in the proposal:** migration notes (this entry), impact analysis (seven records, no assertion changes), compatibility mapping (old term → new, in `proposals/OTCS-0003/proposal.md`), and the 12-month window above.
+
+*Before this entry: none affecting a published record. **`v0.1.0` is the first public release**, so nothing before it can have broken anyone's data ([VERSIONING.md](VERSIONING.md) §1).*
 
 One change of meaning happened during incubation and is recorded here anyway, because a reader comparing a pre-release artifact against `v0.1.0` needs to be able to find it.
 

@@ -75,4 +75,18 @@ Which is exactly what a calibration case is for. It is queued as a candidate mod
 
 ---
 
+## Under the three layers — OTCS-0003 trial, 2026-09-13
+
+*The proposal's trial requirement: the split must be expressible for a system that never stated an intent, and must not make Bitcoin look deficient where the single vector did not.*
+
+| Layer | Bitcoin | |
+|---|---|---|
+| **1 — Coordinates** | Actor, Authority, Action, Environment, Time, Evidence exactly as in the table above | Unchanged: the split moves nothing in Layer 1 |
+| **2 — Governance intent** | **Empty.** Bitcoin has no owner to declare an intent, and the whitepaper's stated purpose is a design goal, not a governance intent declared by a participant | Empty is a complete record. The test the proposal set — expressible for a system that never stated one — passes by the same rule as everything else here: absence is honest |
+| **3 — Functions** | `enforce` 1.0 · `record` 1.0 · **`coordinate` 1.0** · `decide` 0.4 · no `observe`, `interpret`, `repair`, `learn` | **One new finding.** The single vector had no place for consensus. Bitcoin's defining function — peers converging on one chain by a deterministic rule — was invisible in the v0.1 vocabulary and lands in Layer 3's `coordinate` without borrowing anyone's conclusions |
+
+**Result.** The split makes Bitcoin look *more* like itself, not less: nothing in the earlier mapping weakens, and the function the earlier mapping could not say is now sayable. **No deficiency introduced. Neutrality check passes.** Layer 2 stays empty and the record is complete.
+
+---
+
 **See also:** [CALIBRATION.md](../CALIBRATION.md) — the method and the other cases · [LAYERS.md](../LAYERS.md) — the vocabulary being tested · [EVIDENCE-MODEL.md](../EVIDENCE-MODEL.md) §7 — the moves these rules prevent

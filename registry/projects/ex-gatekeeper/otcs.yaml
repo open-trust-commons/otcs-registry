@@ -19,10 +19,10 @@ declaration:
 coordinates:
   actor: { service: 1.0, ai_agent: 0.8 }
   authority: [credential, capability]
-  verbs: [execute, transfer, send]
+  action: [execute, transfer, send]
   environment: [system_health]
-  functions: { enforce: 0.9, record: 0.5 }
   time: [initiation, during_action, commit_point]
+functions: { enforce: 0.9, record: 0.5 }
 evidence: { specification: 1, implementation: 1, independent_validation: 0 }
 interfaces:
   provides: [receipt]

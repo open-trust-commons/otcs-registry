@@ -29,7 +29,17 @@ const semantic: Record<string, (d: Doc) => Finding[]> = {
     const out: Finding[] = [];
     const coords = d.coordinates as Doc | undefined;
     const decl = d.declaration as Doc | undefined;
-    const fns = (coords?.functions ?? {}) as Record<string, number>;
+    // OTCS-0003 deprecation stage 1 (ratification → +6 months): the old paths
+    // validate, warn, and are mapped to the new ones. Stage 2 turns these into
+    // errors; stage 3 removes the old paths from the schema. The dates are set
+    // by 0003's decision record, not here.
+    for (const [old, now] of [["verbs", "action"], ["custom_verbs", "custom_action"], ["functions", "functions (top level; sense → observe)"]] as const)
+      if (coords && old in coords)
+        out.push({ level: "warning", msg: `coordinates.${old} is deprecated by OTCS-0003 — use ${now}; accepted until ratification + 6 months` });
+    if (coords?.functions && d.functions)
+      out.push({ level: "error", msg: "functions declared at both coordinates.functions (deprecated) and top level — one Layer 3, not two" });
+    const oldF = (coords?.functions ?? {}) as Record<string, number>;
+    const fns = ((d.functions as Record<string, number> | undefined) ?? oldF);
     if ((fns.enforce ?? 0) > 0 && !(decl?.enforcement_points as unknown[] | undefined)?.length)
       out.push({ level: "warning", msg: "functions.enforce > 0 without declaration.enforcement_points" });
     const env = (coords?.environment ?? []) as string[];

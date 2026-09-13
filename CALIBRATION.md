@@ -40,6 +40,9 @@ And one rule about the set rather than the case:
 | **[Bitcoin](calibration/bitcoin.md)** | Authority with no identity · **near-zero environment** | 4 of 5 | Ownerless projects can never qualify |
 | **[TCP congestion control](calibration/tcp-ip.md)** | **Empty authority** · environment is everything · no enforcement power | 4 of 5 | Governor and governed are the same party |
 | **[Spanning Tree](calibration/spanning-tree.md)** | Elected authority · **a real enforcement point** | 3 of 5 | Authority's provenance · the unconverged state |
+| **[NeMo Guardrails](calibration/nemo-guardrails.md)** *(OTCS-0003 trial draft)* | **Nearly all Layer 3** · thin Layer 1 · thin Evidence | 5 of 5 under the three layers | Nothing new; shows what the single vector described worst |
+
+**Under the three-layer split (OTCS-0003, in trial):** Bitcoin was re-expressed in three layers on 2026-09-13 and gained one function it could not previously state — `coordinate` — with nothing weakened ([bitcoin.md](calibration/bitcoin.md), last section). The NeMo Guardrails case is the proposal's required heavy-Layer-3 counterpart and is a draft until the founder confirms the subject.
 
 **Bitcoin and TCP are near-inverses**, which is deliberate. Bitcoin has authority and almost no environment; TCP has almost no authority and lives entirely in environment. A vocabulary that handled only one corner would have been caught by the other.
 

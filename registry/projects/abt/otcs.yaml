@@ -28,10 +28,10 @@ declaration:
 coordinates:
   actor: { organization: 1.0, human: 0.6 }
   authority: []
-  verbs: []
+  action: []
   environment: [ambiguity_load, repair_capacity, uncertainty, human_availability]
-  functions: { sense: 0.7, interpret: 0.9 }
   time: [during_action]
+functions: { observe: 0.7, interpret: 0.9 }
 ownership:
   owners:
     - name: Chris Perkins (nmcitra)

@@ -18,10 +18,10 @@ declaration:
 coordinates:
   actor: { service: 1.0 }
   authority: []
-  verbs: []
+  action: []
   environment: []
-  functions: { record: 0.9 }
   time: [after_action, across_trajectory]
+functions: { record: 0.9 }
 evidence: { specification: 1, implementation: 0, independent_validation: 0 }
 interfaces:
   provides: [receipt, provenance]

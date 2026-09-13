@@ -14,7 +14,7 @@
   "properties": {
     "otcs_version": {
       "type": "string",
-      "pattern": "^0\\.1$"
+      "pattern": "^0\\.(1|2)$"
     },
     "project": {
       "type": "object",
@@ -257,9 +257,6 @@
     },
     "coordinates": {
       "type": "object",
-      "required": [
-        "functions"
-      ],
       "additionalProperties": false,
       "properties": {
         "actor": {
@@ -327,7 +324,9 @@
               "create_identity",
               "revoke"
             ]
-          }
+          },
+          "deprecated": true,
+          "description": "DEPRECATED by OTCS-0003 — use `action`. Accepted with a warning until ratification + 6 months, an error until + 12, then removed."
         },
         "custom_verbs": {
           "type": "array",
@@ -362,7 +361,9 @@
                 ]
               }
             }
-          }
+          },
+          "deprecated": true,
+          "description": "DEPRECATED by OTCS-0003 — use `custom_action`."
         },
         "environment": {
           "type": "array",
@@ -411,7 +412,9 @@
             "repair": {
               "$ref": "#/$defs/weight"
             }
-          }
+          },
+          "deprecated": true,
+          "description": "DEPRECATED by OTCS-0003 — Layer 3 lives at the top-level `functions` block (`sense` → `observe`). Same deprecation window as `verbs`."
         },
         "time": {
           "type": "array",
@@ -429,6 +432,105 @@
             ]
           },
           "description": "`repair_window` is the temporal position AFTER damage, distinct from the `repair` FUNCTION (the capability). The two were the same token until 2026-07-27; a validator could not tell them apart and neither could a reader."
+        },
+        "action": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "read",
+              "write",
+              "send",
+              "publish",
+              "execute",
+              "purchase",
+              "transfer",
+              "delete",
+              "delegate",
+              "impersonate",
+              "bind",
+              "commit",
+              "modify_policy",
+              "create_identity",
+              "revoke"
+            ]
+          },
+          "description": "Layer 1 — the consequential verbs the project governs (OTCS-0003 Revision 2: was `verbs`; values unchanged)."
+        },
+        "custom_action": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "action",
+              "maps_to"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "action": {
+                "type": "string"
+              },
+              "maps_to": {
+                "enum": [
+                  "read",
+                  "write",
+                  "send",
+                  "publish",
+                  "execute",
+                  "purchase",
+                  "transfer",
+                  "delete",
+                  "delegate",
+                  "impersonate",
+                  "bind",
+                  "commit",
+                  "modify_policy",
+                  "create_identity",
+                  "revoke"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "description": "Layer 1 — what is. Descriptive only; says nothing about what should happen (OTCS-0003)."
+    },
+    "governance_intent": {
+      "type": "string",
+      "maxLength": 2000,
+      "description": "Layer 2 — what should happen, in the project's own words. Declared, never enumerated: no controlled vocabulary, no tags. MUST NOT be counted, scored, ranked, compared across projects, filtered on, or rendered as a filled-versus-unfilled grid (OTCS-0003 Revision 3). Optional indefinitely; absence is a complete record. The normative layer is adopted from Tamed Autonomy (Robin Martherus)."
+    },
+    "functions": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "description": "Layer 3 — how: what the governing project itself does, as capability weights (OTCS-0003 Revision 1). Relocated from coordinates.functions; `sense` became `observe`; `coordinate` and `learn` are new.",
+      "properties": {
+        "observe": {
+          "$ref": "#/$defs/weight"
+        },
+        "interpret": {
+          "$ref": "#/$defs/weight"
+        },
+        "coordinate": {
+          "$ref": "#/$defs/weight"
+        },
+        "decide": {
+          "$ref": "#/$defs/weight"
+        },
+        "constrain": {
+          "$ref": "#/$defs/weight"
+        },
+        "enforce": {
+          "$ref": "#/$defs/weight"
+        },
+        "record": {
+          "$ref": "#/$defs/weight"
+        },
+        "repair": {
+          "$ref": "#/$defs/weight"
+        },
+        "learn": {
+          "$ref": "#/$defs/weight"
         }
       }
     },
@@ -806,5 +908,22 @@
       "minimum": 0,
       "maximum": 5
     }
-  }
+  },
+  "anyOf": [
+    {
+      "required": [
+        "functions"
+      ]
+    },
+    {
+      "properties": {
+        "coordinates": {
+          "type": "object",
+          "required": [
+            "functions"
+          ]
+        }
+      }
+    }
+  ]
 }

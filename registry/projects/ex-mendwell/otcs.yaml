@@ -17,10 +17,10 @@ declaration:
 coordinates:
   actor: { human: 0.8, service: 0.5 }
   authority: [organizational_policy]
-  verbs: [revoke]
+  action: [revoke]
   environment: [repair_capacity, reversibility]
-  functions: { repair: 0.9, interpret: 0.4 }
   time: [repair_window, after_action]
+functions: { repair: 0.9, interpret: 0.4 }
 evidence: { specification: 0, implementation: 0, independent_validation: 0 }
 interfaces:
   provides: [repair]
