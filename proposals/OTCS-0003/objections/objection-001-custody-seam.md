@@ -25,5 +25,6 @@ therefore drawn, and recorded, at *meaning*: any future proposal that crosses
 it needs the custodian as a participant, not as the same person wearing a
 second hat.
 
-**Status:** answered; carried on the record. *Founder's confirmation of the
-ruling pending.*
+**Status:** answered; carried on the record. **Ruling confirmed by the founder
+2026-09-19** and binding on future proposals: one that changes a meaning needs
+the custodian as a participant, not the same person in a second hat.
