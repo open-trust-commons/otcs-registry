@@ -1,7 +1,7 @@
 proposal_id: OTCS-0012
 title: The first policy record — the registry's AI-use policy
 class: registry_update
-phase: DRAFT
+phase: DELIBERATION
 author: Chris Perkins (nmcitra)
 sponsor: Chris Perkins (nmcitra)
 created: "2026-09-19"
@@ -11,3 +11,4 @@ affected_projects: [otcs-ai-use]
 phase_history:
   - { phase: SEED, date: "2026-09-19" }
   - { phase: DRAFT, date: "2026-09-19" }
+  - { phase: DELIBERATION, date: "2026-09-20" }

@@ -1,7 +1,7 @@
 proposal_id: OTCS-0013
 title: What an amendment does to the clock
 class: constitutional
-phase: DRAFT
+phase: DELIBERATION
 author: Chris Perkins (nmcitra)
 sponsor: Chris Perkins (nmcitra)
 created: "2026-09-19"      # the day the PR merges — set at merge, never earlier
@@ -11,3 +11,4 @@ affected_projects: []
 phase_history:
   - { phase: SEED, date: "2026-09-19" }
   - { phase: DRAFT, date: "2026-09-19" }
+  - { phase: DELIBERATION, date: "2026-09-20" }
