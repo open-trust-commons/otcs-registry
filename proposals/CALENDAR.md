@@ -24,6 +24,7 @@ Nobody owns advancing the proposals unless a page says who and when. This page m
 | OTCS-0013 — what an amendment does to the clock | constitutional | **DELIBERATION** | Window opened 2026-09-20 by the window workflow | 2026-11-03 (floor; window 2026-09-20 + 28 = 2026-10-18 is earlier) |
 | OTCS-0014 — disagreeing well: restatement, disposition, agreed facts | constitutional | **DELIBERATION** | Window opened 2026-09-20 by the window workflow | 2026-11-04 (floor; window 2026-09-20 + 28 = 2026-10-18 is earlier) |
 | OTCS-0015 — the bright line: standing to object is never a proposal topic | constitutional | **DELIBERATION** | Window opened 2026-09-20 by the window workflow | 2026-11-04 (floor; window 2026-09-20 + 28 = 2026-10-18 is earlier) |
+| OTCS-0016 — the observed-record end condition | model_revision | **DELIBERATION** | Published and windowed the same day, 2026-09-20; executes the observed-record ruling (issue #12) | 2026-11-04 (floor; window 2026-09-20 + 28 = 2026-10-18 is earlier) |
 
 Dates are computed as `clock_start` + the floor of the proposal's `GOVERNANCE.md` §3 class: 45 days for constitutional and vocabulary-touching model revisions, 3–7 days for a registry listing update. The clock is a floor, not a target; a proposal may sit in deliberation as long as the deliberation needs.
 
