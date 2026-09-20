@@ -54,6 +54,23 @@
     "artifact_version": {
       "type": "string"
     },
+    "artifact_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "On VERSION_PUBLISHED: sha256 of the pinned proposal text (proposal.md, then proposal.yaml with phase/phase_history/clock_start removed), as src/clock.ts computes it. Distinct from content_hash, which chains the event itself."
+    },
+    "amendment_class": {
+      "type": "string",
+      "enum": [
+        "NON_SUBSTANTIVE",
+        "SUBSTANTIVE"
+      ],
+      "description": "On a VERSION_PUBLISHED that follows an earlier pin: what kind of amendment this version is, declared by its author. Carries no clock force until OTCS-0012 ratifies; src/clock.ts reads it informationally meanwhile."
+    },
+    "supersedes_version": {
+      "type": "string",
+      "description": "On a VERSION_PUBLISHED that follows an earlier pin: the artifact_version it replaces."
+    },
     "content_hash": {
       "type": "string",
       "pattern": "^[a-f0-9]{64}$"

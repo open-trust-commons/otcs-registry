@@ -7,6 +7,32 @@ import type { Doc } from "./registry-load.js";
 export const WEIGHTS = { actor: 1, authority: 1, verbs: 1, environment: 2, functions: 2, time: 1 };
 export const ALGORITHM_VERSION = "complementarity-0.2.0-categorical";
 
+/**
+ * OTCS-0003 (three layers) — read a record in either shape.
+ *
+ * Deprecation stage 1: the old paths (`coordinates.verbs`, `coordinates.functions`,
+ * function `sense`) are still accepted and mapped to the new ones
+ * (`coordinates.action`, top-level `functions`, `observe`). The computation below
+ * sees only the new shape, so a record migrated by rename alone produces exactly
+ * the same numbers it did before — which is what the golden-file test proves.
+ */
+export type Layers = {
+  action: string[];
+  functions: Record<string, number>;
+  governance_intent?: string;
+};
+export function layers(rec: Doc): Layers {
+  const c = (rec.coordinates ?? {}) as Doc;
+  const oldF = (c.functions ?? {}) as Record<string, number>;
+  const fromOld: Record<string, number> = {};
+  for (const [k, v] of Object.entries(oldF)) fromOld[k === "sense" ? "observe" : k] = v;
+  return {
+    action: (c.action ?? c.verbs ?? []) as string[],
+    functions: (rec.functions as Record<string, number> | undefined) ?? fromOld,
+    governance_intent: rec.governance_intent as string | undefined,
+  };
+}
+
 // v0.0.6 DEFERRAL: numerical Γ/O are NOT published. A number like "84% complementary"
 // reads as an objective evaluation while resting on incomplete self-description,
 // subjective weights, unstable semantics, and unknown legal compatibility. Categorical
@@ -40,12 +66,13 @@ const cosine = (a: Record<string, number> = {}, b: Record<string, number> = {}):
 
 export function overlap(a: Doc, b: Doc): number {
   const ca = a.coordinates ?? {}, cb = b.coordinates ?? {};
+  const la = layers(a), lb = layers(b);
   const parts: [number, number][] = [
     [cosine(ca.actor, cb.actor), WEIGHTS.actor],
     [jaccard(ca.authority, cb.authority), WEIGHTS.authority],
-    [jaccard(ca.verbs, cb.verbs), WEIGHTS.verbs],
+    [jaccard(la.action, lb.action), WEIGHTS.verbs],
     [jaccard(ca.environment, cb.environment), WEIGHTS.environment],
-    [cosine(ca.functions, cb.functions), WEIGHTS.functions],
+    [cosine(la.functions, lb.functions), WEIGHTS.functions],
     [jaccard(ca.time, cb.time), WEIGHTS.time],
   ];
   const wsum = parts.reduce((s, [, w]) => s + w, 0);
@@ -54,7 +81,7 @@ export function overlap(a: Doc, b: Doc): number {
 
 export function gamma(a: Doc, b: Doc, edges: Doc[]): { gamma: number; D: number; I: number; L: number; Q: number } {
   // D — functional difference without contradiction: distinct functions complement.
-  const D = 1 - cosine(a.coordinates?.functions, b.coordinates?.functions);
+  const D = 1 - cosine(layers(a).functions, layers(b).functions);
   // I — interface compatibility: provides↔consumes match or a declared edge.
   const pa = a.interfaces?.provides ?? [], caM = a.interfaces?.consumes ?? [];
   const pb = b.interfaces?.provides ?? [], cbM = b.interfaces?.consumes ?? [];

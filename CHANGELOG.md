@@ -6,6 +6,13 @@ Format: [Keep a Changelog](https://keepachangelog.com/). Versioning: VERSIONING.
 >
 > Everything tagged `v0.0.x` below is **internal incubation history**. Those tags exist only in the private staging repository and **are deliberately not pushed to the public repository** — the public history starts at `v0.1.0`, cut fresh. Nothing under `v0.1.0` was ever published, so nothing under `v0.1.0` can have broken anyone's records — see [MIGRATIONS.md](MIGRATIONS.md) §2.
 
+## [Unreleased] — v0.2.0 candidate · the first contract revision
+
+The set of proposals ratified since v0.1.0. Each entry lands when its decision record does; an entry listed here before its decision is in trial, and says so.
+
+### Changed
+- **OTCS-0003 (in trial) — the coordinate vector split into three layers.** `coordinates.verbs` → `coordinates.action`; `coordinates.functions` → top-level `functions` with `sense` → `observe` and two new functions, `coordinate` and `learn`; a new optional free-text `governance_intent` that is never enumerated, counted, or compared. Values unchanged; all eight records migrated; computed outputs changed only in their input stamps. Old paths accepted with a warning through the deprecation window in MIGRATIONS.md. `otcs_version` accepts `0.2`.
+
 ## [v0.1.0] — 2026-07-29 · First public release
 
 Everything in the incubation sections below ships as one release. The entries are kept separate because they record what was decided when, and collapsing them would erase the order the reasoning arrived in.

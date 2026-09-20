@@ -32,11 +32,16 @@ Every registered project carries `C(p) = ⟨Actor, Authority, Action, Environmen
 **Why primary:** most systems in this field have strong actor/authority coordinates and weak environmental coverage; the coordinate exists to make that visible, not to shame it.
 **Failure states:** claiming `cumulative_trajectory` without a decaying accumulation mechanism in the declaration; claiming `uncertainty` while treating reduced observability as neutral or favorable (see §2.5 — uncertainty must be conservative).
 
-### 1.5 Control function **[N]**
+### 1.5 Control function **[N]** — relocated to Layer 3 by OTCS-0003
 
-**Means:** what the project actually does, as capability weights: `sense · interpret · constrain · decide · enforce · record · repair`.
+**Means:** what the *governing project itself* does, as capability weights: `observe · interpret · coordinate · decide · constrain · enforce · record · repair · learn`. Under OTCS-0003 this is not a coordinate: the six coordinates describe the situation being governed, this describes the system looking at it, and the two are different subjects ([LAYERS.md](../LAYERS.md)). It lives in the top-level `functions` block. `coordinates.functions` and the name `sense` are deprecated and still accepted, with a warning, through the deprecation window 0003 sets.
 **Does not mean:** aspiration. `enforce` claimed above 0 requires a declared enforcement point.
-**Reference profiles (informative):** observability platform ≈ sense+record high, decide/enforce low · policy engine ≈ interpret medium, decide high, enforce low unless bound to a gate · gateway ≈ enforce high, record medium · a full KTP runtime ≈ all seven.
+**Reference profiles (informative):** observability platform ≈ observe+record high, decide/enforce low · policy engine ≈ interpret medium, decide high, enforce low unless bound to a gate · gateway ≈ enforce high, record medium · a consensus network ≈ coordinate+enforce+record high · a full KTP runtime ≈ most of the nine.
+
+### 1.5a Governance intent **[N]** — Layer 2, new in OTCS-0003
+
+**Means:** what the project is trying to preserve, in its own words, in the top-level `governance_intent` field.
+**Is never:** enumerated, tagged, counted, scored, ranked, compared across projects, filtered on, or rendered as a filled-versus-unfilled grid. There is no permitted-value list and none may be introduced. A project declaring one intent is not behind a project declaring six; a project declaring none has a complete record. The layer is adopted from Tamed Autonomy and OTCS says so.
 
 ### 1.6 Time **[N]**
 

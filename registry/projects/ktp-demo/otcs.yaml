@@ -30,11 +30,11 @@ declaration:
 coordinates:
   actor: { ai_agent: 1.0, service: 0.6 }
   authority: [capability, situational_approval]
-  verbs: [execute]
+  action: [execute]
   environment: [system_health, data_quality, identity_confidence, dependency_health,
     threat_pressure, uncertainty, cumulative_trajectory]
-  functions: { sense: 0.8, interpret: 0.8, constrain: 0.7, decide: 0.9, enforce: 0.6, record: 0.9 }
   time: [initiation, during_action, across_trajectory]
+functions: { observe: 0.8, interpret: 0.8, constrain: 0.7, decide: 0.9, enforce: 0.6, record: 0.9 }
 ownership:
   owners:
     - name: Chris Perkins (nmcitra)

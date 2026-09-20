@@ -6,6 +6,7 @@ import { ROOT, type Doc } from "./registry-load.js";
 import { esc, badge } from "./html.js";
 import { mdToHtml } from "./md.js";
 import type { Page } from "./pages.js";
+import { computeClock } from "./clock.js";
 
 const DOCS: [string, string, string][] = [
   ["CHARTER.md", "charter", "Charter"],
@@ -64,6 +65,17 @@ ${rows}</table>`,
   return out;
 }
 
+// The date is computed from proposal.yaml and the ledger (src/clock.ts), never
+// typed. The hand-maintained CALENDAR.md is the thing to compare it against;
+// if they disagree, a person and a script disagree about a date, and that is
+// worth seeing rather than hiding behind "clock running".
+const clockCell = (id: string): string => {
+  const c = computeClock(id);
+  if (!c) return "<em>clock running</em>";
+  const restarted = c.clock_start !== c.declared_clock_start ? ` (restarted ${esc(c.clock_start)})` : "";
+  return `<em>clock running — no decision before ${esc(c.earliest)}</em>${restarted}`;
+};
+
 export function proposalPages(): Page[] {
   const out: Page[] = [];
   const propDir = join(ROOT, "proposals");
@@ -74,7 +86,7 @@ export function proposalPages(): Page[] {
     const decided = existsSync(join(propDir, id, "decision.json"));
     items.push(`<tr><td><a href="${esc(id)}.html">${esc(id)}</a></td><td>${esc(String(y.title))}</td>` +
       `<td>${esc(String(y.class))}</td><td>${badge(String(y.phase))}</td>` +
-      `<td>${decided ? "decided" : `<em>clock running — no decision before the ${esc(String(y.class))} minimum elapses</em>`}</td></tr>`);
+      `<td>${decided ? "decided" : clockCell(id)}</td></tr>`);
 
     const md = existsSync(join(propDir, id, "proposal.md")) ? mdToHtml(readFileSync(join(propDir, id, "proposal.md"), "utf8")) : "";
     const history = ((y.phase_history ?? []) as Doc[]).map((h) => `<tr><td>${esc(String(h.phase))}</td><td>${esc(String(h.date))}</td></tr>`).join("");

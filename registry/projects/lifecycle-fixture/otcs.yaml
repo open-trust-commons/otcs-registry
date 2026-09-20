@@ -46,9 +46,9 @@ declaration:
     - "Not a real project, system, or piece of software"
     - "Not intended to remain registered — created to demonstrate withdrawal"
     - "Never eligible to count as a qualifying active project"
-coordinates:
-  functions:
-    record: 1
+coordinates: {}
+functions:
+  record: 1
 evidence:
   specification: 0
   implementation: 0

@@ -1,0 +1,25 @@
+# OTCS-0003 deprecation stage 1: a record still in the v0.1 shape — verbs, and
+# functions inside coordinates, with the old `sense` name — MUST validate, with a
+# warning per deprecated path. This fixture proves it, and goes invalid at stage 2.
+otcs_version: "0.1"
+project:
+  id: ex-old-shape
+  name: Old Shape Example
+  status: prototype
+  first_public_date: "2026-07-01"
+  license: Apache-2.0
+  record_state: example
+  maintainers:
+    - name: Example Maintainer
+declaration:
+  problem: A record written before OTCS-0003, still using the single vector.
+  governed_object: [request]
+  threat_or_failure_model: None; this is a schema fixture.
+  known_limitations: Exists only to prove the deprecated paths still validate with a warning.
+coordinates:
+  actor: { service: 1.0 }
+  verbs: [read]
+  environment: [system_health]
+  functions: { sense: 0.9, record: 0.6 }
+  time: [during_action]
+evidence: { specification: 1, implementation: 0, independent_validation: 0 }

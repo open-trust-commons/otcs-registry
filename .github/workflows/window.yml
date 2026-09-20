@@ -1,0 +1,81 @@
+# A person is not a clock.
+#
+# CALENDAR.md says entering DELIBERATION means opening a dated window on the
+# public record. The first window (#49) was opened by hand, by the founder,
+# which is the pattern CHARTER.md §7 exists to end: a registry whose windows
+# open when its founder gets round to it is founder-led however honest the
+# text inside them.
+#
+# So the window is opened by the record. When a proposal's proposal.yaml says
+# DELIBERATION and the ledger holds a VERSION_PUBLISHED pin for it, and no
+# issue with the window's title exists, this opens one whose body is
+# generated from those two files and nothing else (src/window.ts). It never
+# closes an issue, never edits a proposal, never writes a date a script did
+# not compute, and fails closed: a DELIBERATION with no pin fails the job
+# instead of opening a window with a blank in it.
+#
+# Runs on push to main (a phase change is a merge) and nightly (a clock does
+# not care whether anyone pushed). Idempotent: an existing window is left
+# alone.
+name: window
+on:
+  push:
+    branches: [main]
+    paths: ['proposals/**', 'governance-log/**']
+  schedule:
+    - cron: '23 9 * * *'   # 09:23 UTC daily — off the hour, after standing
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Print what would be opened; post nothing'
+        type: boolean
+        default: true
+permissions:
+  contents: read
+  issues: write
+concurrency:
+  group: window
+  cancel-in-progress: false
+jobs:
+  open:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with: { node-version-file: '.nvmrc', cache: npm }
+      - run: npm ci
+      - name: Which windows are due
+        id: due
+        run: |
+          npx tsx src/window.ts list > /tmp/due.json
+          cat /tmp/due.json
+          echo "count=$(jq length /tmp/due.json)" >> "$GITHUB_OUTPUT"
+      - name: Open the ones that do not exist
+        if: steps.due.outputs.count != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
+        run: |
+          set -euo pipefail
+          jq -c '.[]' /tmp/due.json | while read -r w; do
+            id=$(jq -r .proposal_id <<<"$w")
+            title=$(jq -r .title <<<"$w")
+            # An existing window — open or closed — means this is not the first
+            # time; leave it. Re-pins after a substantive amendment are a
+            # comment on that issue and are not automated yet (OTCS-0012).
+            existing=$(gh issue list --repo "$GITHUB_REPOSITORY" --state all --search "in:title \"$id — deliberation window\"" --json number --jq 'length')
+            if [ "$existing" != "0" ]; then
+              echo "$id: window exists ($existing issue(s) titled for it) — leaving it"
+              continue
+            fi
+            npx tsx src/window.ts body "$id" > /tmp/body.md
+            if [ "${DRY_RUN:-false}" = "true" ]; then
+              echo "::group::$id — would open: $title"; cat /tmp/body.md; echo "::endgroup::"
+              continue
+            fi
+            gh issue create --repo "$GITHUB_REPOSITORY" --title "$title" --body-file /tmp/body.md
+            echo "$id: opened"
+          done
+      - name: Summary
+        run: |
+          { echo "### Windows"; echo; cat /tmp/due.json; } >> "$GITHUB_STEP_SUMMARY"

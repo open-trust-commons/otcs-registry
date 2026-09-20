@@ -17,10 +17,10 @@ declaration:
 coordinates:
   actor: { service: 1.0 }
   authority: []
-  verbs: []
+  action: []
   environment: [system_health, dependency_health, threat_pressure, uncertainty]
-  functions: { sense: 0.9, record: 0.6 }
   time: [during_action]
+functions: { observe: 0.9, record: 0.6 }
 evidence: { specification: 1, implementation: 0, independent_validation: 0 }
 interfaces:
   provides: [environment, observer]

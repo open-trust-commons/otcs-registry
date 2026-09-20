@@ -31,12 +31,12 @@ declaration:
 coordinates:
   actor: { ai_agent: 1.0, service: 0.8, delegated_subagent: 0.7, human: 0.3 }
   authority: [mandate, capability, delegation, situational_approval]
-  verbs: [execute, transfer, delegate, commit, revoke]
+  action: [execute, transfer, delegate, commit, revoke]
   environment: [system_health, data_quality, identity_confidence, dependency_health,
     threat_pressure, reversibility, financial_exposure, human_availability,
     uncertainty, cumulative_trajectory, downstream_capacity]
-  functions: { interpret: 0.8, constrain: 0.9, decide: 0.9, record: 0.7 }
   time: [before_action, initiation, during_action, across_trajectory, repair_window]
+functions: { interpret: 0.8, constrain: 0.9, decide: 0.9, record: 0.7 }
 ownership:
   owners:
     - name: Chris Perkins (nmcitra)

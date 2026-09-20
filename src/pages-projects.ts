@@ -5,6 +5,7 @@ import { parse } from "yaml";
 import { ROOT, type Doc } from "./registry-load.js";
 import { esc, badge, maturityProfile } from "./html.js";
 import type { Page } from "./pages.js";
+import { layers } from "./complementarity.js";
 
 const claimsFor = (id: string): Doc[] => {
   const p = join(ROOT, "registry/projects", id, "claims.yaml");
@@ -57,14 +58,19 @@ export function projectPage(p: Doc, edges: Doc[]): Page {
 </table>
 <h2>Maturity profile</h2>
 ${maturityProfile(p.evidence ?? {})}
-<h2>Coordinates</h2>
+<h2>Layer 1 — coordinates</h2>
 <table>
 <tr><th>actor</th><td>${wtable(c.actor)}</td></tr>
 <tr><th>authority</th><td>${list(c.authority)}</td></tr>
-<tr><th>verbs</th><td>${list(c.verbs)}</td></tr>
+<tr><th>action</th><td>${list(layers(p).action)}</td></tr>
 <tr><th>environment</th><td>${list(c.environment)}</td></tr>
-<tr><th>functions</th><td>${wtable(c.functions)}</td></tr>
 <tr><th>time</th><td>${list(c.time)}</td></tr>
+</table>
+<h2>Layer 2 — governance intent</h2>
+<p>${layers(p).governance_intent ? esc(layers(p).governance_intent!) : "<em>not declared — a complete record; Layer 2 is optional indefinitely and is never counted (OTCS-0003 Revision 3)</em>"}</p>
+<h2>Layer 3 — functions</h2>
+<table>
+<tr><th>functions</th><td>${wtable(layers(p).functions)}</td></tr>
 </table>
 <h2>Interfaces</h2>
 <p>provides: ${list(p.interfaces?.provides)} · consumes: ${list(p.interfaces?.consumes)}</p>
