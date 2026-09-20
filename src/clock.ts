@@ -7,14 +7,14 @@
 // "earliest decision" date: a date someone chose is the founder-led pattern
 // CHARTER.md §7 exists to end.
 //
-// Amendment semantics (OTCS-0012, proposed): a VERSION_PUBLISHED event that
+// Amendment semantics (OTCS-0013, proposed): a VERSION_PUBLISHED event that
 // carries `amendment_class: SUBSTANTIVE` restarts the clock at its date;
 // `NON_SUBSTANTIVE` adds a 7-day contest tail. Events without an
-// amendment_class — every pin recorded before 0012 — do not move the clock.
+// amendment_class — every pin recorded before 0013 — do not move the clock.
 // That is deliberate: the pre-rule amendments to 0002, 0005 and 0010 are
-// disclosed in 0012 as having run under no rule, not retroactively restarted.
+// disclosed in 0013 as having run under no rule, not retroactively restarted.
 //
-// Until OTCS-0012 ratifies, everything here is informational. `npm run
+// Until OTCS-0013 ratifies, everything here is informational. `npm run
 // validate` reports disagreements as warnings; nothing fails on them.
 //
 // CLI: tsx src/clock.ts table | tsx src/clock.ts hash <proposal-id>
@@ -41,8 +41,17 @@ export const MINIMUM_DAYS: Record<string, number> = {
 };
 /** GOVERNANCE.md §8 — an emergency action expires unless approved normally. */
 export const EMERGENCY_EXPIRY_DAYS = 7;
-/** OTCS-0012 §3.1 — the contest window after a NON_SUBSTANTIVE amendment. */
+/** OTCS-0013 §3.1 — the contest window after a NON_SUBSTANTIVE amendment. */
 export const CONTEST_DAYS = 7;
+/**
+ * OTCS-0013 §3.1 — the deliberation window's own minimum. A proposal is not
+ * decided earlier than 28 days after its window opened, or the class minimum
+ * after the window opened if that is shorter. The floor says how long the
+ * text has been public; this says how long the place to object has existed.
+ * Founder's ruling 2026-09-19 ("28 days, that's the calendar"), applied as a
+ * self-binding from that date until 0013 decides.
+ */
+export const WINDOW_MIN_DAYS = 28;
 
 export type AmendmentClass = "NON_SUBSTANTIVE" | "SUBSTANTIVE";
 
@@ -141,6 +150,17 @@ export function computeClock(id: string, opts: { events?: LedgerEvent[]; root?: 
     }
   }
 
+  // The window's own minimum (OTCS-0013 §3.1): the place to object must have
+  // existed for 28 days, or the class minimum if shorter. Bites only where a
+  // window was opened later than the text was published.
+  const delib = ((y.phase_history ?? []) as Doc[]).find((h) => String(h.phase) === "DELIBERATION");
+  if (delib && cls !== "emergency") {
+    const days = Math.min(WINDOW_MIN_DAYS, min);
+    const winMin = addDays(String(delib.date), days);
+    if (winMin > earliest) basis.push(`window opened ${delib.date} + ${days} days (window minimum, OTCS-0013) → ${winMin}`);
+    earliest = later(earliest, winMin);
+  }
+
   return {
     proposal_id: id,
     class: cls,
@@ -163,7 +183,7 @@ export function clockTable(opts: { events?: LedgerEvent[]; root?: string } = {})
 }
 
 /**
- * Refusals that OTCS-0012 §3.1 makes mechanical. Returned as findings so the
+ * Refusals that OTCS-0013 §3.1 makes mechanical. Returned as findings so the
  * caller decides whether they warn (before ratification) or fail (after).
  */
 export type ClockFinding = { proposal_id: string; msg: string };
@@ -181,11 +201,11 @@ export function clockFindings(opts: { events?: LedgerEvent[]; root?: string } = 
       if (prev && p.hash && prev.hash && p.hash === prev.hash)
         out.push({ proposal_id: c.proposal_id, msg: `VERSION_PUBLISHED ${p.version ?? p.date} re-pins the same artifact hash as ${prev.version ?? prev.date}` });
       if (prev && p.hash && !p.amendment_class)
-        out.push({ proposal_id: c.proposal_id, msg: `VERSION_PUBLISHED ${p.version ?? p.date} follows a pin without an amendment_class (OTCS-0012 §3.1)` });
+        out.push({ proposal_id: c.proposal_id, msg: `VERSION_PUBLISHED ${p.version ?? p.date} follows a pin without an amendment_class (OTCS-0013 §3.1)` });
       prev = p;
     }
     if (c.class === "emergency" && c.pins.some((p) => p.amendment_class))
-      out.push({ proposal_id: c.proposal_id, msg: `emergency proposals admit no amendments (OTCS-0012 §3.1); a change is a new proposal` });
+      out.push({ proposal_id: c.proposal_id, msg: `emergency proposals admit no amendments (OTCS-0013 §3.1); a change is a new proposal` });
     // A decision before the computed date — the check RUNBOOK.md states in
     // prose ("you cannot shorten a clock by merging"), made mechanical.
     // RATIFICATION is the voting phase and may open before the date; what may

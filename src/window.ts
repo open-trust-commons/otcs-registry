@@ -81,7 +81,7 @@ Substantive changes to the proposal text arrive as pull requests against \`propo
 
 ### Amendment and the clock
 
-A merged change to the pinned text is an amendment. Its author declares it \`NON_SUBSTANTIVE\` or \`SUBSTANTIVE\` on the ledger event that records it; anyone may contest that here within 7 days. A substantive amendment re-pins the text and the date above is recomputed from the ledger (\`src/clock.ts\`). Until OTCS-0012 is decided, that recomputation follows its strictest reading.
+A merged change to the pinned text is an amendment. Its author declares it \`NON_SUBSTANTIVE\` or \`SUBSTANTIVE\` on the ledger event that records it; anyone may contest that here within 7 days. A substantive amendment re-pins the text and the date above is recomputed from the ledger (\`src/clock.ts\`). Until OTCS-0013 is decided, that recomputation follows its strictest reading.
 
 ### Follow-on
 

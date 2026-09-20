@@ -11,8 +11,8 @@ Nobody owns advancing the proposals unless a page says who and when. This page m
 | OTCS-0000 — constitutional documents | constitutional | OPERATION | REVIEW at its review date | 2027-01-25 (review) |
 | OTCS-0001 — v0.1 registry seed records | registry_update | **OPERATION** | Decision recorded 2026-08-05 (late, disclosed): RATIFIED / ALLOW | review 2026-10-25 |
 | OTCS-0002 — lifecycle, typing, legend, evidence classes | model_revision | DRAFT | DELIBERATION → RATIFICATION | 2026-09-09 |
-| OTCS-0003 — three-layer split of the coordinate vector | model_revision | **DELIBERATION** | Window open since 2026-09-20 ([#51](https://github.com/open-trust-commons/otcs-registry/issues/51), opened by the window workflow), trial executed, seam recorded as objection-001 | 2026-09-27 (seven days from the public opening; the §3 floor of 2026-09-10 had already elapsed) |
-| OTCS-0004 — entry licensing | model_revision | **DELIBERATION** | Window open since 2026-09-12 ([#49](https://github.com/open-trust-commons/otcs-registry/issues/49)), version pinned at `main` `92e1436` (ledger `VERSION_PUBLISHED`); RATIFICATION no earlier than the floor, and no earlier than any amendment rule ratified meanwhile allows | 2026-09-14 |
+| OTCS-0003 — three-layer split of the coordinate vector | model_revision | **DELIBERATION** | Window open since 2026-09-20 ([#51](https://github.com/open-trust-commons/otcs-registry/issues/51), opened by the window workflow), trial executed, seam recorded as objection-001 | **2026-10-18** — window opened 2026-09-20 + 28 days (window minimum, OTCS-0013, applied as the founder's self-binding from 2026-09-19); the §3 floor of 2026-09-10 had already elapsed |
+| OTCS-0004 — entry licensing | model_revision | **DELIBERATION** | Window open since 2026-09-12 ([#49](https://github.com/open-trust-commons/otcs-registry/issues/49)), version pinned at `main` `92e1436` (ledger `VERSION_PUBLISHED`); RATIFICATION no earlier than the floor, no earlier than any amendment rule ratified meanwhile allows, and held by objection-001 to the strictest reading of OTCS-0013 | **2026-10-10** — window opened 2026-09-12 + 28 days (window minimum); floor 2026-09-14 elapsed |
 | OTCS-0005 — sealed claims | model_revision | DRAFT | DELIBERATION → RATIFICATION | 2026-09-14 |
 | OTCS-0006 — project families | model_revision | DRAFT | DELIBERATION → RATIFICATION | 2026-09-14 |
 | OTCS-0007 — "uses the data to make a decision" | constitutional | DRAFT | DELIBERATION → RATIFICATION | 2026-09-17 |
@@ -21,8 +21,11 @@ Nobody owns advancing the proposals unless a page says who and when. This page m
 | OTCS-0010 — temporal validity + constructability ladder | model_revision | DRAFT | Deliberation window open; sequenced after OTCS-0003 | earliest 2026-09-24 |
 | OTCS-0011 — evidence efficacy | model_revision | DRAFT | Deliberation window open; independent of 0010 | earliest 2026-09-25 |
 | OTCS-0012 — the first policy record (AI-use policy) | registry_update | DRAFT | DELIBERATION → RATIFICATION | 2026-09-22 |
+| OTCS-0013 — what an amendment does to the clock | constitutional | DRAFT | DELIBERATION → RATIFICATION | 2026-11-03 |
 
 Dates are computed as `clock_start` + the floor of the proposal's `GOVERNANCE.md` §3 class: 45 days for constitutional and vocabulary-touching model revisions, 3–7 days for a registry listing update. The clock is a floor, not a target; a proposal may sit in deliberation as long as the deliberation needs.
+
+**The window has a minimum of its own (OTCS-0013, proposed; applied from 2026-09-19 as the founder's self-binding until it decides).** A proposal is not decided earlier than 28 days after its deliberation window opened, or the class minimum after the window opened if that is shorter. The floor says how long the text has been public; the window minimum says how long the place to object has existed. Windows are opened by the window workflow the day a proposal enters DELIBERATION, so the two clocks coincide from here on; the minimum bites only where a window was opened late. `npx tsx src/clock.ts table` computes every date on this page from the ledger and the phase history.
 
 ## What each transition requires
 
