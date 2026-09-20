@@ -206,7 +206,7 @@ if (existsSync(ledgerFile)) {
 
 // The clock (src/clock.ts). Every finding here is something RUNBOOK.md already
 // forbids in prose — a clock shortened by merging, a decision before its date,
-// a pin that does not say what it amends. Reported as warnings until OTCS-0012
+// a pin that does not say what it amends. Reported as warnings until OTCS-0013
 // ratifies; CLOCK_ENFORCE=1 makes them failures, which is what the decision
 // record for 0012 switches on.
 {

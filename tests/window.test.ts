@@ -15,7 +15,7 @@ describe("the window for OTCS-0004 is generated from the record", () => {
   it("names the pin, the computed date, and where objections land", () => {
     expect(w.pin).toEqual({ version: "v1", hash: H });
     expect(w.body).toContain(`artifact hash \`${H}\``);
-    expect(w.body).toContain("**Earliest legal decision:** 2026-09-14");
+    expect(w.body).toContain("**Earliest legal decision:** 2026-10-10");
     expect(w.body).toContain("### Where objections land");
     expect(w.body).toContain("Nothing in it was typed by a person.");
   });
