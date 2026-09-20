@@ -11,7 +11,7 @@ Nobody owns advancing the proposals unless a page says who and when. This page m
 | OTCS-0000 — constitutional documents | constitutional | OPERATION | REVIEW at its review date | 2027-01-25 (review) |
 | OTCS-0001 — v0.1 registry seed records | registry_update | **OPERATION** | Decision recorded 2026-08-05 (late, disclosed): RATIFIED / ALLOW | review 2026-10-25 |
 | OTCS-0002 — lifecycle, typing, legend, evidence classes | model_revision | DRAFT | DELIBERATION → RATIFICATION | 2026-09-09 |
-| OTCS-0003 — three-layer split of the coordinate vector | model_revision | DRAFT | DELIBERATION → RATIFICATION | 2026-09-10 |
+| OTCS-0003 — three-layer split of the coordinate vector | model_revision | **DELIBERATION** | Window open since 2026-09-20 ([#51](https://github.com/open-trust-commons/otcs-registry/issues/51), opened by the window workflow), trial executed, seam recorded as objection-001 | 2026-09-27 (seven days from the public opening; the §3 floor of 2026-09-10 had already elapsed) |
 | OTCS-0004 — entry licensing | model_revision | **DELIBERATION** | Window open since 2026-09-12 ([#49](https://github.com/open-trust-commons/otcs-registry/issues/49)), version pinned at `main` `92e1436` (ledger `VERSION_PUBLISHED`); RATIFICATION no earlier than the floor, and no earlier than any amendment rule ratified meanwhile allows | 2026-09-14 |
 | OTCS-0005 — sealed claims | model_revision | DRAFT | DELIBERATION → RATIFICATION | 2026-09-14 |
 | OTCS-0006 — project families | model_revision | DRAFT | DELIBERATION → RATIFICATION | 2026-09-14 |
