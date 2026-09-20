@@ -54,13 +54,17 @@
       {
         "file": "registry/projects/lifecycle-fixture/otcs.yaml",
         "sha256": "1e4f2c27b689e2c1b09e22d08f64e408635d2274d91d66a47eba026cfa9fea31"
+      },
+      {
+        "file": "registry/projects/otcs-ai-use/otcs.yaml",
+        "sha256": "4ae93d7c5e133b1a52ef733c6ca34ea9c9205c07169c8ba616b492ac4140e376"
       }
     ],
     "generated_at": "2026-07-25T00:00:00Z",
     "note": "Computed interpretation, not an authoritative project attribute (EVIDENCE-MODEL.md §6)."
   },
   "summary": {
-    "registered": 3,
+    "registered": 4,
     "observed": 0,
     "example": 4
   },
@@ -112,6 +116,12 @@
       "name": "Lifecycle Process Fixture (not a real project)",
       "record_state": "withdrawn",
       "status": "research"
+    },
+    {
+      "id": "otcs-ai-use",
+      "name": "OTCS AI-use policy",
+      "record_state": "registered",
+      "status": "production"
     }
   ],
   "edges": [

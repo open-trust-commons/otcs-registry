@@ -24,7 +24,9 @@ describe("golden-file reproduction (deterministic generation)", () => {
 describe("record-state discipline", () => {
   it("excludes example records from real counts", () => {
     const { matrix } = buildAll();
-    expect(matrix.summary.registered).toBe(3);
+    // 3 seed records (OTCS-0001) + otcs-ai-use (the registry-update proposal
+    // that registers the first policy record).
+    expect(matrix.summary.registered).toBe(4);
     expect(matrix.summary.example).toBe(4);
     const exampleIds = matrix.rows.filter((r) => r.record_state === "example").map((r) => r.id);
     expect(exampleIds).toEqual(["ex-gatekeeper", "ex-ledgerline", "ex-mendwell", "ex-watchtower"]);

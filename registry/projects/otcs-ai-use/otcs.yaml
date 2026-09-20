@@ -1,0 +1,80 @@
+# The registry's own policy on what AI may do inside it, registered as a
+# governance method (QUALIFYING-PROJECTS.md §2). Founder-stewarded, like the
+# ktp / ktp-demo / abt records, and disclosed as such. The first record whose
+# subject is a policy rather than a system; it exists to prove that a policy
+# governing automated software is registrable under CHARTER.md §1 as written.
+otcs_version: "0.1"
+project:
+  id: otcs-ai-use
+  name: OTCS AI-use policy
+  canonical_url: https://github.com/open-trust-commons/otcs-registry/blob/main/AI-USE.md
+  status: production
+  first_public_date: "2026-07-29"
+  current_version: "0.1"
+  license: CC BY 4.0
+  record_state: registered
+  maintainers:
+    - name: Chris Perkins (nmcitra)
+      representative: true
+declaration:
+  problem: >
+    A registry built partly in response to a field flooded with AI-generated
+    framework material has to make its own use of AI legible, or the criticism
+    is hollow. This policy says what AI may be used for inside the registry,
+    the conditions attached, and what it may never do.
+  governed_object: [model_output, authorship, institutional_process, evidence]
+  primary_users: [registry maintainers, contributors, analysts]
+  threat_or_failure_model: >
+    Generated material entering the record unmarked manufactures the synthetic
+    convergence the registry exists to make visible; an AI presented as
+    consensus ("the AI says the community agrees"); a candidate relationship
+    promoted to an edge without a human; a provenance dispute or an evidence
+    state decided by a model.
+  # The policy's own outputs are permitted / conditioned / prohibited. The
+  # schema admits only KTP's four — the exact situation OTCS-0003 Revision 4
+  # names — so they are mapped here and the mismatch is recorded in the
+  # registering proposal as a finding against the schema, not against the policy.
+  decision_outputs: [ALLOW, SHAPE, VETO]
+  evidence_outputs: [disclosure on contributions (DCO §2), labelled generated material, model and version recorded where practical]
+  known_limitations: >
+    Enforced by disclosure and review, not by a gate in any system: a
+    contributor who does not disclose is caught by review or not at all. No
+    independent party has evaluated compliance. The policy governs the
+    registry's own surfaces only; it says nothing about how any listed project
+    uses AI.
+coordinates:
+  actor: { ai_agent: 1.0, human: 0.7 }
+  authority: [mandate]
+  action: [write, publish, modify_policy]
+  environment: []
+  time: [before_action, after_action]
+governance_intent: >
+  A record in which generated content never passes as human agreement, so that
+  what the registry makes visible is real convergence and not manufactured
+  convergence.
+functions: { constrain: 0.9, record: 0.7, decide: 0.3 }
+ownership:
+  owners:
+    - name: Open Trust Commons (steward)
+      organization: open-trust-commons
+      public_contact: kinetic-trust@proton.me
+  verification:
+    status: repository_control_confirmed
+    verified_at: "2026-09-19"
+    evidence:
+      - https://github.com/open-trust-commons/otcs-registry
+    verified_by: Chris Perkins (nmcitra)
+freshness:
+  review_interval_days: 365
+  next_owner_confirmation: "2027-09-19"
+  confirmation_status: CURRENT
+consent:
+  publication: true
+  metadata_use: true
+  history_preservation: true
+  mapping_and_analysis: true
+  public_correction_process: true
+  consented_at: "2026-09-19"
+evidence: { specification: 2, implementation: 1, independent_validation: 0 }
+offers: [a worked example of a policy registered as a governance method]
+needs: [an independent check that contributions since v0.1.0 carry the disclosures the policy requires]
