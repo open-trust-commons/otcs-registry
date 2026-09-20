@@ -56,6 +56,10 @@
       {
         "file": "registry/projects/lifecycle-fixture/otcs.yaml",
         "sha256": "1e4f2c27b689e2c1b09e22d08f64e408635d2274d91d66a47eba026cfa9fea31"
+      },
+      {
+        "file": "registry/projects/otcs-ai-use/otcs.yaml",
+        "sha256": "4ae93d7c5e133b1a52ef733c6ca34ea9c9205c07169c8ba616b492ac4140e376"
       }
     ],
     "generated_at": "2026-07-25T00:00:00Z",
@@ -72,7 +76,7 @@
     "CONFORMANCE_TESTED"
   ],
   "summary": {
-    "registered": 3,
+    "registered": 4,
     "observed": 0,
     "example": 4
   },
@@ -140,6 +144,12 @@
     {
       "id": "lifecycle-fixture",
       "record_state": "withdrawn",
+      "provides": {},
+      "consumes": []
+    },
+    {
+      "id": "otcs-ai-use",
+      "record_state": "registered",
       "provides": {},
       "consumes": []
     }
