@@ -1,7 +1,7 @@
 proposal_id: OTCS-0015
 title: The bright line — standing to object is never a proposal topic
 class: constitutional
-phase: DRAFT
+phase: DELIBERATION
 author: Chris Perkins (nmcitra)
 sponsor: Chris Perkins (nmcitra)
 created: "2026-09-20"
@@ -11,3 +11,4 @@ affected_projects: []
 phase_history:
   - { phase: SEED, date: "2026-09-20" }
   - { phase: DRAFT, date: "2026-09-20" }
+  - { phase: DELIBERATION, date: "2026-09-20" }

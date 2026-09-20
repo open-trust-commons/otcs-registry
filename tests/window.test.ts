@@ -19,8 +19,8 @@ describe("the window for OTCS-0004 is generated from the record", () => {
     expect(w.body).toContain("### Where objections land");
     expect(w.body).toContain("Nothing in it was typed by a person.");
   });
-  it("is due alongside 0003, 0012 and 0013", () => {
-    expect(dueWindows().map((x) => x.proposal_id)).toEqual(["OTCS-0003", "OTCS-0004", "OTCS-0012", "OTCS-0013"]);
+  it("is due alongside 0003, 0012, 0013, 0014 and 0015", () => {
+    expect(dueWindows().map((x) => x.proposal_id)).toEqual(["OTCS-0003", "OTCS-0004", "OTCS-0012", "OTCS-0013", "OTCS-0014", "OTCS-0015"]);
   });
 });
 

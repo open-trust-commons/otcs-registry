@@ -22,8 +22,8 @@ Nobody owns advancing the proposals unless a page says who and when. This page m
 | OTCS-0011 — evidence efficacy | model_revision | DRAFT | Deliberation window open; independent of 0010 | earliest 2026-09-25 |
 | OTCS-0012 — the first policy record (AI-use policy) | registry_update | **DELIBERATION** | Window opened 2026-09-20 by the window workflow; RATIFICATION no earlier than the floor and the window minimum | 2026-09-23 (window 2026-09-20 + 3, the class minimum) |
 | OTCS-0013 — what an amendment does to the clock | constitutional | **DELIBERATION** | Window opened 2026-09-20 by the window workflow | 2026-11-03 (floor; window 2026-09-20 + 28 = 2026-10-18 is earlier) |
-| OTCS-0014 — disagreeing well: restatement, disposition, agreed facts | constitutional | DRAFT | DELIBERATION → RATIFICATION | 2026-11-04 |
-| OTCS-0015 — the bright line: standing to object is never a proposal topic | constitutional | DRAFT | DELIBERATION → RATIFICATION | 2026-11-04 |
+| OTCS-0014 — disagreeing well: restatement, disposition, agreed facts | constitutional | **DELIBERATION** | Window opened 2026-09-20 by the window workflow | 2026-11-04 (floor; window 2026-09-20 + 28 = 2026-10-18 is earlier) |
+| OTCS-0015 — the bright line: standing to object is never a proposal topic | constitutional | **DELIBERATION** | Window opened 2026-09-20 by the window workflow | 2026-11-04 (floor; window 2026-09-20 + 28 = 2026-10-18 is earlier) |
 
 Dates are computed as `clock_start` + the floor of the proposal's `GOVERNANCE.md` §3 class: 45 days for constitutional and vocabulary-touching model revisions, 3–7 days for a registry listing update. The clock is a floor, not a target; a proposal may sit in deliberation as long as the deliberation needs.
 
