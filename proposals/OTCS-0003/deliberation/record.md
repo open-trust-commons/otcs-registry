@@ -1,8 +1,8 @@
 # OTCS-0003 — deliberation record
 
-**Window opened:** 2026-09-13 · **Where objections land:** the window issue on this repository (opened by the window workflow from this file's pin) · **Version deliberated:** the pin in the ledger's `VERSION_PUBLISHED` for this proposal, hash reproducible with `npx tsx src/clock.ts hash OTCS-0003` · **Participant set at opening:** founder only, disclosed, per `proposals/CALENDAR.md` *Deliberation with one participant*.
+**Window opened:** 2026-09-20, the day this record and its window issue (#51) reached the public repository. The record was written 2026-09-13; that date is when it was drafted, not when the window existed. · **Where objections land:** the window issue on this repository (opened by the window workflow from this file's pin) · **Version deliberated:** the pin in the ledger's `VERSION_PUBLISHED` for this proposal, hash reproducible with `npx tsx src/clock.ts hash OTCS-0003` · **Participant set at opening:** founder only, disclosed, per `proposals/CALENDAR.md` *Deliberation with one participant*.
 
-The floor for this class elapsed on 2026-09-10. The window did not exist until today. Under the one-participant protocol a window has to be real and dated, so no decision is recorded earlier than **seven days after this window opened — 2026-09-20 —** whatever the floor says. Seven is the smallest interval `GOVERNANCE.md` §3 recognises as enough for a change to be seen. *(Founder's self-binding; recorded here so it cannot be shortened later.)*
+The floor for this class elapsed on 2026-09-10. The window did not exist until today. Under the one-participant protocol a window has to be real and dated, so no decision is recorded earlier than **seven days after this window opened on the public record — 2026-09-27 —** whatever the floor says. The date is when it is public, and the clock starts when there is a public receipt. Seven is the smallest interval `GOVERNANCE.md` §3 recognises as enough for a change to be seen. *(Founder's self-binding; recorded here so it cannot be shortened later.)*
 
 ## The seam the calendar told us to name
 

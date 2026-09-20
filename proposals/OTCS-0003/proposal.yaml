@@ -11,4 +11,4 @@ affected_projects: [ktp, ktp-demo, abt, ex-gatekeeper, ex-watchtower, ex-ledgerl
 phase_history:
   - { phase: SEED, date: "2026-07-27" }
   - { phase: DRAFT, date: "2026-07-27" }
-  - { phase: DELIBERATION, date: "2026-09-13" }
+  - { phase: DELIBERATION, date: "2026-09-20" }
