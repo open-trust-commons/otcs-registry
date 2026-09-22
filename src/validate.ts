@@ -3,13 +3,13 @@
 import { readFileSync, readdirSync, existsSync, statSync } from "node:fs";
 import { join, basename, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import Ajv2020 from "ajv/dist/2020.js";
-import addFormats from "ajv-formats";
+import { Ajv2020 } from "ajv/dist/2020.js";
+import formats from "ajv-formats";
 import { parse } from "yaml";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const ajv = new Ajv2020({ allErrors: true, strict: true, strictRequired: false, allowUnionTypes: true });
-addFormats(ajv);
+formats.default(ajv);
 
 type Doc = Record<string, unknown>;
 const load = (p: string): Doc => parse(readFileSync(p, "utf8")) as Doc;
@@ -69,19 +69,29 @@ let pass = 0, fail = 0;
 const problems: string[] = [];
 const check = (name: string, doc: Doc, expectValid: boolean, label: string) => {
   const v = validators.get(name);
-  if (!v) { problems.push(`${label}: no schema named ${name}`); fail++; return; }
+  if (!v) { problems.push(`${label}: no schema named ${name}`); fail++; return false; }
   const schemaOk = v(doc) as boolean;
-  const findings = (semantic[name]?.(doc) ?? []);
+  const findings = schemaOk ? (semantic[name]?.(doc) ?? []) : [];
   const semanticOk = !findings.some((f) => f.level === "error");
   const ok = schemaOk && semanticOk;
   for (const f of findings.filter((f) => f.level === "warning" && expectValid))
     console.log(`  ⚠ ${label}: ${f.msg}`);
-  if (ok === expectValid) { pass++; return; }
+  if (ok === expectValid) { pass++; return ok; }
   fail++;
   const why = !schemaOk ? ajv.errorsText(v.errors, { separator: "; " })
     : findings.filter((f) => f.level === "error").map((f) => f.msg).join("; ") || "unexpectedly valid";
   problems.push(`${label}: expected ${expectValid ? "VALID" : "INVALID"} — ${why}`);
+  return false;
 };
+
+function loadSequence(path: string, label: string, allowEmptyFile = false): Doc[] {
+  const items = parse(readFileSync(path, "utf8"));
+  if (Array.isArray(items)) return items;
+  if (allowEmptyFile && items == null) return [];
+  fail++;
+  problems.push(`${label}: expected YAML sequence`);
+  return [];
+}
 
 const exDir = join(ROOT, "schemas/examples");
 for (const name of readdirSync(exDir)) {
@@ -96,6 +106,7 @@ for (const name of readdirSync(exDir)) {
 // ---- validate real records where present ----------------------------------
 const recordCounts: Record<string, number> = { registered: 0, observed: 0, example: 0 };
 const registryIds: string[] = [];
+const relationships: { edge: Doc; label: string }[] = [];
 const regDir = join(ROOT, "registry/projects");
 if (existsSync(regDir)) {
   for (const id of readdirSync(regDir)) {
@@ -104,33 +115,34 @@ if (existsSync(regDir)) {
     const manifest = join(base, "otcs.yaml");
     if (existsSync(manifest)) {
       const doc = load(manifest);
-      check("project-manifest", doc, true, `registry/${id}/otcs.yaml`);
-      const proj = doc.project as Doc | undefined;
-      const state = String(proj?.record_state ?? "?");
-      if (state in recordCounts) recordCounts[state]++;
-      if (proj?.id && proj.id !== id)
-        { fail++; problems.push(`registry/${id}: directory name != project.id (${proj.id})`); }
+      if (check("project-manifest", doc, true, `registry/${id}/otcs.yaml`)) {
+        const proj = doc.project as Doc;
+        const state = String(proj.record_state);
+        if (state in recordCounts) recordCounts[state]++;
+        if (proj.id !== id)
+          { fail++; problems.push(`registry/${id}: directory name != project.id (${proj.id})`); }
+      }
       registryIds.push(id);
     }
     for (const [file, schema] of [["relationships.yaml", "relationship"], ["claims.yaml", "claim"]] as const) {
       const p = join(base, file);
       if (!existsSync(p)) continue;
-      const items = parse(readFileSync(p, "utf8")) as Doc[];
-      items.forEach((item, i) => check(schema, item, true, `registry/${id}/${file}[${i}]`));
+      const label = `registry/${id}/${file}`;
+      loadSequence(p, label).forEach((item, i) => {
+        const itemLabel = `${label}[${i}]`;
+        if (check(schema, item, true, itemLabel) && schema === "relationship")
+          relationships.push({ edge: item, label: itemLabel });
+      });
     }
   }
 }
 // relationship endpoints must reference known registry ids (dangling-edge check)
-for (const id of registryIds) {
-  const p = join(regDir, id, "relationships.yaml");
-  if (!existsSync(p)) continue;
-  (parse(readFileSync(p, "utf8")) as Doc[]).forEach((edge, i) => {
-    for (const end of ["source_project", "target_project"] as const) {
-      const ref = String(edge[end] ?? "");
-      if (ref && !registryIds.includes(ref))
-        { fail++; problems.push(`registry/${id}/relationships.yaml[${i}]: ${end} "${ref}" is not a registered record`); }
-    }
-  });
+for (const { edge, label } of relationships) {
+  for (const end of ["source_project", "target_project"] as const) {
+    const ref = String(edge[end]);
+    if (!registryIds.includes(ref))
+      { fail++; problems.push(`${label}: ${end} "${ref}" is not a registered record`); }
+  }
 }
 const propDir = join(ROOT, "proposals");
 if (existsSync(propDir)) {
@@ -166,8 +178,7 @@ for (const [file, schema] of [
 ] as const) {
   const p = join(ROOT, file);
   if (!existsSync(p)) continue;
-  const items = (parse(readFileSync(p, "utf8")) as Doc[]) ?? [];
-  items.forEach((item, i) => check(schema, item, true, `${file}[${i}]`));
+  loadSequence(p, file, true).forEach((item, i) => check(schema, item, true, `${file}[${i}]`));
 }
 
 // Release decision records. RELEASE-GOVERNANCE.md §6 says a release whose
@@ -184,8 +195,8 @@ if (existsSync(relDir)) {
 // generated; it is accepted through the same validated, versioned path as
 // everything else in the registry — including analysis of the founder's own
 // projects, which gets no exemption from this check.
-function walkAnalysis(dir) {
-  const out = [];
+function walkAnalysis(dir: string): string[] {
+  const out: string[] = [];
   if (!existsSync(dir)) return out;
   for (const name of readdirSync(dir)) {
     const p = join(dir, name);

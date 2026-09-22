@@ -59,12 +59,19 @@ Nothing here asks to be taken on trust. Clone it and run the same checks we run:
 
 ```bash
 npm install
+npm run lint           # static JavaScript and TypeScript checks
+npm run typecheck      # strict TypeScript compilation without emitted files
 npm run validate       # every format, record and cross-reference
 npm test               # the full test suite
 npm run ledger:verify  # confirm the governance history has not been altered
 npm run build:site     # build the site
 npm run serve          # preview at http://localhost:8138
 ```
+
+`npm run check` runs lint, type checking, validation, tests, ledger verification and the site build in order.
+Lint includes source, tests and candidate modules; generated `site/dist` and installed dependencies are excluded.
+Type checking covers TypeScript source, tests and configuration in strict mode, including inferred interfaces of imported JavaScript modules.
+JavaScript module bodies remain covered by lint and runtime tests; `checkJs` is not enabled.
 
 If your results differ from ours, that is a bug and we want to hear about it.
 

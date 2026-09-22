@@ -13,7 +13,6 @@ import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, rmSync
 import { createHash } from "node:crypto";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { parse } from "yaml";
 import { loadRegistry, type Doc } from "./registry-load.js";
 import { computeStatus } from "./roadmap-status.js";
 import { readLedger } from "./ledger.js";

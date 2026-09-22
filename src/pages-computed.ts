@@ -41,7 +41,7 @@ export function graphPage(): Page {
   const pairs = c.pairs.slice(0, 8).map((p: any) =>
     `<tr><td>${esc(p.pair[0])} ↔ ${esc(p.pair[1])}</td><td>${p.bands.map((b: string) => badge(b)).join(" ")}</td></tr>`).join("\n");
   const body = `<h1>Relationship graph</h1>
-<p>${g.summary.registered} registered · ${g.summary.observed} observed · ${g.summary.example} example <span class="muted">(excluded from real counts)</span></p>
+<p>${esc(String(g.summary.registered))} registered · ${esc(String(g.summary.observed))} observed · ${esc(String(g.summary.example))} example <span class="muted">(excluded from real counts)</span></p>
 ${stampBox(g.stamp)}
 <h2>Records</h2><ul>${nodes}</ul>
 <h2>Declared relationships</h2>
@@ -60,7 +60,7 @@ export function interfacePages(): Page[] {
   const items = readdirSync(join(ROOT, "interfaces")).filter((f) => f.endsWith(".md")).sort();
   const links = items.map((f) => {
     const name = f.replace(".md", "");
-    return `<li><a href="${name}.html">${esc(name)}</a> ${badge("EXPERIMENTAL")}</li>`;
+    return `<li><a href="${esc(name)}.html">${esc(name)}</a> ${badge("EXPERIMENTAL")}</li>`;
   }).join("\n");
   out.push({
     path: "interfaces/index.html", title: "Interfaces",
