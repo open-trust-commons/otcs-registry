@@ -17,7 +17,7 @@
 //
 // CLI: tsx src/window.ts list         — proposals whose window is due (JSON)
 //      tsx src/window.ts body <id>    — the issue body for one proposal
-import { readFileSync, existsSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { parse } from "yaml";
