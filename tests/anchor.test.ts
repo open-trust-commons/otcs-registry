@@ -1,4 +1,5 @@
 import { describe, it, expect } from "vitest";
+import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync, mkdirSync, rmSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { treeDigest, ROOT } from "../src/anchor.js";
@@ -30,6 +31,7 @@ describe("anchor manifests are immutable once written", () => {
     for (const e of idx) {
       expect(existsSync(join(ROOT, e.manifest_file))).toBe(true);
       expect(e.manifest_sha256).toMatch(/^[0-9a-f]{64}$/);
+      expect(createHash("sha256").update(readFileSync(join(ROOT, e.manifest_file))).digest("hex")).toBe(e.manifest_sha256);
     }
   });
 });

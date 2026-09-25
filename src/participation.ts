@@ -32,7 +32,7 @@
 // ADVISORY. Exit is always 0. It reports and logs; it appoints nobody and
 // changes no record. The bar it reports against is #14's published one;
 // applying the result is a human governance act.
-import { readFileSync, readdirSync, existsSync, appendFileSync, mkdirSync } from "node:fs";
+import { existsSync, appendFileSync, mkdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { readLedger, type LedgerEvent } from "./ledger.js";

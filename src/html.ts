@@ -1,5 +1,13 @@
 // Shared layout + badge helpers for the OTCS static site. Deterministic output.
-export const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+export const esc = (s: unknown) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+
+// Only navigational URLs become links; return an escaped attribute value.
+export function safeHref(value: string): string | null {
+  try {
+    const protocol = new URL(value, "https://otcs.invalid/").protocol;
+    return ["http:", "https:", "mailto:"].includes(protocol) ? esc(value) : null;
+  } catch { return null; }
+}
 
 // depth = how many directories below dist/ the page lives (for relative links).
 export function layout(title: string, body: string, depth = 0): string {
@@ -36,12 +44,12 @@ const BADGE_CLASS: Record<string, string> = {
   REFERENCE_IMPLEMENTATION: "b-green", CONFORMANCE_TESTED: "b-green",
 };
 export const badge = (label: string): string =>
-  `<span class="badge ${BADGE_CLASS[label] ?? "b-grey"}">${esc(label)}</span>`;
+  `<span class="badge ${esc(Object.hasOwn(BADGE_CLASS, label) ? BADGE_CLASS[label] : "b-grey")}">${esc(label)}</span>`;
 
 // Maturity is ALWAYS a profile — rendering a single collapsed number is prohibited (NON-GOALS #2).
 export const maturityProfile = (e: { specification?: number; implementation?: number; independent_validation?: number }): string =>
   `<table class="profile"><tr><th>specification</th><th>implementation</th><th>independent validation</th></tr>` +
-  `<tr><td>M${e.specification ?? 0}</td><td>M${e.implementation ?? 0}</td><td>M${e.independent_validation ?? 0}</td></tr></table>`;
+  `<tr><td>M${esc(String(e.specification ?? 0))}</td><td>M${esc(String(e.implementation ?? 0))}</td><td>M${esc(String(e.independent_validation ?? 0))}</td></tr></table>`;
 
 export const stampBox = (s: { algorithm_version: string; generated_at: string; inputs: { file: string }[] }): string =>
   `<p class="stamp">Computed interpretation, not fact — algorithm <code>${esc(s.algorithm_version)}</code> · generated ${esc(s.generated_at)} · ${s.inputs.length} input records (hashes in the JSON artifact)</p>`;

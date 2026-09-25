@@ -110,7 +110,7 @@ export function pairs(projects: Doc[], edges: Doc[]) {
         bands: band(g, o),
         // numerics retained for internal sensitivity work; NOT rendered, NOT authoritative
         _experimental: { overlap: Number(o.toFixed(4)),
-          ...Object.fromEntries(Object.entries(g).map(([k, v]) => [k, Number((v as number).toFixed(4))])) },
+          ...(Object.fromEntries(Object.entries(g).map(([k, v]) => [k, Number(v.toFixed(4))])) as typeof g) },
       });
     }
   }

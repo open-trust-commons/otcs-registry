@@ -1,22 +1,10 @@
-// External timestamp witnesses.
-//
-// The requirement is NOT Bitcoin. It is a party this project cannot influence,
-// keeping a public record, durable for decades, at no ongoing cost. Bitcoin via
-// OpenTimestamps satisfies that. So do other things, and the layer is built to
-// hold more than one — because a single witness is a single point of dependence,
-// which is the shape of problem this whole registry exists to make visible.
-//
-// Two are implemented, and they fail differently on purpose:
-//
-//   opentimestamps  proof-of-work chain, no operator, hours to confirm
-//   rekor           operated append-only Merkle log, immediate inclusion proof
-//
-// If Bitcoin's calendars vanish, Rekor is unaffected. If sigstore's operator
-// stops, Bitcoin is unaffected. Neither shares a failure domain with the other
-// or with this project. That is the property being bought, not the technology.
-import { execFileSync } from "node:child_process";
-import { existsSync, readFileSync } from "node:fs";
+// External timestamp adapters: OpenTimestamps/Bitcoin and Rekor/Sigstore.
+// They use different infrastructure. Long-term availability and independence
+// are deployment assumptions, not properties certified by this adapter.
+import { execFileSync, spawnSync } from "node:child_process";
+import { existsSync } from "node:fs";
 import { join } from "node:path";
+import { homedir } from "node:os";
 
 export type WitnessState = "SUBMITTED" | "CONFIRMED" | "UNKNOWN";
 
@@ -39,7 +27,7 @@ export type Witness = {
 
 const has = (bin: string, args: string[] = ["--version"]): boolean => {
   try {
-    execFileSync(bin, args, { stdio: "pipe" });
+    execFileSync(bin, args, { stdio: "pipe", timeout: 5000 });
     return true;
   } catch {
     return false;
@@ -60,59 +48,34 @@ export const opentimestamps: Witness = {
     const proof = `${absPath}.ots`;
     if (!existsSync(proof)) return { state: "UNKNOWN", note: "proof file missing" };
 
-    // `ots info` reads the proof itself. It needs no node and no network, and
-    // it names the block any attestation points at.
-    //
-    // `ots verify` is NOT used to decide this. It writes to stderr rather than
-    // stdout — so a stdout-only capture silently never matched, and CONFIRMED
-    // was unreachable for months of wall-clock — and it requires a local
-    // Bitcoin node to check the block header, which no CI runner has. Making
-    // confirmation depend on running a full node would mean this project could
-    // never report its own anchors as confirmed.
-    let info = "";
-    try {
-      info = execFileSync("ots", ["info", proof], { stdio: ["pipe", "pipe", "pipe"] }).toString();
-    } catch (e) {
-      info = ((e as { stdout?: Buffer }).stdout ?? Buffer.from("")).toString();
+    // The verifier binds the proof to the adjacent manifest and checks Bitcoin.
+    // Inspection output names claims; only successful verification confirms one.
+    const result = spawnSync("ots", ["verify", proof], {
+      encoding: "utf8", timeout: 60000, maxBuffer: 1024 * 1024,
+    });
+    const output = `${result.stdout ?? ""}\n${result.stderr ?? ""}`;
+    const success = output.match(/^Success! Bitcoin block (\d+) attests existence as of .+$/m);
+    if (!result.error && result.status === 0 && success) {
+      return { state: "CONFIRMED", note: `Bitcoin block ${success[1]} verified by ots` };
     }
-
-    const blocks = [...info.matchAll(/BitcoinBlockHeaderAttestation\((\d+)\)/g)].map((m) => m[1]);
-    if (blocks.length) {
-      // The proof is complete: it commits to named blocks, and anyone can check
-      // those block headers themselves. That independence is the whole point,
-      // so it does not become weaker because we lack a node to check it here.
-      // Sorted, not insertion-ordered: this string is written into the index,
-      // which is committed. An unsorted list would churn the file between runs
-      // for no reason, and determinism is a requirement here, not a preference.
-      const seen = [...new Set(blocks)].sort((a, b) => Number(a) - Number(b));
-      return {
-        state: "CONFIRMED",
-        note: `bitcoin ${seen.length > 1 ? "blocks" : "block"} ${seen.join(", ")} — verify independently with a node`,
-      };
-    }
-    if (/PendingAttestation/.test(info)) {
-      return { state: "SUBMITTED", note: "calendars hold it; no block commits it yet — run ots upgrade" };
-    }
-    return { state: "UNKNOWN", note: "proof contains neither a pending nor a block attestation" };
+    return { state: "UNKNOWN", note: "Bitcoin proof not verified; client, node or proof may be unavailable" };
   },
 };
 
 /* ── Rekor · sigstore transparency log ───────────────────────────────────── */
 
 /**
- * Rekor records a signature over the manifest, not the manifest itself, so the
- * log entry says *who* submitted *what digest* and *when the log saw it*. The
- * signature uses the same key published in MAINTAINERS.md §1, which is why
- * .allowed_signers permits the `file` namespace as well as `git`.
- *
- * Inclusion is immediate rather than eventual — the opposite trade from
- * Bitcoin, and the reason having both says more than having either twice.
+ * Rekor records a signature over the manifest digest. This adapter uses the
+ * configured SSH signing key; the operator must bind its public key to the
+ * intended maintainer identity. Verification checks the submitted artifact and
+ * inclusion, under the installed client's log-key trust configuration.
  */
 export const rekor: Witness = {
   id: "rekor",
   substrate: "sigstore transparency log",
-  available: () => has("rekor-cli", ["version"]) && existsSync(SIGNING_KEY),
+  available: () => has("rekor-cli", ["version"]),
   submit(absPath, repoRelPath) {
+    if (!existsSync(SIGNING_KEY)) return null;
     const sig = `${absPath}.sig`;
     execFileSync("ssh-keygen", ["-Y", "sign", "-f", SIGNING_KEY, "-n", "file", absPath], { stdio: "pipe" });
     // `rekord`, not `hashedrekord`: hashedrekord accepts x509-based PKI only and
@@ -134,24 +97,33 @@ export const rekor: Witness = {
     };
   },
   check(absPath) {
-    try {
-      const out = execFileSync(
-        "rekor-cli", ["search", "--artifact", absPath], { stdio: "pipe" },
-      ).toString();
-      if (/[0-9a-f]{64,}/.test(out)) return { state: "CONFIRMED", note: "present in the log" };
-      return { state: "UNKNOWN", note: "not found in the log" };
-    } catch {
-      return { state: "UNKNOWN", note: "search failed, or no network" };
+    const signature = `${absPath}.sig`;
+    const publicKey = `${SIGNING_KEY}.pub`;
+    if (!existsSync(signature) || !existsSync(publicKey)) {
+      return { state: "UNKNOWN", note: "signature or public key missing" };
     }
+    // Delegate artifact/signature binding and inclusion verification to Rekor.
+    // Trust remains that of the installed client and its configured log key.
+    const result = spawnSync("rekor-cli", ["verify", "--type", "rekord", "--artifact", absPath,
+      "--signature", signature, "--pki-format", "ssh", "--public-key", publicKey], {
+      encoding: "utf8", timeout: 60000, maxBuffer: 1024 * 1024,
+    });
+    const output = result.stdout ?? "";
+    const computed = output.match(/^Computed Root Hash: ([0-9a-f]{64})\s*$/m)?.[1];
+    const expected = output.match(/^Expected Root Hash: ([0-9a-f]{64})\s*$/m)?.[1];
+    if (!result.error && result.status === 0 && computed && computed === expected) {
+      return { state: "CONFIRMED", note: "artifact and inclusion proof verified by rekor-cli" };
+    }
+    return { state: "UNKNOWN", note: "Rekor artifact/inclusion verification did not succeed" };
   },
 };
 
-const SIGNING_KEY = process.env.OTCS_SIGNING_KEY ?? join(process.env.HOME ?? "", ".ssh", "otcs-signing");
+const SIGNING_KEY = process.env.OTCS_SIGNING_KEY ?? join(homedir(), ".ssh", "otcs-signing");
 
 /**
  * Registered witnesses, in the order a round tries them.
  *
- * A round succeeds if ANY witness accepts. It reports how many of the
+ * Submission and confirmation are separate. The caller reports how many of the
  * registered set responded, because "witnessed by one of two" and "witnessed
  * by two of two" are different claims and collapsing them would be the
  * authority inflation ANCHORING.md refuses.

@@ -9,6 +9,7 @@ import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createRequire } from "node:module";
 import { parse } from "yaml";
+import { withFileLock } from "./local-file-lock.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 export const LEDGER = join(ROOT, "governance-log", "events.jsonl");
@@ -32,23 +33,22 @@ export const readLedger = (path = LEDGER): LedgerEvent[] =>
  * — edit it — is the one thing the chain exists to make detectable. A note
  * exceeding the 2000-character limit was written and only caught afterwards.
  *
- * Validation is best-effort by design: if ajv or the schema cannot be loaded,
- * the append proceeds rather than blocking the ledger on a tooling problem.
- * A schema that loads and rejects is fatal.
+ * Both unavailable validation and a rejected event are fatal before append.
+ * Existing committed event bytes are never rewritten by this operation.
  */
 function assertValidEvent(full: LedgerEvent): void {
   let validate: ((d: unknown) => boolean) & { errors?: unknown[] };
   try {
     const schemaPath = join(ROOT, "schemas", "governance-event.schema.json");
-    if (!existsSync(schemaPath)) return;
+    if (!existsSync(schemaPath)) throw new Error("schema missing");
     const require_ = createRequire(import.meta.url);
     const Ajv2020 = require_("ajv/dist/2020.js");
     const addFormats = require_("ajv-formats");
     const ajv = new Ajv2020({ allErrors: true, strict: false });
     addFormats(ajv);
     validate = ajv.compile(JSON.parse(readFileSync(schemaPath, "utf8")));
-  } catch {
-    return; // tooling unavailable — do not block the ledger on it
+  } catch (error) {
+    throw new Error("ledger: validation unavailable; nothing was written", { cause: error });
   }
   if (!validate(full)) {
     const detail = (validate.errors ?? [])
@@ -61,11 +61,14 @@ function assertValidEvent(full: LedgerEvent): void {
   }
 }
 
-export function appendEvent(fields: LedgerEvent, path = LEDGER): LedgerEvent {
+function appendUnlocked(fields: LedgerEvent, path: string): LedgerEvent {
+  const prior = verifyLedger(path);
+  if (!prior.ok) throw new Error(`ledger: existing chain is damaged: ${prior.problems.join("; ")}`);
   const events = readLedger(path);
   const prev = events.length ? String(events[events.length - 1].content_hash) : "GENESIS";
+  const { event_id: _event, prev_hash: _previous, content_hash: _content, ...input } = fields;
   const body: LedgerEvent = {
-    ...fields,
+    ...input,
     event_id: `ev-${String(events.length + 1).padStart(6, "0")}`,
     prev_hash: prev,
   };
@@ -73,8 +76,14 @@ export function appendEvent(fields: LedgerEvent, path = LEDGER): LedgerEvent {
   const full = { ...body, content_hash };
   assertValidEvent(full);
   mkdirSync(dirname(path), { recursive: true });
-  appendFileSync(path, JSON.stringify(full) + "\n");
+  const previousBytes = existsSync(path) ? readFileSync(path, "utf8") : "";
+  const separator = previousBytes.length && !previousBytes.endsWith("\n") ? "\n" : "";
+  appendFileSync(path, separator + JSON.stringify(full) + "\n");
   return full;
+}
+
+export function appendEvent(fields: LedgerEvent, path = LEDGER): LedgerEvent {
+  return withFileLock(path, () => appendUnlocked(fields, path));
 }
 
 export function verifyLedger(path = LEDGER): { ok: boolean; count: number; problems: string[] } {

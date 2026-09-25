@@ -1,8 +1,8 @@
 import { describe, it, expect, beforeAll } from "vitest";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import Ajv2020 from "ajv/dist/2020.js";
-import addFormats from "ajv-formats";
+import { Ajv2020 } from "ajv/dist/2020.js";
+import formats from "ajv-formats";
 import { buildAll, graphHtml } from "../src/generate.js";
 import { gamma, overlap } from "../src/complementarity.js";
 import { loadRegistry, ROOT, type Doc } from "../src/registry-load.js";
@@ -80,7 +80,7 @@ describe("complementarity semantics", () => {
 describe("malformed manifest rejected", () => {
   it("schema rejects a collapsed-maturity manifest", () => {
     const ajv = new Ajv2020({ strict: true, strictRequired: false, allowUnionTypes: true });
-    addFormats(ajv);
+    formats.default(ajv);
     const schema = JSON.parse(readFileSync(join(ROOT, "schemas/project-manifest.schema.json"), "utf8"));
     const validate = ajv.compile(schema);
     const bad = loadRegistry().projects[0] ? { ...loadRegistry().projects[0], evidence: 3 } : {};

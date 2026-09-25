@@ -3,7 +3,7 @@ import { readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { parse } from "yaml";
 import { ROOT, type Doc } from "./registry-load.js";
-import { esc, badge, maturityProfile } from "./html.js";
+import { esc, safeHref, badge, maturityProfile } from "./html.js";
 import type { Page } from "./pages.js";
 import { layers } from "./complementarity.js";
 
@@ -16,7 +16,7 @@ const list = (xs?: string[]) => (xs?.length ? xs.map(esc).join(", ") : "<span cl
 const wtable = (obj?: Record<string, number>) =>
   obj && Object.keys(obj).length
     ? "<table class='profile'><tr>" + Object.keys(obj).map((k) => `<th>${esc(k)}</th>`).join("") + "</tr><tr>" +
-      Object.values(obj).map((v) => `<td>${v}</td>`).join("") + "</tr></table>"
+      Object.values(obj).map((v) => `<td>${esc(String(v))}</td>`).join("") + "</tr></table>"
     : "<span class='muted'>—</span>";
 
 export function projectsIndex(projects: Doc[]): Page {
@@ -36,6 +36,7 @@ ${rows}</table>`;
 export function projectPage(p: Doc, edges: Doc[]): Page {
   const pr = p.project, d = p.declaration ?? {}, c = p.coordinates ?? {};
   const id = String(pr.id);
+  const canonical = pr.canonical_url ? safeHref(String(pr.canonical_url)) : null;
   const myEdges = edges.filter((e) => e.source_project === id || e.target_project === id);
   const exampleBanner = pr.record_state === "example"
     ? `<p class="example-banner">EXAMPLE — fictional demonstration record; implements nothing; excluded from real counts</p>` : "";
@@ -43,10 +44,10 @@ export function projectPage(p: Doc, edges: Doc[]): Page {
     `<tr><td>${esc(e.source_project)}</td><td>${esc(e.relationship_type)}</td><td>${esc(e.target_project)}</td>` +
     `<td>${badge(e.status)}</td><td class="muted">${esc(e.asserted_by)}</td></tr>`).join("\n");
   const claimRows = claimsFor(id).map((cl) =>
-    `<tr><td>${esc(cl.class)}</td><td>${esc(cl.content)}</td><td>${badge(cl.evidence_state)}</td><td>M${cl.maturity}</td></tr>`).join("\n");
+    `<tr><td>${esc(cl.class)}</td><td>${esc(cl.content)}</td><td>${badge(cl.evidence_state)}</td><td>M${esc(String(cl.maturity))}</td></tr>`).join("\n");
   const body = `${exampleBanner}
 <h1>${esc(pr.name)} ${badge(pr.record_state)}</h1>
-<p class="muted">${esc(id)} · ${esc(pr.status)} · first public ${esc(pr.first_public_date)} · ${esc(pr.license)}${pr.canonical_url ? ` · <a href="${esc(pr.canonical_url)}">canonical</a>` : ""}</p>
+<p class="muted">${esc(id)} · ${esc(pr.status)} · first public ${esc(pr.first_public_date)} · ${esc(pr.license)}${canonical !== null ? ` · <a href="${canonical}">canonical</a>` : ""}</p>
 <h2>Declaration</h2>
 <p>${esc(String(d.problem ?? ""))}</p>
 <table>

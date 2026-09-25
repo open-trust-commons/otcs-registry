@@ -15,7 +15,7 @@
 //              when written and silently became false
 //
 // Exit non-zero on any finding, so it can gate a commit.
-import { readFileSync, readdirSync, existsSync, statSync } from "node:fs";
+import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -28,7 +28,6 @@ const findings: Finding[] = [];
 const flag = (kind: string, where: string, what: string) => findings.push({ kind, where, what });
 
 const rootDocs = readdirSync(ROOT).filter((f) => f.endsWith(".md"));
-const slug = (f: string) => f.replace(/\.md$/, "").toLowerCase().replace(/_/g, "-") + ".md";
 
 /** Section headings a document actually has: "## 4b. Title" -> 4b */
 function sectionsOf(doc: string): Map<string, string> {
@@ -57,7 +56,7 @@ if (existsSync(gen)) {
 
 /* ── 3. every §N reference points at a section that exists ──────────────── */
 for (const doc of rootDocs) {
-  // [A-Z0-9]+ not [0-9]+: a §F citation must be caught, not skipped. Sections
+  // [0-9A-Za-z]+ not [0-9]+: a §F citation must be caught, not skipped. Sections
   // here are numbered; a letter is someone citing a plane label or an appendix
   // marker as though it were a section, which resolves to nothing.
   for (const m of read(doc).matchAll(/\[?([A-Z][A-Z0-9_-]+\.md)\]?(?:\([^)]*\))?\s*§\s*([0-9A-Za-z]+)/g)) {
@@ -65,7 +64,7 @@ for (const doc of rootDocs) {
     if (!rootDocs.includes(target)) continue;
     const secs = sectionsOf(target);
     if (secs.size === 0) continue; // target has no numbered sections at all
-    if (!secs.has(sec)) flag("SECTION", doc, `${target} §${sec} does not exist`);
+    if (!secs.has(sec.toLowerCase())) flag("SECTION", doc, `${target} §${sec} does not exist`);
   }
 }
 
@@ -157,7 +156,7 @@ for (const { label, values, doc } of VOCAB) {
       }
       text = text.slice(0, cut);
     }
-    for (const m of text.matchAll(/v?0\.0\.\d+/g))
+    for (const m of text.matchAll(/(?<![\w.])v?0\.0\.\d+(?![\w.])/g))
       flag("VERSION", doc, `cites incubation tag ${m[0]} — nothing below v0.1.0 was published`);
   }
 }
@@ -178,8 +177,10 @@ for (const { label, values, doc } of VOCAB) {
     tracked = new Set(
       execFileSync("git", ["ls-files"], { cwd: ROOT, encoding: "utf8" }).split("\n").filter(Boolean),
     );
+    if (tracked.size === 0) flag("UNTRACKED", ".", "Git index contains no tracked files");
   } catch {
-    tracked = new Set(); // not a git checkout — nothing to assert
+    flag("UNTRACKED", ".", "Git tracking could not be measured; run in a Git checkout");
+    tracked = new Set(); // no coverage claim without a readable index
   }
   if (tracked.size) {
     for (const doc of rootDocs) {

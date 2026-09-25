@@ -1,16 +1,29 @@
 // Minimal deterministic Markdown → HTML for OTCS docs (headers, emphasis, code,
 // fences, lists, tables, blockquotes, links, hr). No external dependencies.
-const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+import { esc, safeHref } from "./html.js";
 
-const inline = (s: string): string =>
+const emphasis = (s: string): string =>
   esc(s)
-    .replace(/`([^`]+)`/g, "<code>$1</code>")
     .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
-    .replace(/\*([^*]+)\*/g, "<em>$1</em>")
-    .replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, '<a href="$2">$1</a>');
+    .replace(/\*([^*]+)\*/g, "<em>$1</em>");
+
+const inline = (s: string): string => {
+  let result = "", start = 0;
+  for (const match of s.matchAll(/`([^`]+)`|\[([^\]]+)\]\(([^)\s]+)\)/g)) {
+    result += emphasis(s.slice(start, match.index));
+    if (match[1] !== undefined) {
+      result += `<code>${esc(match[1])}</code>`;
+    } else {
+      const href = safeHref(match[3]), label = inline(match[2]);
+      result += href === null ? label : `<a href="${href}">${label}</a>`;
+    }
+    start = match.index! + match[0].length;
+  }
+  return result + emphasis(s.slice(start));
+};
 
 export function mdToHtml(md: string): string {
-  const lines = md.split("\n");
+  const lines = md.replace(/\r\n?/g, "\n").split("\n");
   const out: string[] = [];
   let i = 0;
   const isTableRow = (l: string) => /^\s*\|.*\|\s*$/.test(l);
@@ -30,6 +43,7 @@ export function mdToHtml(md: string): string {
       out.push(`<blockquote><p>${buf.join("<br>")}</p></blockquote>`); continue;
     }
     if (isTableRow(line)) {                         // table
+      const start = i;
       const rows: string[][] = [];
       while (i < lines.length && isTableRow(lines[i])) {
         const cells = lines[i].trim().replace(/^\||\|$/g, "").split("|").map((c) => c.trim());
@@ -37,6 +51,10 @@ export function mdToHtml(md: string): string {
         i++;
       }
       const [head, ...body] = rows;
+      if (!head) {
+        out.push(`<p>${lines.slice(start, i).map(inline).join("<br>")}</p>`);
+        continue;
+      }
       out.push("<table><thead><tr>" + head.map((c) => `<th>${inline(c)}</th>`).join("") + "</tr></thead><tbody>" +
         body.map((r) => "<tr>" + r.map((c) => `<td>${inline(c)}</td>`).join("") + "</tr>").join("") + "</tbody></table>");
       continue;
@@ -52,7 +70,8 @@ export function mdToHtml(md: string): string {
       out.push("<ol>" + items.map((it) => `<li>${it}</li>`).join("") + "</ol>"); continue;
     }
     if (line.trim() === "") { i++; continue; }
-    const buf: string[] = [];                        // paragraph
+    // Consume the fallback line even if it resembles an unsupported block.
+    const buf: string[] = [inline(lines[i++])];       // paragraph
     while (i < lines.length && lines[i].trim() !== "" && !/^(#{1,4}\s|```|---+\s*$|\s*[-*]\s|\s*\d+\.\s|\s*>|\s*\|)/.test(lines[i]))
       buf.push(inline(lines[i++]));
     if (buf.length) out.push(`<p>${buf.join(" ")}</p>`);

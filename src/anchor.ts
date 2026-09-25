@@ -1,10 +1,9 @@
 // External timestamp anchoring — ANCHORING.md.
 //
-// An anchor round writes ONE immutable manifest listing the sha256 of each
-// anchored artifact, then stamps that manifest. Stamping the manifest rather
-// than the artifacts themselves matters: the ledger grows, so a proof bound to
-// the ledger's bytes would be invalidated by the next event. The manifest never
-// changes after it is written, so its proof stays verifiable forever.
+// A round writes a manifest listing artifact digests; submission is separate.
+// The CLI refuses to overwrite a manifest. Subsequent journal appends therefore
+// leave that manifest unchanged. Preservation of the manifest, proof and trust
+// substrate is still required for later verification.
 //
 // A witness client is OPTIONAL. Without one a round still produces a complete,
 // hash-committed manifest marked ANCHOR_PENDING — the digest is fixed now and
@@ -13,13 +12,13 @@
 //
 // CLI: tsx src/anchor.ts round [label] | stamp | verify | status
 import { createHash } from "node:crypto";
-import { execFileSync } from "node:child_process";
 import {
-  readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync, statSync,
+  readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync, statSync, lstatSync,
 } from "node:fs";
-import { join, dirname, relative } from "node:path";
+import { join, dirname, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { WITNESSES, type WitnessState } from "./witnesses.js";
+import { replaceFile, withFileLock } from "./local-file-lock.js";
 
 export const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 export const ANCHOR_DIR = join(ROOT, "governance-log", "anchors");
@@ -37,7 +36,7 @@ export type AnchorManifest = {
   proves: string;
   does_not_prove: string[];
 };
-export type WitnessRecord = { state: WitnessState; proofs: string[]; note?: string };
+export type WitnessRecord = { state: WitnessState; proofs: string[]; note?: string; verification?: "client-verify-v1" };
 export type IndexEntry = {
   anchor_id: string;
   manifest_file: string;
@@ -65,7 +64,7 @@ export function aggregate(w: Record<string, WitnessRecord>): IndexEntry["status"
   return "ANCHOR_PENDING";
 }
 
-/** Recursively list files under a directory, sorted, excluding dotfiles. */
+/** Visit non-dot entries depth-first, sorting names within each directory. */
 function walk(dir: string): string[] {
   if (!existsSync(dir)) return [];
   const out: string[] = [];
@@ -78,10 +77,13 @@ function walk(dir: string): string[] {
   return out;
 }
 
-/** A directory's digest is the hash of its sorted "relpath sha256" lines. */
+/** Encode a generated repository-relative path with forward slashes. */
+const repoPath = (file: string): string => relative(ROOT, file).split(sep).join("/");
+
+/** Hash depth-first, name-sorted "repo-relative-path sha256" lines with forward slashes. */
 export function treeDigest(dir: string): { sha256: string; bytes: number } {
   const files = walk(dir);
-  const lines = files.map((f) => `${relative(ROOT, f)} ${sha256(readFileSync(f))}`);
+  const lines = files.map((f) => `${repoPath(f)} ${sha256(readFileSync(f))}`);
   const body = lines.join("\n");
   return { sha256: sha256(body), bytes: Buffer.byteLength(body) };
 }
@@ -97,7 +99,7 @@ function target(p: string): AnchorTarget | null {
   return { path: p, sha256: sha256(buf), bytes: buf.length };
 }
 
-/** Which registered witnesses have a working client right now. */
+/** Which registered clients pass their version/availability probe. */
 export const availableWitnesses = () => WITNESSES.filter((w) => w.available());
 
 /** Retained name: any witness at all. Absence is reported, never routed around. */
@@ -108,27 +110,34 @@ export const otsAvailable = (): boolean => availableWitnesses().length > 0;
  *
  * Rounds written before the witness registry existed recorded one status and
  * one proof_file, both implicitly OpenTimestamps. Those become a witnesses map
- * with the same meaning rather than being rewritten on disk — the manifests are
- * hashed in the index and editing them would break the very check that proves
- * they were not edited.
+ * without changing manifest bytes. Legacy confirmations are reset until the
+ * client-verification path confirms them. Reading does not rewrite the index.
  */
 const readIndex = (): IndexEntry[] => {
   if (!existsSync(INDEX)) return [];
   const raw = JSON.parse(readFileSync(INDEX, "utf8")) as IndexEntry[];
   for (const e of raw) {
-    if (e.witnesses) continue;
-    const state: WitnessState =
-      e.status === "ANCHOR_CONFIRMED" ? "CONFIRMED" : e.status === "ANCHOR_SUBMITTED" ? "SUBMITTED" : "UNKNOWN";
-    e.witnesses = e.proof_file
-      ? { opentimestamps: { state, proofs: [e.proof_file], note: e.confirmed_note } }
-      : {};
+    if (!e.witnesses) {
+      const state: WitnessState =
+        e.status === "ANCHOR_CONFIRMED" ? "CONFIRMED" : e.status === "ANCHOR_SUBMITTED" ? "SUBMITTED" : "UNKNOWN";
+      e.witnesses = e.proof_file
+        ? { opentimestamps: { state, proofs: [e.proof_file], note: e.confirmed_note } }
+        : {};
+    }
+    for (const rec of Object.values(e.witnesses)) {
+      if (rec.state === "CONFIRMED" && rec.verification !== "client-verify-v1") {
+        rec.state = "UNKNOWN";
+        rec.note = "legacy confirmation requires client verification";
+      }
+    }
+    e.status = aggregate(e.witnesses);
   }
   return raw;
 };
 
 const writeIndex = (entries: IndexEntry[]) => {
   mkdirSync(ANCHOR_DIR, { recursive: true });
-  writeFileSync(INDEX, JSON.stringify(entries, null, 2) + "\n");
+  replaceFile(INDEX, JSON.stringify(entries, null, 2) + "\n");
 };
 
 /** Default anchor set — ANCHORING.md §2. */
@@ -140,7 +149,7 @@ export const DEFAULT_TARGETS = [
 ];
 
 /** Build and write an anchor manifest. Does not stamp; that is a separate step. */
-export function round(label = "scheduled", paths = DEFAULT_TARGETS): { manifest: AnchorManifest; file: string } {
+function createRound(label = "scheduled", paths = DEFAULT_TARGETS): { manifest: AnchorManifest; file: string } {
   const targets = paths.map(target).filter((t): t is AnchorTarget => t !== null);
   if (!targets.length) throw new Error("anchor round has no existing targets");
 
@@ -154,7 +163,7 @@ export function round(label = "scheduled", paths = DEFAULT_TARGETS): { manifest:
     label,
     targets,
     proves:
-      "Each listed byte sequence existed no later than the Bitcoin block time of the attached proof.",
+      "A verified witness proof can establish an upper time bound for each listed byte sequence; this manifest alone does not.",
     does_not_prove: [
       "that the content is true",
       "that the content was authorized",
@@ -168,14 +177,15 @@ export function round(label = "scheduled", paths = DEFAULT_TARGETS): { manifest:
   const body = JSON.stringify(manifest, null, 2) + "\n";
   const file = join(ANCHOR_DIR, `${anchor_id}.json`);
   mkdirSync(ANCHOR_DIR, { recursive: true });
-  writeFileSync(file, body);
+  writeFileSync(file, body, { flag: "wx" });
 
   index.push({
     anchor_id,
-    manifest_file: relative(ROOT, file),
+    manifest_file: repoPath(file),
     manifest_sha256: sha256(body),
     created_at,
     status: "ANCHOR_PENDING",
+    witnesses: {},
   });
   writeIndex(index);
   return { manifest, file };
@@ -184,20 +194,22 @@ export function round(label = "scheduled", paths = DEFAULT_TARGETS): { manifest:
 /**
  * Submit every manifest to every registered witness that has not seen it.
  *
- * Each witness is tried independently and a failure in one never stops
- * another — the point of holding two is that they do not share a fate.
+ * Each witness is tried separately; a handled submission failure does not
+ * prevent the next available witness from being tried.
  */
-export function stampPending(): {
+function submitPending(): {
   stamped: string[]; skipped: string[]; reason?: string; perWitness: Record<string, number>;
 } {
   const index = readIndex();
   const available = availableWitnesses();
-  const outstanding = index.filter((e) => Object.keys(e.witnesses).length < WITNESSES.length);
+  const needsSubmission = (record?: WitnessRecord): boolean =>
+    !record || (record.state === "UNKNOWN" && record.proofs.length === 0);
+  const outstanding = index.filter((e) => WITNESSES.some((w) => needsSubmission(e.witnesses[w.id])));
 
   if (!available.length) {
     return {
       stamped: [], skipped: outstanding.map((e) => e.anchor_id), perWitness: {},
-      reason: `no witness client installed (${WITNESSES.map((w) => w.id).join(", ")}) — manifests stay ANCHOR_PENDING and can be submitted later`,
+      reason: `no witness client installed (${WITNESSES.map((w) => w.id).join(", ")}) — submission deferred`,
     };
   }
 
@@ -207,8 +219,13 @@ export function stampPending(): {
 
   for (const e of outstanding) {
     const f = join(ROOT, e.manifest_file);
+    if (!manifestMatches(e)) {
+      invalidate(e, "manifest identity unavailable; submission refused");
+      skipped.add(e.anchor_id);
+      continue;
+    }
     for (const w of available) {
-      if (e.witnesses[w.id]) continue; // already submitted to this one
+      if (!needsSubmission(e.witnesses[w.id])) continue; // keep existing successful submissions
       try {
         const r = w.submit(f, e.manifest_file);
         if (!r) { skipped.add(e.anchor_id); continue; }
@@ -229,6 +246,22 @@ export function stampPending(): {
   return { stamped: [...stamped], skipped: [...skipped], perWitness };
 }
 
+function manifestMatches(e: IndexEntry): boolean {
+  const f = resolve(ROOT, e.manifest_file);
+  // Index entries may refer only to their own regular manifest, never a
+  // different local file to be signed/submitted through a tampered path.
+  if (!/^anchor-\d{4,}$/.test(e.anchor_id)
+      || f !== resolve(ANCHOR_DIR, `${e.anchor_id}.json`)) return false;
+  return existsSync(f) && lstatSync(f).isFile() && sha256(readFileSync(f)) === e.manifest_sha256;
+}
+
+function invalidate(e: IndexEntry, note: string): void {
+  for (const rec of Object.values(e.witnesses)) {
+    rec.state = "UNKNOWN"; rec.note = note; delete rec.verification;
+  }
+  e.status = aggregate(e.witnesses);
+}
+
 export type VerifyResult = {
   ok: boolean;
   checked: number;
@@ -240,42 +273,50 @@ export type VerifyResult = {
 /**
  * Two independent checks:
  *   1. every manifest still hashes to what the index recorded (works offline, always)
- *   2. every .ots proof verifies against the chain (needs the client + network)
- * Check 1 failing means the record was altered. Check 1 passing with the client
- * absent is a real, reportable result — not a pass.
+ *   2. submitted proofs are checked by their registered clients (may need a node/network)
+ * Check 1 fails on a missing, misdirected or altered manifest. With the client
+ * absent proves only index/manifest consistency; `ok` reports check 1 alone.
  */
-export function verify(): VerifyResult {
+function verifyAnchors(): VerifyResult {
   const index = readIndex();
   const problems: string[] = [];
   const notes: string[] = [];
   let checked = 0;
+  const intact = new Set<IndexEntry>();
 
   for (const e of index) {
     const f = join(ROOT, e.manifest_file);
-    if (!existsSync(f)) {
-      problems.push(`${e.anchor_id}: manifest missing (${e.manifest_file})`);
+    const present = existsSync(f);
+    const matches = manifestMatches(e);
+    if (present) checked++;
+    if (!matches) {
+      problems.push(present ? `${e.anchor_id}: manifest ALTERED since it was committed` : `${e.anchor_id}: manifest missing (${e.manifest_file})`);
+      invalidate(e, "manifest identity unavailable; proof not checked");
       continue;
     }
-    if (sha256(readFileSync(f)) !== e.manifest_sha256) {
-      problems.push(`${e.anchor_id}: manifest ALTERED since it was committed`);
-    }
-    checked++;
+    intact.add(e);
   }
 
   const available = availableWitnesses();
-  const missing = WITNESSES.filter((w) => !w.available());
+  const missing = WITNESSES.filter((w) => !available.includes(w));
   if (missing.length) notes.push(`not checked by ${missing.map((w) => w.id).join(", ")} — client not installed`);
 
   for (const e of index) {
     const f = join(ROOT, e.manifest_file);
-    if (!existsSync(f)) continue; // already reported above
+    if (!intact.has(e)) continue; // do not verify a different or missing manifest
+    invalidate(e, "witness client not available or no longer registered");
     for (const w of available) {
       const rec = e.witnesses[w.id];
       if (!rec) continue; // never submitted to this witness
-      const r = w.check(f, e.manifest_file);
-      rec.state = r.state;
-      rec.note = r.note;
-      if (r.state !== "CONFIRMED") notes.push(`${e.anchor_id} · ${w.id}: ${r.note ?? r.state}`);
+      try {
+        const r = w.check(f, e.manifest_file);
+        rec.state = r.state;
+        rec.note = r.note;
+        if (r.state === "CONFIRMED") rec.verification = "client-verify-v1";
+      } catch {
+        rec.state = "UNKNOWN"; rec.note = "witness verification failed";
+      }
+      if (rec.state !== "CONFIRMED") notes.push(`${e.anchor_id} · ${w.id}: ${rec.note ?? rec.state}`);
     }
     e.status = aggregate(e.witnesses);
   }
@@ -284,11 +325,17 @@ export function verify(): VerifyResult {
   const pending = index.filter((e) => e.status === "ANCHOR_PENDING").length;
   const confirmed = index.filter((e) => e.status === "ANCHOR_CONFIRMED").length;
   if (confirmed < index.length) {
-    notes.push(`${confirmed}/${index.length} manifest(s) CONFIRMED — the rest are submitted, which proves nothing yet`);
+    notes.push(`${confirmed}/${index.length} manifest(s) CONFIRMED — the rest are unconfirmed, which proves nothing yet`);
   }
   return { ok: problems.length === 0, checked, pending, problems, notes };
 }
 
+export const round = (...args: Parameters<typeof createRound>): ReturnType<typeof createRound> =>
+  withFileLock(INDEX, () => createRound(...args));
+export const stampPending = (): ReturnType<typeof submitPending> =>
+  withFileLock(INDEX, submitPending);
+export const verify = (): VerifyResult => withFileLock(INDEX, verifyAnchors);
+/** Read recorded observations; use verify() to refresh proof/manifest checks. */
 export const status = () => readIndex();
 
 // ---- CLI -------------------------------------------------------------------
@@ -330,7 +377,7 @@ if (process.argv[1]?.endsWith("anchor.ts")) {
     const avail = availableWitnesses().map((w) => w.id);
     console.log(`\nwitnesses registered: ${WITNESSES.map((w) => `${w.id} (${w.substrate})`).join(" · ")}`);
     console.log(`clients available:    ${avail.length ? avail.join(", ") : "NONE — rounds still valid, submission deferred"}`);
-    console.log("\nONLY ANCHOR_CONFIRMED proves when bytes existed. SUBMITTED is a request.");
+    console.log("\nRecorded observations; run anchor:verify to refresh. CONFIRMED requires a verified witness proof; SUBMITTED is a request.");
   } else {
     console.error("usage: anchor [round <label> | stamp | verify | status]");
     process.exit(2);

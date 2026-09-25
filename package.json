@@ -22,12 +22,21 @@
     "coherence": "tsx src/coherence.ts",
     "standing": "tsx src/standing.ts",
     "participation": "tsx src/participation.ts",
-    "use-evidence": "tsx src/use-evidence.ts"
+    "use-evidence": "tsx src/use-evidence.ts",
+    "lint": "eslint . --max-warnings 0",
+    "check": "npm run lint && npm run typecheck && npm run validate && npm test -- --maxWorkers=1 --no-file-parallelism && npm run ledger:verify && npm run build:site",
+    "typecheck": "tsc --project tsconfig.json"
   },
   "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@types/node": "22.20.2",
     "ajv": "^8.17.0",
     "ajv-formats": "^3.0.0",
+    "eslint": "10.10.0",
+    "globals": "16.5.0",
     "tsx": "^4.19.0",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.70.0",
     "vitest": "^3.2.7",
     "yaml": "^2.5.0"
   }
