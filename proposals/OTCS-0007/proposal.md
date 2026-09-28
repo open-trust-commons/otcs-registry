@@ -6,7 +6,7 @@
 
 PREMORTEM.md §2 fails this project if there is *"no evidence that anyone uses the data to make a decision"*, evaluated at the final kill-criteria evaluation — 2028-07-29 under OTCS-0009's recalibration (originally 2027-07-29, now the interim reading date). The phrase is defined nowhere — it appears once in canonical text, restated in FAQ.md §27.
 
-This proposal defines it now, while the outcome is unknown. Amending a test in advance is legitimate; reinterpreting it in July 2027 is not, and the date is the entire defence. The grounds were prepared, the decisions made, and the draft adversarially pressure-tested on the public record in issue #6.
+This proposal defines it now, while the outcome is unknown. Amending a test in advance is legitimate; reinterpreting it in July 2027 is not, and the date is the entire defence. The grounds were prepared, the decisions made, and the draft adversarially pressure-tested before publication.
 
 ## The defect being repaired
 
@@ -33,7 +33,7 @@ Entry use excludes the founder's own records deliberately: reading `ktp`'s entry
 
 None of these lines is ever collapsed into a score or a rank (NON-GOALS.md §2, §5). They are counts of qualifying instances, reported side by side.
 
-### 2. Qualifying evidence — imported from issue #14's resolution
+### 2. Qualifying evidence — imported from the published participation bar
 
 The **substance must be public; the identity need not be.**
 
@@ -50,7 +50,7 @@ An instance never qualifies if it is:
 - from a party contacted about evidence, unless the contact-log entry (below) predates the party's artifact;
 - from a party disqualified under EVIDENCE-MODEL.md §3 independence — applied **pairwise**: the parties counted toward the two-party bar must be independent of the project *and of each other*, or RFC 6410's number imports without the property that made it worth importing. Stated plainly, because the discipline of this document is stating costs: a party with an advisory or collaborative relationship to this project fails §3 for these purposes, and that includes the parties closest to the project today.
 
-**The founder is never the source and never the judge.** The founder may point at evidence; a complete contact log — every party contacted about evidence of use, dates and outcomes, identity redacted — is committed to the public record, and each entry must predate any artifact it could have produced, so selection is auditable. The instances themselves live in a public, challengeable file; the counts are computed from it and published, on the same pull-model pattern as the participation recompute (issue #14 §3), so the criterion can be found **met** — a finding of no qualifying evidence — without the founder's cooperation. Qualification rulings on contested instances belong to the evaluator; who that is remains issue #7's subject and is not decided here.
+**The founder is never the source and never the judge.** The founder may point at evidence; a complete contact log — every party contacted about evidence of use, dates and outcomes, identity redacted — is committed to the public record, and each entry must predate any artifact it could have produced, so selection is auditable. The instances themselves live in a public, challengeable file; the counts are computed from it and published, on the same pull-model pattern as the participation recompute (`src/participation.ts`), so the criterion can be found **met** — a finding of no qualifying evidence — without the founder's cooperation. Qualification rulings on contested instances belong to the evaluator; who that is is OTCS-0008's subject and is not decided here.
 
 **Stated cost, so it is not discovered later:** the external accounts that exist today do not qualify as they stand. They live in this project's decision records as the founder's account of unnamed parties, and remain there as history — but every evidence line starts at zero, including the zero-force one. An account would have to be published by the party themselves — under a handle if they prefer — to appear on any line.
 
@@ -68,13 +68,13 @@ The matrix never overrides the arithmetic: three criteria met is a stop whatever
 
 Instrument decisions are reported alongside whatever row obtains, and change nothing in it.
 
-**The coupling, made explicit instead of silent:** this definition does not free criterion 3 from criterion 1 — it makes the dependency literal. With no external registrations there are no externally self-registered entries, entry use is impossible, and criterion 3 is met alongside criterion 1: two of four, an automatic narrow. What the matrix changes is that this arrives *visibly and pre-labelled*, not as a reinterpretation. Whether the criteria's structure or clock should change in light of the coupling was issue #16's question — resolved as OTCS-0009: the coupled pair counts once toward the thresholds when zero external self-registrations exist, and the final evaluation moves to 2028-07-29 with an all-dark interim tripwire on the original date.
+**The coupling, made explicit instead of silent:** this definition does not free criterion 3 from criterion 1 — it makes the dependency literal. With no external registrations there are no externally self-registered entries, entry use is impossible, and criterion 3 is met alongside criterion 1: two of four, an automatic narrow. What the matrix changes is that this arrives *visibly and pre-labelled*, not as a reinterpretation. Whether the criteria's structure or clock should change in light of the coupling is OTCS-0009's subject: the coupled pair counts once toward the thresholds when zero external self-registrations exist, and the final evaluation moves to 2028-07-29 with an all-dark interim tripwire on the original date.
 
 ## What this proposal does not do
 
-- **Choose the evaluator.** Issue #7. This proposal only requires that the counts be computable from a public instances file and that a finding of *no qualifying evidence* — the criterion met — needs nobody's permission.
-- **Recalibrate the clock or the 2-of-4 structure.** Issue #16, which this definition unblocked and sharpened — resolved as OTCS-0009, ratifying alongside this proposal.
-- **Grade anyone.** No individual is told, here or anywhere, whether their artifact or decision "counts" — the recompute makes the counts readable without anyone being told their standing (issue #17's rule).
+- **Choose the evaluator.** That is OTCS-0008. This proposal only requires that the counts be computable from a public instances file and that a finding of *no qualifying evidence* — the criterion met — needs nobody's permission.
+- **Recalibrate the clock or the 2-of-4 structure.** That is OTCS-0009, which this definition unblocked and sharpened, ratifying alongside this proposal.
+- **Grade anyone.** No individual is told, here or anywhere, whether their artifact or decision "counts" — the recompute makes the counts readable without anyone being told their standing.
 - **Score anything.** Three lines, kept apart, never a headline number (NON-GOALS.md §2, §5).
 
 ## Impact on existing documents
@@ -90,6 +90,6 @@ Instrument decisions are reported alongside whatever row obtains, and change not
 - **Entries-only (strict).** Rejected: converts the 2-of-4 threshold into 1-of-1 silently, on a ~318-day effective clock (OTCS-0004's ratification is held until 2026-09-14, and REGISTERING.md recommends against registering before it).
 - **Vocabulary counts toward survival (permissive).** Rejected: makes the prescribed failure response satisfy the survival test — the narrowing trap in full.
 - **Founder-collected attestations.** Rejected: selection precedes attestation; a quoted party is not independent evidence if the quoter chose the quotes.
-- **Named parties required.** Rejected: retroactively discards most of the existing parties, and issue #14 already rejected this shape for standing.
+- **Named parties required.** Rejected: retroactively discards most of the existing parties, and the published participation bar already rejects this shape for standing.
 - **One instance suffices ("anyone", literal).** Rejected: a single instance is manufacturable; the imported two-party bar is the cheapest evidence the first instance was not arranged.
 - **Founder-authored entries as valid entry-use targets.** Rejected after adversarial review: two friendly parties depending on the founder's self-description would defeat the criterion without any external record existing — a manufactured pass built entirely inside the project.

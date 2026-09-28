@@ -4,7 +4,7 @@
 
 ## Provenance
 
-PREMORTEM.md §2 evaluates the kill criteria 12 months after first public release — 2027-07-29. That number was chosen before any evidence existed on how long this class of artifact takes to be adopted. Ticket #8 supplied dates from 17 primary-sourced cases (`research/vocabulary-adoption`, commit `d1c238a`); ticket #16 applied them. Decisions were made by the founder on prepared decision material, on the public record in issue #16.
+PREMORTEM.md §2 evaluates the kill criteria 12 months after first public release — 2027-07-29. That number was chosen before any evidence existed on how long this class of artifact takes to be adopted. Dates from 17 primary-sourced adoption cases (`research/vocabulary-adoption`, commit `d1c238a`) are applied here. Decisions were made by the founder on prepared decision material.
 
 This proposal amends the test now, while the outcome is unknown. Amending a test in advance is legitimate; adjusting it near the deadline reads as goalpost-moving regardless of intent, and the date is the entire defence. The reasoning below rests on the adoption record, not on how the project happens to be doing — the calibration would be identical had the registry already filled. It ratifies alongside OTCS-0007 (what counts as evidence) and OTCS-0008 (who reads it) as one dated set: the three reforms to PREMORTEM.md §2 reference each other while all are still amendable.
 
@@ -29,7 +29,7 @@ OTCS-0008's failure-to-appear rule travels with the date: a computed survival no
 
 ### 2. The original date becomes the interim reading — the all-dark tripwire
 
-On 2027-07-29 the recompute (#19) publishes in full — every line, conservative counts, contested instances excluded until ruled — and is read under OTCS-0008's determination machinery. The reading is pre-registered now:
+On 2027-07-29 the recompute (`src/use-evidence.ts`) publishes in full — every line, conservative counts, contested instances excluded until ruled — and is read under OTCS-0008's determination machinery. The reading is pre-registered now:
 
 | Interim observable, 2027-07-29 | Outcome |
 |---|---|
@@ -73,7 +73,7 @@ PREMORTEM.md §1's "strongest signal" reading gains the matching qualification: 
 - **OTCS-0007** (DRAFT): matrix date rekeyed to the final evaluation; review date to 2028-08-01. In-draft amendment, its clock unaffected.
 - **OTCS-0008** (DRAFT): failure-to-appear rule keyed to both evaluation dates; review date to 2028-08-01. In-draft amendment, its clock unaffected.
 - **FAQ.md** §27: restated with pointers, at OPERATION.
-- **#19's recompute**: outputs must include the external self-registration count (the coupled-pair annotation input) and the four interim lines.
+- **The use-evidence recompute** (`src/use-evidence.ts`): outputs must include the external self-registration count (the coupled-pair annotation input) and the four interim lines.
 
 **Review date.** 2028-08-01 — after the final evaluation this proposal governs, for the sibling rationale: the rules of a test must not come up for revision while the test is being scored.
 
@@ -88,4 +88,4 @@ PREMORTEM.md §1's "strongest signal" reading gains the matching qualification: 
 - **Raise thresholds to 3-of-4 / 4-of-4.** Dulls the teeth for genuinely independent failure combinations to pay for one structural coupling.
 - **Merge criteria 1 and 3.** Overcorrects: where external entries exist, registration count and entry use measure different things and must be able to fail separately.
 - **Drop criterion 2.** Deletes the only criterion measuring whether the technical model — not the registry — attracts builders, and forces new threshold arithmetic besides.
-- **Engagement-based criterion 2** (issues, questions, patches count). Soft: a drive-by typo fix would defeat the strongest-signal criterion, and "engagement" drifts into the participation measures issue #14 already owns.
+- **Engagement-based criterion 2** (issues, questions, patches count). Soft: a drive-by typo fix would defeat the strongest-signal criterion, and "engagement" drifts into the participation measures the published participation bar already owns.
