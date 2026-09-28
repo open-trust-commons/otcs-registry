@@ -3,8 +3,9 @@ import { classifyLedgerEvent, classifyPublicItem, table, touchesOf, BAR } from "
 
 // Both directions, like standing's suite: acts that must qualify, and acts
 // that must not — each exclusion with its stated reason. The rule under test
-// is issue #14's: public substance, attributable to the actor, across more
-// than one proposal, over 90 days, computed rather than noticed.
+// is the published participation bar: public substance, attributable to the
+// actor, across more than one proposal, over 90 days, computed rather than
+// noticed.
 
 process.env.OTCS_TODAY = "2026-08-05";
 
@@ -31,8 +32,8 @@ describe("participation — what qualifies", () => {
     expect(act.why).toMatch(/artifact missing/i);
   });
 
-  // Issue #14's stated consequence, as code: the strongest engagement to date
-  // does not qualify as it stands, because it arrived privately. A ledger
+  // The rule's consequence, as code: an engagement that happens privately does
+  // not count until its author puts it on the public record. A ledger
   // COMMENT_SUBMITTED whose only substance is the recorder's note is the
   // recorder's account of the actor, not the actor's public act.
   it("a note-only comment event scores zero — the substance is the recorder's account", () => {

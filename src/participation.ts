@@ -3,11 +3,11 @@
 //
 // WHY THIS EXISTS
 // CHARTER.md §7 opens maintainer nominations after sustained substantive
-// participation in the governance, and issue #14 defined "sustained": the
-// VOTING.md §2 trail of acts, demonstrated publicly across more than one
-// proposal, over 90 days — and COMPUTED rather than noticed. Without this
-// file, the destination in the wayfinder map depends on a trigger nothing
-// watches for, and the founder is the party who decides whether it fired.
+// participation in the governance. "Sustained" means the VOTING.md §2 trail
+// of acts, demonstrated publicly across more than one proposal, over 90 days —
+// and COMPUTED rather than noticed. Without this file, the stage-2 trigger
+// depends on something nobody watches for, and the founder is the party who
+// decides whether it fired.
 //
 // THE RULE THAT DECIDES EVERY EDGE CASE
 // Public substance only. An act counts when its substance is readable by
@@ -16,21 +16,21 @@
 // own words on the public issue tracker under their own account. A ledger
 // event whose only substance is the recorder's `note` is the RECORDER'S
 // account of what someone did — however substantive, it is not the actor's
-// own public act, and it scores zero (COMMUNICATIONS.md §7; issue #14's
-// stated consequence: the strongest engagement to date does not qualify as
-// it stands, because it arrived privately).
+// own public act, and it scores zero (COMMUNICATIONS.md §7). An engagement
+// that happens privately does not count until its author puts it on the
+// public record.
 //
 // WHAT THIS IS NOT
 // Not a leaderboard. NON-GOALS.md §2 forbids collapsing anything into a
 // headline number and §5 forbids ranking. The output is one trail per actor
 // against the published bar, ordered alphabetically — never by volume, and
 // no number in it aggregates across actors. Identity may be a handle
-// (VOTING.md §7 at version 0.1; issue #14). Raw message count earns nothing
+// (VOTING.md §7 at version 0.1). Raw message count earns nothing
 // (VOTING.md §8): the GitHub side counts distinct proposals touched, not
 // comment volume.
 //
 // ADVISORY. Exit is always 0. It reports and logs; it appoints nobody and
-// changes no record. The bar it reports against is #14's published one;
+// changes no record. The bar it reports against is the published one below;
 // applying the result is a human governance act.
 import { existsSync, appendFileSync, mkdirSync } from "node:fs";
 import { join, dirname } from "node:path";
@@ -57,7 +57,7 @@ export type Act = {
   why: string;            // stated either way — every exclusion shows its reason
 };
 
-/** The published bar, from issue #14's resolution. Change requires a proposal, not an edit here. */
+/** The published bar. Change requires a proposal, not an edit here. */
 export const BAR = {
   min_distinct_touched: 2, // "across more than one proposal"
   min_days: 90,            // "over 90 days"

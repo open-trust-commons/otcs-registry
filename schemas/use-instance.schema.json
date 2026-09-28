@@ -20,7 +20,7 @@
     "party": {
       "type": "string",
       "minLength": 1,
-      "description": "The party as they publicly identify — a handle is fine, a name is not required (issue #14)."
+      "description": "The party as they publicly identify — a handle is fine, a name is not required."
     },
     "party_artifact_url": {
       "type": "string",

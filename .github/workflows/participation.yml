@@ -1,7 +1,7 @@
 # The trigger the destination depends on, watched by a machine.
 #
-# CHARTER.md §7's stage-2 trigger is sustained public participation, and issue
-# #14 resolved that it is COMPUTED rather than noticed — the founder cannot be
+# CHARTER.md §7's stage-2 trigger is sustained public participation, and it is
+# COMPUTED rather than noticed — the founder cannot be
 # the party who decides whether it fired, cannot fail to notice, and cannot
 # delay noticing. A recompute that only ran when someone remembered would put
 # the noticing back in a person's hands. So it runs nightly, like standing.
