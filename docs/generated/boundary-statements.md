@@ -3,7 +3,7 @@
 
 # Stating where your thing stops
 
-*Version 0.1 · Status: EXPERIMENTAL · Executes the resolution of wayfinder issue #10; the builder-facing surface that consumes this is issue #11's subject.*
+*Version 0.1 · Status: EXPERIMENTAL*
 
 The smallest act this vocabulary supports is not registration. It is a **boundary statement**: a few lines of prose, in vocabulary terms, saying what your system does, where it stops, and what it does not claim. No schema, no submission, no entry anywhere. Producible in minutes from this page.
 

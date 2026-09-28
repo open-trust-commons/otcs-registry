@@ -77,7 +77,7 @@ jobs:
       - uses: actions/setup-node@v5
         with: { node-version-file: '.nvmrc', cache: npm }
       - run: npm ci
-      # Advisory: each actor's public trail against the #14 bar. Never fails
+      # Advisory: each actor's public trail against the published bar. Never fails
       # the build and appoints nobody - applying the result is a governance
       # act, not a CI step.
       - name: Recompute participation (advisory)

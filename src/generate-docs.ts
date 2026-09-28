@@ -26,8 +26,6 @@ const sha = (s: string) => createHash("sha256").update(s).digest("hex").slice(0,
 /** Root documents that are NOT published as pages, and why. */
 const NOT_PUBLISHED: Record<string, string> = {
   "README.md": "the site's own index page says this, in the site's voice",
-  "PROGRESS.md": "working notes, not a governing document",
-  "CLAUDE.md": "how this repo is worked on, not what it governs",
 };
 
 /** Grouping for the document index. Order is deliberate: what governs, then what constrains. */
