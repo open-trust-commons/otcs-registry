@@ -2,11 +2,11 @@
 
 **Class:** `model_revision` · **Phase:** DELIBERATION · **Clock start:** 2026-09-20
 **Clock:** 45–90 days (`GOVERNANCE.md` §3 and §11) — **earliest ratification: clock start + 45 days**
-**Executes:** wayfinder issue #12 (decided) via #45. Founder's ruling to open now: 2026-09-19.
+**Executes:** the founder's ruling on the observed-record end condition. Founder's ruling to open now: 2026-09-19.
 
 ## The decision this implements
 
-#12 resolved: an observed record may exist once **a record can carry its subject's own words**, and only where **a registered record cannot be read without it**. This proposal builds the three conditions and replaces the undated hold.
+The ruling: an observed record may exist once **a record can carry its subject's own words**, and only where **a registered record cannot be read without it**. This proposal builds the three conditions and replaces the undated hold.
 
 ## The three conditions, all validator-checkable
 
