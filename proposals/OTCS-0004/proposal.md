@@ -70,9 +70,18 @@ It does **not** grant: sublicensing · commercial reuse of the entry's prose out
 
 **Renewal.** Before the term ends, the holder records a renewal as a public, dated event in the governance ledger, naming the holder, the unchanged scope and the new end date. A renewal adds no authority. Anyone may object to a renewal on the record.
 
-**Lapse.** If no renewal is recorded before the term ends, the permission lapses. The lapse is computed by the registry's tooling from the ledger, the same way standing and deliberation windows are computed. No person has to notice it. A lapse produces the caretaker state in §6.
+**Lapse.** The permission lapses if no renewal is recorded before the term ends, or if the holder is absent for the period the instrument sets. Both are computed by the registry's tooling from the ledger, the same way standing and deliberation windows are computed. No person has to notice either. A lapse produces the caretaker state in §6.
 
 **Succession.** A successor may continue only the preservation scope expressly granted to a validly appointed successor; the role change does not invent authority for new uses. Everything beyond preservation needs a new operating permission.
+
+**Continuity is designated in advance.** Before the permission takes effect, the instrument must specify:
+
+- how the holder's absence is computed, and when it ends the permission;
+- who may act as caretaker, and the preservation-only scope they receive;
+- how anyone, including a caretaker or a former holder, obtains a new operating permission after a lapse;
+- how succession grows as more people take a role, from one person to the commons.
+
+These are designated by rule, not left until a lapse, when no one would have standing to decide them. Named persons are optional; where none has publicly accepted, the rule applies. **The registrants are the authority designated in advance:** a new operating permission after a lapse needs each registrant's new consent for their own entry. The draft instrument is published with this proposal: [`operating-permission-v1-draft.md`](https://github.com/open-trust-commons/otcs-registry/blob/main/proposals/OTCS-0004/operating-permission-v1-draft.md).
 
 ### 4. Participation consent
 
@@ -99,9 +108,9 @@ Published versions of an entry stay published. Withdrawal ends active participat
 The same rule applies to the operator, because the operator is also a party to the arrangement:
 
 - **Published material is outside the lease.** The lease governs acts not yet taken. What is already published is a historical record, not a continuing exercise of authority. A registrant is told this at the point of consent: the archive permission is effectively irrevocable, including for a registrant who chose all rights reserved.
-- **A lapse produces a caretaker state, never a deletion.** No new entries, no new derived views, no new mirrors. The published record stays readable, and registrants keep an export and reclaim path. `HOSTING-AND-MIRRORS.md` already makes archival redundancy a release requirement.
+- **A lapse produces a caretaker state, never a deletion.** No new entries and no new derived views. The published record stays readable, and registrants keep an export and reclaim path. Preservation, including mirroring, continues only under the caretaker rule in the instrument (§3). `HOSTING-AND-MIRRORS.md` already makes archival redundancy a release requirement.
 
-Who acts as caretaker when a lapse arrives and no one renews is not decided here. It belongs to the long-term holder question in §3.
+A registrant is told at the point of consent who may preserve their published entry after a lapse, and that forward operation after a lapse needs their new consent.
 
 ### 7. Expressly deferred
 
@@ -134,7 +143,7 @@ All three registered records are the founder's. Ratification gives no existing r
 - **Do nothing and answer registrants case-by-case.** Rejected: the first honest answer would still be "the documents contradict each other."
 - **A single `entry_license` field that also carries the operating grant.** Rejected by Amendment 1: under CC BY or CC0 the operating minimum restrains nothing, and under all rights reserved it names no party that can receive a grant.
 - **A permanent operating permission.** Rejected by Amendment 1: every registrant would depend on one holder with no term and no point at which anyone must ask whether the arrangement still holds.
-- **An operating permission that ends only at a change of operator.** Adopted in part, not in whole: a handover ends it, but so does the end of a 12-month term, so an operator who never hands over cannot keep authority for new work indefinitely.
+- **An operating permission that ends only at a change of operator.** Adopted in part, not in whole: a handover ends it, but so do the end of a 12-month term and a computed absence, so an operator who never hands over cannot keep authority for new work indefinitely.
 
 ## On decision — required cleanup
 
@@ -145,8 +154,9 @@ This proposal has visible consequences outside its own file, and they must be re
    - add the four declarations and the consent binding of §4 to the manifest schema;
    - add the third category and the sign-off rule of §1 to `DCO.md` §2 and `CONTRIBUTING.md` §2;
    - define the five consent scopes of §4 in `PARTICIPATION.md`;
-   - create `OPERATING-PERMISSION.md` version 1, naming the holder, the scope, the 12-month term and the renewal rule of §3;
-   - add a renewal event type to `schemas/governance-event.schema.json`, and compute a lapse in the registry's tooling;
+   - create `OPERATING-PERMISSION.md` version 1 from the draft published with this proposal, naming the holder, the term, the renewal rule and the continuity rules of §3;
+   - add event types for renewal, planned absence and caretaker claims to `schemas/governance-event.schema.json`, and compute the absence count and the lapse in the registry's tooling, reproducibly from a clone;
+   - create the public `handover/` directory the instrument requires;
    - leave existing records unmigrated; migration is deferred (§7).
 3. **If rejected:** the defect stands and the notices must be rewritten, not deleted — a registrant is still entitled to know their entry defaults into CC BY 4.0.
 
@@ -154,11 +164,11 @@ A hold notice that outlives its proposal is its own small dishonesty, so the rem
 
 ## Amendment 1 — MERGE-DATE (set at merge), substantive
 
-**What changed.** The sections of "What this proposal changes" (§§1–7) were replaced, and "Impact on existing records", "Alternatives considered" and "On decision — required cleanup" were updated to match. The Provenance, the statement of the defect, and "What this proposal does not do" are unchanged in substance.
+**What changed.** The sections of "What this proposal changes" (§§1–7) were replaced, a draft of the operating permission instrument was added beside this file, and "Impact on existing records", "Alternatives considered" and "On decision — required cleanup" were updated to match. The Provenance, the statement of the defect, and "What this proposal does not do" are unchanged in substance.
 
 **Why.** An objection on this proposal's deliberation window found that `entry_license` carried two relations that one field cannot hold ([objection 001](https://github.com/open-trust-commons/otcs-registry/blob/main/proposals/OTCS-0004/objections/objection-001-two-relations-one-field.md), raised 2026-09-22 by Maksim Barziankou (MxBv) on [#49](https://github.com/open-trust-commons/otcs-registry/issues/49), answered 2026-09-25). The finding was accepted.
 
-**Attribution.** The four declarations and the rules that apply to them (§2), the five consent scopes (§4), the identification permission (§5), the succession rule (§3), and the rule that every operation is either fixed or expressly deferred (§7) are adopted from the contributor's amendment, [`amendment-rights-retention.md`](https://github.com/open-trust-commons/otcs-registry/blob/main/proposals/OTCS-0004/amendment-rights-retention.md) ([#67](https://github.com/open-trust-commons/otcs-registry/pull/67)), with light editing for this document. The holder, the 12-month term, the renewal and lapse rules (§3), and the rule that published material stays outside the lease (§6) are the author's, as stated on #49 on 2026-09-25.
+**Attribution.** The four declarations and the rules that apply to them (§2), the five consent scopes (§4), the identification permission (§5), the succession rule (§3), and the rule that every operation is either fixed or expressly deferred (§7) are adopted from the contributor's amendment, [`amendment-rights-retention.md`](https://github.com/open-trust-commons/otcs-registry/blob/main/proposals/OTCS-0004/amendment-rights-retention.md) ([#67](https://github.com/open-trust-commons/otcs-registry/pull/67)), with light editing for this document. The holder, the 12-month term, the renewal and lapse rules (§3), and the rule that published material stays outside the lease (§6) are the author's, as stated on #49 on 2026-09-25. The requirement that continuity be designated in advance (§3) answers the contributor's [reply on #49](https://github.com/open-trust-commons/otcs-registry/issues/49#issuecomment-5876247644) of 2026-09-28: that a successor appointment be confirmed by an authority designated in advance, and that the caretaker and their preservation scope be specified before any lapse. The mechanism in the draft instrument is the author's.
 
 **Class and clock.** Substantive. Under OTCS-0013, applied as the founder's self-binding commitment until it is decided, this amendment is a new pin. The clock restarts at the merge date, and no decision is earlier than 45 days after it. The pin is recorded in the governance ledger as a `VERSION_PUBLISHED` event with `amendment_class: SUBSTANTIVE`.
 
