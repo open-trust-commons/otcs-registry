@@ -37,4 +37,5 @@ If ratified: `LAYERS.md` status moves from PROPOSED to ratified; MIGRATIONS entr
 *Comments and objections arrive on the window issue and are summarised here with links. Nothing private counts.*
 
 - 2026-07-31 — first external exercise (ev-000026), recorded in the proposal's own discussion record.
-- 2026-09-13 — window opened; trial executed; objection-001 raised and answered by the founder.
+- 2026-09-13 — record drafted; trial executed; objection-001 raised and answered by the founder.
+- 2026-09-20 — record published and window opened (#51). Objection-001 is recorded in the ledger as ev-000061 and ev-000062, timestamped at publication.
