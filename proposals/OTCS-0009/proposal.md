@@ -4,7 +4,7 @@
 
 ## Provenance
 
-PREMORTEM.md §2 evaluates the kill criteria 12 months after first public release — 2027-07-29. That number was chosen before any evidence existed on how long this class of artifact takes to be adopted. Dates from 17 primary-sourced adoption cases (`research/vocabulary-adoption`, commit `d1c238a`) are applied here. Decisions were made by the founder on prepared decision material.
+PREMORTEM.md §2 evaluates the kill criteria 12 months after first public release — 2027-07-29. That number was chosen before any evidence existed on how long this class of artifact takes to be adopted. Dates from 17 primary-sourced adoption cases ([`research/vocabulary-adoption.md`](https://github.com/open-trust-commons/otcs-registry/blob/main/research/vocabulary-adoption.md)) are applied here. Decisions were made by the founder on prepared decision material.
 
 This proposal amends the test now, while the outcome is unknown. Amending a test in advance is legitimate; adjusting it near the deadline reads as goalpost-moving regardless of intent, and the date is the entire defence. The reasoning below rests on the adoption record, not on how the project happens to be doing — the calibration would be identical had the registry already filled. It ratifies alongside OTCS-0007 (what counts as evidence) and OTCS-0008 (who reads it) as one dated set: the three reforms to PREMORTEM.md §2 reference each other while all are still amendable.
 
