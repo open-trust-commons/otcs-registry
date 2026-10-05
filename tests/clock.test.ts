@@ -17,7 +17,7 @@ describe("clock reproduces the hand calendar from the ledger alone", () => {
     "OTCS-0002": "2026-09-09",
     "OTCS-0003": "2026-10-18", // window opened 2026-09-20 + 28 (OTCS-0013 window minimum)
     "OTCS-0004": "2026-10-10", // window opened 2026-09-12 + 28
-    "OTCS-0005": "2026-09-14",
+    "OTCS-0005": "2026-11-02", // window opened 2026-10-05 + 28 (OTCS-0013 window minimum)
     "OTCS-0006": "2026-09-14",
     "OTCS-0007": "2026-09-17",
     "OTCS-0008": "2026-09-17",
