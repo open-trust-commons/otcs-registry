@@ -1,6 +1,6 @@
 # OTCS-0005 — A sealed claim: provably dated, deliberately undisclosed, never inflated
 
-*Class: `model_revision` · Clock: 45–90 days · Earliest decision: 2026-09-14*
+*Class: `model_revision` · Clock: 45–90 days · Earliest decision: set by the window minimum; see `proposals/CALENDAR.md`*
 
 ## Provenance — four independent arrivals at the same missing state
 
