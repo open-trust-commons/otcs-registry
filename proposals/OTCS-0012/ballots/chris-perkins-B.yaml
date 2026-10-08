@@ -1,0 +1,11 @@
+proposal_id: OTCS-0012
+ballot_type: B_RATIFICATION
+voter: chris-perkins-nmcitra
+affiliation: individual (founder)
+choice: SUPPORT
+rationale: Registering the policy keeps the schema defect visible until it is fixed.
+conflicts_disclosed:
+  - author of the proposal
+  - author of AI-USE.md, the record's canonical artifact
+  - steward of the record being registered
+date: "2026-10-08"
