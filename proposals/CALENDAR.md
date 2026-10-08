@@ -25,6 +25,7 @@ Nobody owns advancing the proposals unless a page says who and when. This page m
 | OTCS-0014 — disagreeing well: restatement, disposition, agreed facts | constitutional | **DELIBERATION** | Window opened 2026-09-20 by the window workflow | 2026-11-04 (floor; window 2026-09-20 + 28 = 2026-10-18 is earlier) |
 | OTCS-0015 — the bright line: standing to object is never a proposal topic | constitutional | **DELIBERATION** | Window opened 2026-09-20 by the window workflow | 2026-11-04 (floor; window 2026-09-20 + 28 = 2026-10-18 is earlier) |
 | OTCS-0016 — the observed-record end condition | model_revision | **DELIBERATION** | Published and windowed the same day, 2026-09-20 | 2026-11-04 (floor; window 2026-09-20 + 28 = 2026-10-18 is earlier) |
+| OTCS-0017 — Work Types: kinds of work, and what must be able to refuse them | model_revision | DRAFT | Enter DELIBERATION with OTCS-0010 and OTCS-0011, after OTCS-0003 is decided | None yet — no window is open. No earlier than 28 days after it opens, the class floor 2026-11-22, and the decisions on OTCS-0010 and OTCS-0011 |
 
 Dates are computed as `clock_start` + the floor of the proposal's `GOVERNANCE.md` §3 class: 45 days for constitutional and vocabulary-touching model revisions, 3–7 days for a registry listing update. The clock is a floor, not a target; a proposal may sit in deliberation as long as the deliberation needs.
 
