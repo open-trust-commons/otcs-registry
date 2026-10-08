@@ -20,7 +20,7 @@ describe("the window for OTCS-0004 is generated from the record", () => {
     expect(w.body).toContain("Nothing in it was typed by a person.");
   });
   it("is due alongside every other open proposal", () => {
-    expect(dueWindows().map((x) => x.proposal_id)).toEqual(["OTCS-0003", "OTCS-0004", "OTCS-0005", "OTCS-0012", "OTCS-0013", "OTCS-0014", "OTCS-0015", "OTCS-0016"]);
+    expect(dueWindows().map((x) => x.proposal_id)).toEqual(["OTCS-0003", "OTCS-0004", "OTCS-0005", "OTCS-0013", "OTCS-0014", "OTCS-0015", "OTCS-0016"]);
   });
 });
 

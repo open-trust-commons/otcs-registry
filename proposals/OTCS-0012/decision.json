@@ -1,0 +1,20 @@
+{
+  "proposal_id": "OTCS-0012",
+  "outcome": "RATIFIED",
+  "governance_outcome": "ALLOW",
+  "individual_result": { "qualified": 1, "support": 1, "object": 0, "abstain": 0 },
+  "project_result": { "affected": 1, "ballots": 0 },
+  "process_validity": {
+    "determination": "VALID",
+    "grounds": "Stage 1 founder-led incubation, declared in CHARTER.md §7. Participant set = founder only. Version deliberated: v1 (ledger ev-000050, artifact hash f95b5ae90c80cd22f64ed0303fd50e9684c84c5b56cc8aa9f6509b55fe1a575f), reproduced unchanged at decision. The deliberation window (#59) opened 2026-09-20 and drew no outside comment. On 2026-10-08 the founder raised one objection against his own proposal (objections/objection-001-not-the-policys-own-words.md: the record's decision_outputs are the schema's words, not the policy's) and answered it on #59; finding accepted, carried until a model revision addresses decision_outputs. Without it no ballot could qualify, because VOTING.md §3 requires each qualified ballot to have reviewed a serious objection; OTCS-0018 proposes to make that requirement workable for quiet windows. Under the window minimum (the class minimum where it is shorter than 28 days) the proposal was decidable from 2026-09-23; it was recorded 2026-10-08, late, disclosed here as a process fact rather than backdated. The record otcs-ai-use has carried record_state registered since it was proposed on 2026-09-19 (#54), before this decision; the same pattern as OTCS-0001's seed records, disclosed rather than repaired. Its canonical artifact, AI-USE.md, is unchanged since 2026-07-29. The proposal text's header still reads Phase: DRAFT; it is left as pinned so the ratified text is identical to the deliberated version. Ballots are unsigned files, as for OTCS-0000 and OTCS-0001; VOTING.md §9 calls for signed files. project_result.ballots is 0 because the founder's A/B pair is an individual ballot; no project cast one, and no vote C was cast. On decision, per the proposal: the record stands; the registration hold notice in REGISTERING.md stays, since OTCS-0004 is still open; the finding that decision_outputs admits only one framework's four outcomes is queued as a candidate model revision.",
+    "limitations_disclosed": [
+      "founder-only participant set",
+      "the only objection is self-raised",
+      "decision recorded after its due window",
+      "record present in the registry before the decision",
+      "ballots unsigned"
+    ]
+  },
+  "review_date": "2027-09-19",
+  "recorded": "2026-10-08"
+}

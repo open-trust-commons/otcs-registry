@@ -1,0 +1,11 @@
+proposal_id: OTCS-0012
+ballot_type: A_READINESS
+voter: chris-perkins-nmcitra
+affiliation: individual (founder)
+choice: READY
+rationale: Objection raised and answered on the record; text unchanged since it was proposed.
+conflicts_disclosed:
+  - author of the proposal
+  - author of AI-USE.md, the record's canonical artifact
+  - steward of the record being registered
+date: "2026-10-08"
