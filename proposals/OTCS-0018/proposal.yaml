@@ -1,0 +1,13 @@
+proposal_id: OTCS-0018
+title: A ballot qualifies against the strongest objection, even when no one objected
+class: constitutional
+phase: DRAFT
+author: Chris Perkins (nmcitra)
+sponsor: Chris Perkins (nmcitra)
+created: "2026-10-08"
+clock_start: "2026-10-08"
+review_date: "2027-04-08"
+affected_projects: []
+phase_history:
+  - { phase: SEED, date: "2026-10-08" }
+  - { phase: DRAFT, date: "2026-10-08" }
