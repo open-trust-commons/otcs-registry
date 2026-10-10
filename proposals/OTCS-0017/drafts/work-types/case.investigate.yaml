@@ -1,0 +1,34 @@
+# DRAFT — not ratified. OTCS-0017 governs; this file is not part of its pinned text.
+# Values are the author's proposal for deliberation and may change.
+work_type:
+  id: otcs-work:case.investigate
+  label: investigate a case
+  maps_to: [read]
+  roles:
+    configurator: [human]
+    executor: [human, ai_agent]
+    effect_verifier: [human]
+    acceptor: [human]
+  mandate:
+    required_before_fan_out: false
+    fan_out: bounded
+  consequence_ceiling: recommend
+  observation_domain: [security, network, application]
+  composed_of: []
+  refusal_points:
+    - can_refuse: [scope]
+      constructability: COMMIT_GATED
+    - can_refuse: [consequence]
+      constructability: COMMIT_GATED
+  requires:
+    authority: [role]
+    environment: [ambiguity_load, uncertainty, cumulative_trajectory]
+    time: [before_action, during_action, after_action]
+    maximum_unobserved_interval: no longer than the case's authority_validity.valid_until
+    evidence_efficacy: EVIDENCE_TO_DECISION   # at least
+    decision_outputs: [ALLOW, SHAPE, VETO]
+  basis: single_description
+notes: >
+  An investigation proposes a fix and a rollback; it does not apply them. Investigations that start from operations episodes, not security findings, use the same work type; that is why all three observation domains are listed.
+crosswalk: >
+  OpenC2 action 'investigate'; CACAO playbook type 'investigation'; STIX Incident

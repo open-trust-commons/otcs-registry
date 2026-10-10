@@ -1,0 +1,32 @@
+# DRAFT — not ratified. OTCS-0017 governs; this file is not part of its pinned text.
+# Values are the author's proposal for deliberation and may change.
+work_type:
+  id: otcs-work:service.verify
+  label: verify a service has recovered
+  maps_to: [read]
+  roles:
+    configurator: [human]
+    executor: [service, tool]
+    effect_verifier: [human]
+    acceptor: [human]
+  mandate:
+    required_before_fan_out: false
+    fan_out: none
+  consequence_ceiling: evidence_only
+  observation_domain: [security, network, application]
+  composed_of: []
+  refusal_points:
+    - can_refuse: [consequence]
+      constructability: COMMIT_GATED
+  requires:
+    authority: [role]
+    environment: [system_health, uncertainty]
+    time: [after_action, repair_window]
+    maximum_unobserved_interval: no longer than the case's authority_validity.valid_until
+    evidence_efficacy: EVIDENCE_TO_DECISION   # at least
+    decision_outputs: [ALLOW, SHAPE, VETO]
+  basis: single_description
+notes: >
+  Replaces the earlier seed ID 'recovery.verify'. The consequence refusal point is the case owner declining to close the case. The checks must come from a system other than the one that acted. Verification compares measurements from before and after, issued by a system other than the actor. A failed verification sends the case back to investigation.
+crosswalk: >
+  NIST CSF 2.0 RC.RP-03, RC.RP-05, RC.RP-06; OpenSLO SLO met again

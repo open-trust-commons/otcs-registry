@@ -1,0 +1,34 @@
+# DRAFT — not ratified. OTCS-0017 governs; this file is not part of its pinned text.
+# Values are the author's proposal for deliberation and may change.
+work_type:
+  id: otcs-work:finding.triage
+  label: triage a finding
+  maps_to: [read]
+  roles:
+    configurator: [human]
+    executor: [human, ai_agent]
+    effect_verifier: [human]
+    acceptor: [human]
+  mandate:
+    required_before_fan_out: false
+    fan_out: none
+  consequence_ceiling: recommend
+  observation_domain: [security]
+  composed_of: []
+  refusal_points:
+    - can_refuse: [scope]
+      constructability: COMMIT_GATED
+    - can_refuse: [consequence]
+      constructability: COMMIT_GATED
+  requires:
+    authority: [role]
+    environment: [ambiguity_load, uncertainty, human_availability]
+    time: [before_action, after_action]
+    maximum_unobserved_interval: no longer than the case's authority_validity.valid_until
+    evidence_efficacy: EVIDENCE_TO_DECISION   # at least
+    decision_outputs: [ALLOW, SHAPE, VETO]
+  basis: single_description
+notes: >
+  Renamed from the earlier seed 'detection.triage': triage acts on findings, not on detections. The disposition is recorded on the case by the case system, not by whoever triaged.
+crosswalk: >
+  OpenC2 action 'investigate'; CACAO playbook type 'investigation'; STIX Sighting; NIST CSF 2.0 DE.AE-02

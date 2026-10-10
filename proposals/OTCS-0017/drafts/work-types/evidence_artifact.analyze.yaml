@@ -1,0 +1,34 @@
+# DRAFT — not ratified. OTCS-0017 governs; this file is not part of its pinned text.
+# Values are the author's proposal for deliberation and may change.
+work_type:
+  id: otcs-work:evidence_artifact.analyze
+  label: analyze an evidence artifact
+  maps_to: [read]
+  roles:
+    configurator: [human]
+    executor: [human, ai_agent, tool]
+    effect_verifier: [human]
+    acceptor: [human]
+  mandate:
+    required_before_fan_out: false
+    fan_out: none
+  consequence_ceiling: evidence_only
+  observation_domain: [security]
+  composed_of: []
+  refusal_points:
+    - can_refuse: [scope]
+      constructability: COMMIT_GATED
+    - can_refuse: [path]
+      constructability: COMMIT_GATED
+  requires:
+    authority: [role]
+    environment: [threat_pressure, uncertainty]
+    time: [before_action, during_action, after_action]
+    maximum_unobserved_interval: no longer than the case's authority_validity.valid_until
+    evidence_efficacy: EVIDENCE_ONLY
+    decision_outputs: [ALLOW, SHAPE, VETO]
+  basis: single_description
+notes: >
+  Analysis runs in an isolated environment; the path refusal point is what keeps a live sample from reaching anything else.
+crosswalk: >
+  OpenC2 action 'detonate'; STIX Malware Analysis
