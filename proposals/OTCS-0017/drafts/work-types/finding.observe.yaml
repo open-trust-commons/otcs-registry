@@ -1,0 +1,32 @@
+# DRAFT — not ratified. OTCS-0017 governs; this file is not part of its pinned text.
+# Values are the author's proposal for deliberation and may change.
+work_type:
+  id: otcs-work:finding.observe
+  label: observe security findings
+  maps_to: [read]
+  roles:
+    configurator: [human]
+    executor: [service, ai_agent]
+    effect_verifier: [human]
+    acceptor: [human]
+  mandate:
+    required_before_fan_out: false
+    fan_out: none
+  consequence_ceiling: evidence_only
+  observation_domain: [security]
+  composed_of: []
+  refusal_points:
+    - can_refuse: [scope]
+      constructability: COMMIT_GATED
+  requires:
+    authority: [role, organizational_policy]
+    environment: [data_quality, uncertainty]
+    time: [during_action, across_trajectory]
+    maximum_unobserved_interval: no longer than the data-access grant's authority_validity.valid_until
+    evidence_efficacy: EVIDENCE_ONLY
+    decision_outputs: [ALLOW, SHAPE, VETO]
+  basis: single_description
+notes: >
+  Replaces the earlier seed ID 'security_finding.observe' now that 'finding' is an object class.
+crosswalk: >
+  OCSF Findings category; STIX Observed Data and Sighting; D3FEND Detect; NIST CSF 2.0 DE.CM

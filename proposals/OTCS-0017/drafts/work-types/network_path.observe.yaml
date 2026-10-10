@@ -1,0 +1,34 @@
+# DRAFT — not ratified. OTCS-0017 governs; this file is not part of its pinned text.
+# Values are the author's proposal for deliberation and may change.
+work_type:
+  id: otcs-work:network_path.observe
+  label: observe network paths
+  maps_to: [read]
+  roles:
+    configurator: [human]
+    executor: [service, ai_agent]
+    effect_verifier: [human]
+    acceptor: [human]
+  mandate:
+    required_before_fan_out: false
+    fan_out: none
+  consequence_ceiling: evidence_only
+  observation_domain: [network]
+  composed_of: []
+  refusal_points:
+    - can_refuse: [scope]
+      constructability: COMMIT_GATED
+    - can_refuse: [path]
+      constructability: COMMIT_GATED
+  requires:
+    authority: [role, organizational_policy]
+    environment: [system_health, dependency_health]
+    time: [during_action, across_trajectory]
+    maximum_unobserved_interval: no longer than the monitoring grant's authority_validity.valid_until
+    evidence_efficacy: EVIDENCE_ONLY
+    decision_outputs: [ALLOW, SHAPE, VETO]
+  basis: single_description
+notes: >
+  Active path tests send traffic; the path refusal point bounds where that traffic may go.
+crosswalk: >
+  OCSF Network Activity category; OpenC2 actions 'query' and 'scan'; 3GPP TS 32.450 integrity and mobility indicators

@@ -1,0 +1,33 @@
+# DRAFT — not ratified. OTCS-0017 governs; this file is not part of its pinned text.
+# Values are the author's proposal for deliberation and may change.
+work_type:
+  id: otcs-work:session.terminate
+  label: end a session
+  maps_to: [revoke]
+  roles:
+    configurator: [human]
+    executor: [human, service]
+    effect_verifier: [human]
+    acceptor: [human]
+  mandate:
+    required_before_fan_out: false
+    fan_out: none
+  consequence_ceiling: contain
+  composed_of: []
+  refusal_points:
+    - can_refuse: [identity]
+      constructability: COMMIT_GATED
+    - can_refuse: [consequence]
+      constructability: COMMIT_GATED
+  requires:
+    authority: [role, organizational_policy]
+    environment: [identity_confidence, human_availability]
+    time: [before_action, commit_point, after_action]
+    maximum_unobserved_interval: no longer than the case's authority_validity.valid_until
+    evidence_efficacy: EVIDENCE_TO_DECISION   # at least
+    decision_outputs: [ALLOW, SHAPE, DEAUTOMATE, VETO]
+  basis: single_description
+notes: >
+  Split from the earlier seed 'identity.mutate'. Ending a session is reversible by signing in again; revoking a credential is not.
+crosswalk: >
+  OpenC2 action 'stop'; NIST CSF 2.0 RS.MI-01

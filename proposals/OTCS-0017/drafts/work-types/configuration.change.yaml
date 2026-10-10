@@ -1,0 +1,35 @@
+# DRAFT — not ratified. OTCS-0017 governs; this file is not part of its pinned text.
+# Values are the author's proposal for deliberation and may change.
+work_type:
+  id: otcs-work:configuration.change
+  label: change a system's configuration
+  maps_to: [modify_policy, write]
+  roles:
+    configurator: [human]
+    executor: [human, service]
+    effect_verifier: [human]
+    acceptor: [human]
+  mandate:
+    required_before_fan_out: false
+    fan_out: bounded
+  consequence_ceiling: mutate
+  composed_of: []
+  refusal_points:
+    - can_refuse: [scope]
+      constructability: COMMIT_GATED
+    - can_refuse: [consequence]
+      constructability: COMMIT_GATED
+    - can_refuse: [continuation]
+      constructability: COMMIT_GATED
+  requires:
+    authority: [role, organizational_policy]
+    environment: [reversibility, system_health, downstream_capacity]
+    time: [before_action, commit_point, after_action, repair_window]
+    maximum_unobserved_interval: no longer than the change window granted in authority_validity.valid_until
+    evidence_efficacy: EVIDENCE_TO_DECISION   # at least
+    decision_outputs: [ALLOW, SHAPE, DEAUTOMATE, VETO]
+  basis: single_description
+notes: >
+  New. Fills a gap found when an offer changed collector configuration under an observation label. Fan-out is bounded by the systems the change names.
+crosswalk: >
+  OpenC2 actions 'set' and 'update'

@@ -1,0 +1,37 @@
+# DRAFT — not ratified. OTCS-0017 governs; this file is not part of its pinned text.
+# Values are the author's proposal for deliberation and may change.
+work_type:
+  id: otcs-work:playbook.execute
+  label: execute a playbook
+  maps_to: [execute]
+  roles:
+    configurator: [human]
+    executor: [service, tool]
+    effect_verifier: [human]
+    acceptor: [human]
+  mandate:
+    required_before_fan_out: false
+    fan_out: bounded
+  consequence_ceiling: contain
+  composed_of: []
+  refusal_points:
+    - can_refuse: [scope]
+      constructability: COMMIT_GATED
+    - can_refuse: [identity]
+      constructability: COMMIT_GATED
+    - can_refuse: [consequence]
+      constructability: COMMIT_GATED
+    - can_refuse: [continuation]
+      constructability: COMMIT_GATED
+  requires:
+    authority: [role, organizational_policy, situational_approval]
+    environment: [reversibility, downstream_capacity, system_health, human_availability]
+    time: [before_action, commit_point, during_action, after_action, repair_window]
+    maximum_unobserved_interval: no longer than the approved playbook version's authority_validity.valid_until
+    evidence_efficacy: EVIDENCE_TO_DECISION   # at least
+    decision_outputs: [ALLOW, SHAPE, DEAUTOMATE, VETO]
+  basis: single_description
+notes: >
+  The executor is the orchestration system, never a person's judgment by proxy. Fan-out is bounded by the steps the approved playbook version names. Each action class can be stopped on its own. Execution evidence is the target system's receipt, recorded on the case.
+crosswalk: >
+  OpenC2 command (action, target, actuator); CACAO workflow 'action' steps; OCSF Remediation Activity; D3FEND Isolate, Evict, Restore; NIST CSF 2.0 RS.MI-01, RS.MI-02

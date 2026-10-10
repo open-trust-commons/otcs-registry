@@ -1,0 +1,31 @@
+# DRAFT — not ratified. OTCS-0017 governs; this file is not part of its pinned text.
+# Values are the author's proposal for deliberation and may change.
+work_type:
+  id: otcs-work:playbook.draft
+  label: draft a playbook
+  maps_to: [write]
+  roles:
+    configurator: [human]
+    executor: [human, ai_agent]
+    effect_verifier: [human]
+    acceptor: [human]
+  mandate:
+    required_before_fan_out: false
+    fan_out: none
+  consequence_ceiling: recommend
+  composed_of: []
+  refusal_points:
+    - can_refuse: [consequence]
+      constructability: COMMIT_GATED
+  requires:
+    authority: [role, organizational_policy]
+    environment: [reversibility]
+    time: [before_action, commit_point]
+    maximum_unobserved_interval: no longer than the change window granted in authority_validity.valid_until
+    evidence_efficacy: EVIDENCE_TO_DECISION   # at least
+    decision_outputs: [ALLOW, SHAPE, VETO]
+  basis: single_description
+notes: >
+  A draft cannot run. Running it is playbook.execute, a different work type with a higher ceiling. Promotion of a version is done by the playbook's owner, who is not its author.
+crosswalk: >
+  CACAO playbook (unsigned draft); STIX Course of Action (guidance, not execution)

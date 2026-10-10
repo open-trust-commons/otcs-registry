@@ -1,0 +1,35 @@
+# DRAFT — not ratified. OTCS-0017 governs; this file is not part of its pinned text.
+# Values are the author's proposal for deliberation and may change.
+work_type:
+  id: otcs-work:agent_context.write
+  label: write to an agent's context or memory
+  maps_to: [write]
+  roles:
+    configurator: [human]
+    executor: [human, ai_agent, service]
+    effect_verifier: [human]
+    acceptor: [human]
+  mandate:
+    required_before_fan_out: false
+    fan_out: none
+  consequence_ceiling: mutate
+  composed_of: []
+  refusal_points:
+    - can_refuse: [scope]
+      constructability: COMMIT_GATED
+    - can_refuse: [identity]
+      constructability: COMMIT_GATED
+    - can_refuse: [consequence]
+      constructability: COMMIT_GATED
+  requires:
+    authority: [role, organizational_policy]
+    environment: [data_quality, uncertainty, cumulative_trajectory]
+    time: [before_action, commit_point, across_trajectory, repair_window]
+    maximum_unobserved_interval: no longer than the grant's authority_validity.valid_until
+    evidence_efficacy: EVIDENCE_TO_DECISION   # at least
+    decision_outputs: [ALLOW, SHAPE, DEAUTOMATE, VETO]
+  basis: single_description
+notes: >
+  New. What an agent is told or remembers shapes everything it does next; memory and context poisoning is a named agentic risk.
+crosswalk: >
+  OWASP Top 10 for Agentic Applications ASI06; OWASP Agent Control Standard memory hooks

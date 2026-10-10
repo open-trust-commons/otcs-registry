@@ -1,0 +1,35 @@
+# DRAFT — not ratified. OTCS-0017 governs; this file is not part of its pinned text.
+# Values are the author's proposal for deliberation and may change.
+work_type:
+  id: otcs-work:integration.author
+  label: build or change an integration
+  maps_to: [write]
+  roles:
+    configurator: [human]
+    executor: [human, ai_agent]
+    effect_verifier: [human]
+    acceptor: [human]
+  mandate:
+    required_before_fan_out: false
+    fan_out: none
+  consequence_ceiling: mutate
+  composed_of: []
+  refusal_points:
+    - can_refuse: [scope]
+      constructability: COMMIT_GATED
+    - can_refuse: [identity]
+      constructability: COMMIT_GATED
+    - can_refuse: [consequence]
+      constructability: COMMIT_GATED
+  requires:
+    authority: [role, organizational_policy]
+    environment: [reversibility, dependency_health]
+    time: [before_action, commit_point, after_action]
+    maximum_unobserved_interval: no longer than the change window granted in authority_validity.valid_until
+    evidence_efficacy: EVIDENCE_TO_DECISION   # at least
+    decision_outputs: [ALLOW, SHAPE, DEAUTOMATE, VETO]
+  basis: single_description
+notes: >
+  New. Fills a gap: writing a new connection between systems had no work type. The identity refusal point covers the credentials the integration will act under.
+crosswalk: >
+  (no direct counterpart found in the standards checked)

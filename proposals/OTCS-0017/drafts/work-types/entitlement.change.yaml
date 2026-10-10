@@ -1,0 +1,35 @@
+# DRAFT — not ratified. OTCS-0017 governs; this file is not part of its pinned text.
+# Values are the author's proposal for deliberation and may change.
+work_type:
+  id: otcs-work:entitlement.change
+  label: change an entitlement
+  maps_to: [bind, revoke]
+  roles:
+    configurator: [human]
+    executor: [human, service]
+    effect_verifier: [human]
+    acceptor: [human]
+  mandate:
+    required_before_fan_out: true
+    fan_out: none
+  consequence_ceiling: mutate
+  composed_of: []
+  refusal_points:
+    - can_refuse: [identity]
+      constructability: COMMIT_GATED
+    - can_refuse: [consequence]
+      constructability: COMMIT_GATED
+    - can_refuse: [mandate]
+      constructability: COMMIT_GATED
+  requires:
+    authority: [mandate, role, organizational_policy]
+    environment: [identity_confidence, reversibility, legal_context]
+    time: [before_action, commit_point, after_action, repair_window]
+    maximum_unobserved_interval: no longer than the mandate's authority_validity.valid_until
+    evidence_efficacy: EVIDENCE_TO_DECISION   # at least
+    decision_outputs: [ALLOW, SHAPE, DEAUTOMATE, VETO]
+  basis: single_description
+notes: >
+  Split from the earlier seed 'identity.mutate'. Granting and removing a permission are one work type with one ceiling.
+crosswalk: >
+  NIST CSF 2.0 PR.AA-05 (least privilege, separation of duties)

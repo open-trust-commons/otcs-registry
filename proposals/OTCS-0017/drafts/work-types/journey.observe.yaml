@@ -1,0 +1,32 @@
+# DRAFT — not ratified. OTCS-0017 governs; this file is not part of its pinned text.
+# Values are the author's proposal for deliberation and may change.
+work_type:
+  id: otcs-work:journey.observe
+  label: observe whether a user journey is usable
+  maps_to: [read]
+  roles:
+    configurator: [human]
+    executor: [service, tool]
+    effect_verifier: [human]
+    acceptor: [human]
+  mandate:
+    required_before_fan_out: false
+    fan_out: none
+  consequence_ceiling: evidence_only
+  observation_domain: [application, network]
+  composed_of: []
+  refusal_points:
+    - can_refuse: [scope]
+      constructability: COMMIT_GATED
+  requires:
+    authority: [role, consent, organizational_policy]
+    environment: [system_health, legal_context]
+    time: [during_action, across_trajectory]
+    maximum_unobserved_interval: no longer than the data-access grant's authority_validity.valid_until
+    evidence_efficacy: EVIDENCE_ONLY
+    decision_outputs: [ALLOW, SHAPE, VETO]
+  basis: single_description
+notes: >
+  Replaces the earlier seed ID 'journey_experience.observe'. Availability, retainability and quality are observed separately and never combined into one score. Session data from real users needs the consent recorded in requires.authority.
+crosswalk: >
+  3GPP TS 32.450 accessibility, retainability, integrity, availability; OpenSLO SLI on a journey

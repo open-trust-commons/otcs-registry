@@ -299,7 +299,8 @@ OCAP® is a registered trademark of the First Nations Information Governance Cen
 
 These need their own proposals. Nothing here enables them.
 
-- The remaining seed work types, in batches. Any object class a batch needs beyond §2's list is settled in the same batch.
+- The remaining seed work types, in batches. Any object class a batch needs beyond §2's list is settled in the same batch. Drafts of the first batch are parked, not ratified, in `drafts/` beside this file.
+- Requirement profiles: an organization's own use cases and requirements, mapped to work types. Proposed separately.
 - The manifest field for instance declarations, and its validator checks.
 - A method for classifying an offer, with a test of whether independent classifiers agree.
 - Descriptions of a project's offers by someone other than the project. These are observed records, and they wait for the rules that govern observed records (OTCS-0016).

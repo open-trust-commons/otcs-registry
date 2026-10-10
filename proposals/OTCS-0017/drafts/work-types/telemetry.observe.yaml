@@ -1,0 +1,32 @@
+# DRAFT — not ratified. OTCS-0017 governs; this file is not part of its pinned text.
+# Values are the author's proposal for deliberation and may change.
+work_type:
+  id: otcs-work:telemetry.observe
+  label: observe telemetry
+  maps_to: [read]
+  roles:
+    configurator: [human]
+    executor: [service, tool]
+    effect_verifier: [human]
+    acceptor: [human]
+  mandate:
+    required_before_fan_out: false
+    fan_out: none
+  consequence_ceiling: evidence_only
+  observation_domain: [application, network]
+  composed_of: []
+  refusal_points:
+    - can_refuse: [scope]
+      constructability: COMMIT_GATED
+  requires:
+    authority: [role, organizational_policy]
+    environment: [data_quality, legal_context]
+    time: [during_action, across_trajectory]
+    maximum_unobserved_interval: no longer than the data-access grant's authority_validity.valid_until
+    evidence_efficacy: EVIDENCE_ONLY
+    decision_outputs: [ALLOW, SHAPE, VETO]
+  basis: single_description
+notes: >
+  Changing what is collected is configuration.change, not observation; it exceeds this ceiling. Changing what a collector gathers is configuration.change: it exceeds an evidence-only ceiling.
+crosswalk: >
+  OpenTelemetry semantic conventions (traces, metrics, logs)
