@@ -1,0 +1,169 @@
+# WORKED EXAMPLE — a fictional organization. Not part of OTCS-0019's pinned text.
+# Illustrates the shape in OTCS-0019 §2. Work types are the parked drafts in
+# proposals/OTCS-0017/drafts/, which are not ratified.
+requirement_profile:
+  owner: Example Security Operations (fictional)
+  version: "0.1"
+  work_types_version: OTCS-0017 (draft)
+  use_cases:
+    - id: UC-01
+      title: Bring a new source into collection
+      intent: Every in-scope system's logs are collected, normalized and handed to the operations team, with quality checked before handover.
+      acceptance: Each new source is collected, normalized and accepted by the operations team before it counts as covered.
+      requirements: [RQ-01, RQ-02, RQ-03]
+    - id: UC-02
+      title: Detection coverage
+      intent: Detections cover the agreed threat scenarios, can be tuned per service, and are validated before production.
+      acceptance: Every agreed threat scenario has a validated detection in production.
+      requirements: [RQ-04, RQ-05]
+    - id: UC-03
+      title: Collection keeps running through failure
+      intent: Collection and monitoring continue through maintenance, power, network and system failure.
+      acceptance: No loss of collection goes unnoticed beyond the organization's stated interval.
+      requirements: [RQ-06]
+    - id: UC-04
+      title: Time integrity
+      intent: Every source and collector uses an authoritative time source, so events can be ordered.
+      acceptance: Every source and collector has a recorded primary and backup time source.
+      requirements: [RQ-07]
+    - id: UC-05
+      title: Logs cannot be quietly altered
+      intent: Collected records cannot be changed after collection; access is least-privilege and every administrative change is recorded.
+      acceptance: No collected record can be changed, and every administrative change is on record.
+      requirements: [RQ-08, RQ-09]
+    - id: UC-06
+      title: Enrichment
+      intent: Events carry service context and current threat indicators when an analyst sees them.
+      acceptance: Analysts see context on the event itself.
+      requirements: [RQ-10]
+    - id: UC-07
+      title: Look back with new knowledge
+      intent: New indicators are checked against retained history, and the service owner is told what is found.
+      acceptance: Every new indicator is checked against history, and owners hear what is found.
+      requirements: [RQ-11, RQ-12]
+  requirements:
+    - id: RQ-01
+      type: functional
+      statement: New sources are connected through an approved collection method.
+      acceptance: The connection is reviewed by someone other than its author before it carries live data.
+      needs:
+        - work_type: otcs-work:integration.author
+          max_consequence_ceiling: mutate
+          refusal_points:
+            - { can_refuse: identity, min_constructability: COMMIT_GATED }
+            - { can_refuse: consequence, min_constructability: COMMIT_GATED }
+          min_evidence_efficacy: EVIDENCE_TO_DECISION
+          effect_verifier: [human]
+    - id: RQ-02
+      type: functional
+      statement: Collection settings changes are tracked, including retention, access and forwarding.
+      acceptance: Every change has a record of who changed what, and when.
+      needs:
+        - work_type: otcs-work:configuration.change
+          max_consequence_ceiling: mutate
+          refusal_points:
+            - { can_refuse: scope, min_constructability: COMMIT_GATED }
+            - { can_refuse: continuation, min_constructability: COMMIT_GATED }
+          min_evidence_efficacy: EVIDENCE_TO_DECISION
+          effect_verifier: [human]
+    - id: RQ-03
+      type: non_functional
+      statement: Retention is defined for each group of sources.
+      acceptance: Each group has a stated retention period and a reason for it.
+      needs: []                     # a policy duty; no work type needed
+    - id: RQ-04
+      type: functional
+      statement: Detections are authored and tuned outside production and promoted by a person.
+      acceptance: No detection reaches production without a named reviewer who is not its author.
+      needs:
+        - work_type: otcs-work:detection.author
+          max_consequence_ceiling: mutate
+          refusal_points:
+            - { can_refuse: consequence, min_constructability: COMMIT_GATED }
+          min_evidence_efficacy: EVIDENCE_TO_DECISION
+          effect_verifier: [human]
+    - id: RQ-05
+      type: functional
+      statement: Findings are triaged with a recorded disposition.
+      acceptance: Every finding has a disposition recorded on its case.
+      needs:
+        - work_type: otcs-work:finding.triage
+          max_consequence_ceiling: recommend
+          refusal_points:
+            - { can_refuse: consequence, min_constructability: COMMIT_GATED }
+          min_evidence_efficacy: EVIDENCE_TO_DECISION
+          effect_verifier: [human]
+    - id: RQ-06
+      type: non_functional
+      statement: The health of collection is watched continuously.
+      acceptance: A loss of collection is visible within fifteen minutes.
+      needs:
+        - work_type: otcs-work:service.observe
+          max_consequence_ceiling: evidence_only
+          refusal_points:
+            - { can_refuse: scope, min_constructability: COMMIT_GATED }
+          min_evidence_efficacy: EVIDENCE_ONLY
+          max_unobserved_interval: PT15M
+          effect_verifier: [human]
+    - id: RQ-07
+      type: functional
+      statement: Time sources are configured and documented for every source and collector.
+      acceptance: A primary and backup time source are recorded for each.
+      needs:
+        - work_type: otcs-work:configuration.change
+          max_consequence_ceiling: mutate
+          refusal_points:
+            - { can_refuse: scope, min_constructability: COMMIT_GATED }
+          min_evidence_efficacy: EVIDENCE_TO_DECISION
+          effect_verifier: [human]
+    - id: RQ-08
+      type: functional
+      statement: Access to collected records is least-privilege and reviewed.
+      acceptance: Every permission change is recorded and confirmed by someone other than the person who made it.
+      needs:
+        - work_type: otcs-work:entitlement.change
+          max_consequence_ceiling: mutate
+          refusal_points:
+            - { can_refuse: identity, min_constructability: COMMIT_GATED }
+            - { can_refuse: mandate, min_constructability: COMMIT_GATED }
+          min_evidence_efficacy: EVIDENCE_TO_DECISION
+          effect_verifier: [human]
+    - id: RQ-09
+      type: functional
+      statement: Collected records cannot be altered after collection.
+      acceptance: Any attempt to alter a record is refused before it takes effect.
+      needs:
+        - work_type: otcs-work:telemetry.observe
+          max_consequence_ceiling: evidence_only
+          refusal_points:
+            - { can_refuse: scope, min_constructability: NON_CONSTRUCTABLE }
+          min_evidence_efficacy: EVIDENCE_ONLY
+          effect_verifier: [human]
+    - id: RQ-10
+      type: functional
+      statement: Events are enriched with service context and current indicators.
+      acceptance: An analyst sees the context on the event, not in a separate lookup.
+      needs:
+        - work_type: otcs-work:telemetry.observe
+          max_consequence_ceiling: evidence_only
+          refusal_points:
+            - { can_refuse: scope, min_constructability: COMMIT_GATED }
+          min_evidence_efficacy: EVIDENCE_ONLY
+          effect_verifier: [human]
+    - id: RQ-11
+      type: functional
+      statement: New indicators are searched for across retained history.
+      acceptance: A search runs within twenty-four hours after an indicator arrives.
+      needs:
+        - work_type: otcs-work:case.investigate
+          max_consequence_ceiling: recommend
+          refusal_points:
+            - { can_refuse: scope, min_constructability: COMMIT_GATED }
+          min_evidence_efficacy: EVIDENCE_TO_DECISION
+          max_unobserved_interval: PT24H
+          effect_verifier: [human]
+    - id: RQ-12
+      type: functional
+      statement: The service owner is told what a look-back finds.
+      acceptance: The owner is notified on the case, with the evidence attached.
+      needs: []                     # a person-to-person duty; a future message work type may cover it
