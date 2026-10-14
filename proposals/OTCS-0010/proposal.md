@@ -1,7 +1,7 @@
 # OTCS-0010 — Temporal validity: reassessment mode, invalidation logic, authority lifespan, and the constructability ladder
 
 **Class:** `model_revision` · **Phase:** DRAFT · **Clock start:** 2026-08-10
-**Clock:** 45–90 days (`GOVERNANCE.md` §3, changing the shared vocabulary) — **earliest ratification 2026-09-24**
+**Clock:** 45–90 days (`GOVERNANCE.md` §3, changing the shared vocabulary) — **earliest decision: see `proposals/CALENDAR.md`; after OTCS-0003, and not before 28 days after this proposal's deliberation window opens (OTCS-0013)**
 
 ## The gap
 
@@ -171,8 +171,8 @@ negotiable — a bake period that survives its own corrections measures nothing.
 ## Sequencing against OTCS-0003
 
 `OTCS-0003` restructures the coordinate vector into three layers and is
-ratifiable from 2026-09-10; this proposal is ratifiable from 2026-09-24, after
-it. That order is deliberate and should be preserved: `constructability`
+decided no earlier than 2026-10-18; this proposal is decided after it, and not
+before 28 days after its own deliberation window opens (OTCS-0013). That order is deliberate and should be preserved: `constructability`
 belongs with the control-function layer and `reassessment` with the situation
 layer under 0003's split, so ratifying this first would place fields on a
 structure about to change. If 0003 is rejected, this proposal stands unmodified
