@@ -1,7 +1,7 @@
 # OTCS-0019 — Requirement profiles: an on-ramp for an organization's own use cases and requirements
 
 **Class:** `model_revision` · **Phase:** DRAFT · **Clock start:** 2026-10-10
-**Clock:** 45–90 days (`GOVERNANCE.md` §3, changing the shared vocabulary) — **earliest decision: see `proposals/CALENDAR.md`, and no earlier than OTCS-0017** (this proposal uses its fields)
+**Clock:** 45–90 days (`GOVERNANCE.md` §3, changing the shared vocabulary) — **earliest decision: set by Amendment 1's pin; see `proposals/CALENDAR.md`, and no earlier than OTCS-0017** (this proposal uses its fields)
 
 ## The gap
 
@@ -43,25 +43,29 @@ requirement_profile:
               min_constructability:
           min_evidence_efficacy:
           max_unobserved_interval:      # optional: the longest the work may run unchecked for this requirement (OTCS-0010 §2)
-          effect_verifier: []           # Actor values the organization requires; always includes human
 ```
 
 - **Identifiers belong to the organization.** They are namespaced to the profile's owner. Two organizations' `UC-001` are different things and are never merged.
 - **`needs` is written in OTCS-0017's fields, and adds to the work type.** The work type's own requirements always apply. A need can ask for a lower ceiling, more refusal points, a higher rung, stronger evidence or a shorter interval. It cannot ask for less, and what it leaves out falls back to the work type.
+- **A need states no effect verifier.** OTCS-0017 §4 fixes the effect verifier as `human` for every work type; there is nothing for a need to add.
 - **A requirement may need no work type.** Some requirements are about people, contracts or documents. They stay in the profile with an empty `needs`, and that is a complete entry.
 - **One requirement can need several work types,** and one work type can serve several requirements.
 
 ### 3. Reading a profile against an offer
 
-An organization can set an offer's instance declarations (OTCS-0017 §7) against its profile. For each need, the reading is:
+An organization can set an offer's instance declarations (OTCS-0017 §7) against its profile. An instance declaration is what the offer states about itself as built; where the work runs, and what is in force there, is a deployment record, which a profile is not read against. For each need, the reading is:
 
 | Reading | Meaning |
 |---|---|
 | `stated` | The offer declares the work type, and every limit the need sets |
 | `not stated` | The offer is silent on the work type, or on one of the limits |
-| `contradicted` | The offer declares something that breaks a limit: a higher ceiling, a weaker rung, a longer interval, or a failure posture that gives no assurance |
+| `contradicted` | The offer declares something that breaks a limit: a higher ceiling, a weaker rung, a longer interval, or a declared failure posture that gives no assurance |
 
 There are only these three readings. A need with most of its limits stated is `not stated`; a partial grade would become a score (`NON-GOALS.md` #2).
+
+**Silence is always `not stated`.** An offer is `contradicted` only by what it declares (OTCS-0017 §5 rule 2). A reading never infers a posture, a rung or an interval from an omission.
+
+**A reading carries the evidence state of what it read.** An offer's statement of its own rung or posture is `SELF_ASSERTED` until evidence of a higher state is cited (OTCS-0017 §7), and a reading of `stated` records that state beside it. `stated` says what was declared, not what was shown.
 
 Two rules combine readings:
 
@@ -90,6 +94,7 @@ An offer's instance declarations establish `offered` and nothing more (OTCS-0017
 - It does not make any work allowed. A mapping is never permission to act.
 - It does not hold organizations' profiles, contracts or requirement text (#6).
 - It changes no meaning of any field it reuses from OTCS-0017.
+- It is not read against deployments. What is in force where the work runs is the deploying party's record (OTCS-0017 §7).
 
 ## Dependencies and sequencing
 
@@ -122,6 +127,14 @@ None. No manifest or record changes.
    - add a coherence check that `REQUIREMENT-PROFILES.md` matches §§1–4 of the ratified text;
    - move the worked example to `examples/requirement-profiles/` and validate it in CI.
 2. **If rejected:** nothing to remove.
+
+## Amendments
+
+**Amendment 1** (SUBSTANTIVE under `GOVERNANCE.md` §3.1; restarts the clock at its merge). Follows OTCS-0017 Amendment 1. Three changes:
+
+1. **`effect_verifier` leaves the need shape.** OTCS-0017 §4 now fixes the effect verifier as the scalar `human`; a list on a need had nothing to add and implied a machine could be in it. Removed from §2 and from the worked example.
+2. **Silence is `not stated`.** §3 says an offer is `contradicted` only by what it declares, never by what it omits, and that a profile is read against an instance declaration, not a deployment record.
+3. **A reading carries the evidence state** of what it read, so a self-asserted rung is not read as a tested one.
 
 ## Provenance
 
