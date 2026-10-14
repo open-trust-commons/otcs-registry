@@ -244,11 +244,11 @@ work_type:
     time: [design, initiation, before_action, commit_point, during_action, across_trajectory, after_action, repair_window]
     authority_validity:
       established_at: when the mandate is given, before any fan-out
-      valid_until: set by the mandate; zero for relational consequence (§9 rules)
+      valid_until: set by the mandate; a relational consequence has none to set, because the work never completes it (rule 6)
       freshness_requirement: how long the work may act on the person's intent before it re-asks whether the intent is still meant
       revocation_source: [the person who gave the mandate, the acceptor, any party with recognized authority over an object in scope]
       continuation_conditions: see the rules below
-    maximum_unobserved_interval: no longer than the mandate's authority_validity.valid_until
+    maximum_unobserved_interval: no longer than the time remaining on the mandate's authority_validity.valid_until
     evidence_efficacy: EVIDENCE_TO_DECISION   # at least
     decision_outputs: [ALLOW, SHAPE, DEAUTOMATE, VETO]
   basis: single_description
@@ -360,6 +360,7 @@ None. No manifest changes in this proposal. Instance declarations need the separ
 2. **Silence in the registry is absence.** §5 rule 2 and §9's VETO rule now apply to a deployment record. An instance declaration that omits a field has not stated it (`docs/coordinate-system.md` §3). §7 states that a project's own refusal points are `SELF_ASSERTED` until evidence is cited.
 3. **Same or different.** §6's two sentences on identity were read as contradicting each other on the four parked `*.observe` drafts. The second sentence now applies under one object class and verb.
 4. **The effect verifier is `human`.** §4 said every verifier set includes `human` and that a machine never holds the role. The field is now the scalar `human`; machine checks are inputs to the confirmation, not holders of the role. §9's entry already read this way.
+5. **Types.** `maximum_unobserved_interval` is a duration and `valid_until` a point in time; §9 and the eighteen parked drafts bounded the one by the other. They now say "the time remaining on" the grant's `valid_until`. §9's `valid_until: zero` for a relational consequence is replaced: there is nothing to set, because the work never completes that act (rule 6).
 
 ## Provenance
 
