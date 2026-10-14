@@ -1,7 +1,7 @@
 # OTCS-0019 — Requirement profiles: an on-ramp for an organization's own use cases and requirements
 
-**Class:** `model_revision` · **Phase:** DRAFT · **Clock start:** 2026-10-10
-**Clock:** 45–90 days (`GOVERNANCE.md` §3, changing the shared vocabulary) — **earliest decision: set by Amendment 1's pin; see `proposals/CALENDAR.md`, and no earlier than OTCS-0017** (this proposal uses its fields)
+**Class:** `model_revision` · **Phase:** DRAFT · **Clock start:** 2026-10-14 (restarted by Amendment 1; first published 2026-10-10)
+**Clock:** 45–90 days (`GOVERNANCE.md` §3, changing the shared vocabulary) — **earliest decision: see `proposals/CALENDAR.md`; the class floor 2026-11-28, not before 28 days after the deliberation window opens (OTCS-0013), and no earlier than OTCS-0017** (this proposal uses its fields)
 
 ## The gap
 
@@ -130,7 +130,7 @@ None. No manifest or record changes.
 
 ## Amendments
 
-**Amendment 1** (SUBSTANTIVE under OTCS-0013 §3.1; restarts the clock at its merge). Follows OTCS-0017 Amendment 1. Three changes:
+**Amendment 1** (SUBSTANTIVE under OTCS-0013 §3.1; pinned as v1 at its merge, 2026-10-14, which restarted the clock). Follows OTCS-0017 Amendment 1. Three changes:
 
 1. **`effect_verifier` leaves the need shape.** OTCS-0017 §4 now fixes the effect verifier as the scalar `human`; a list on a need had nothing to add and implied a machine could be in it. Removed from §2 and from the worked example.
 2. **Silence is `not stated`.** §3 says an offer is `contradicted` only by what it declares, never by what it omits, and that a profile is read against an instance declaration, not a deployment record.
