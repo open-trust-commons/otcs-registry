@@ -1,7 +1,7 @@
 # OTCS-0017 — Work Types: kinds of work, and what must be able to refuse them
 
-**Class:** `model_revision` · **Phase:** DRAFT · **Clock start:** 2026-10-08
-**Clock:** 45–90 days (`GOVERNANCE.md` §3, changing the shared vocabulary) — **earliest decision: set by Amendment 1's pin; see `proposals/CALENDAR.md`, and no earlier than OTCS-0010 and OTCS-0011** (this proposal uses their fields)
+**Class:** `model_revision` · **Phase:** DRAFT · **Clock start:** 2026-10-14 (restarted by Amendment 1; first published 2026-10-08)
+**Clock:** 45–90 days (`GOVERNANCE.md` §3, changing the shared vocabulary) — **earliest decision: see `proposals/CALENDAR.md`; the class floor 2026-11-28, not before 28 days after the deliberation window opens (OTCS-0013), and no earlier than OTCS-0010 and OTCS-0011** (this proposal uses their fields)
 
 ## The gap
 
@@ -354,7 +354,7 @@ None. No manifest changes in this proposal. Instance declarations need the separ
 
 ## Amendments
 
-**Amendment 1** (SUBSTANTIVE under `GOVERNANCE.md` §3.1; restarts the clock at its merge). Made before deliberation, after the author's own adversarial read of this proposal with OTCS-0010, OTCS-0011, OTCS-0019 and OTCS-0020. Four changes:
+**Amendment 1** (SUBSTANTIVE under OTCS-0013 §3.1; pinned as v1 at its merge, 2026-10-14, which restarted the clock). Made before deliberation, after the author's own adversarial read of this proposal with OTCS-0010, OTCS-0011, OTCS-0019 and OTCS-0020. Five changes:
 
 1. **Two records, not one word.** *Instance* covered both a project's statement in the registry and a running deployment. §1 now names an **instance declaration** (registry) and a **deployment record** (outside the registry), and every §4, §5, §7, §9 and §10 field says which it belongs to. `environment` is a deployment-record field only.
 2. **Silence in the registry is absence.** §5 rule 2 and §9's VETO rule now apply to a deployment record. An instance declaration that omits a field has not stated it (`docs/coordinate-system.md` §3). §7 states that a project's own refusal points are `SELF_ASSERTED` until evidence is cited.
