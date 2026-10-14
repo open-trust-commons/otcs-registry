@@ -21,7 +21,7 @@ work_type:
     authority: [role, organizational_policy]
     environment: [reversibility]
     time: [before_action, commit_point]
-    maximum_unobserved_interval: no longer than the change window granted in authority_validity.valid_until
+    maximum_unobserved_interval: no longer than the time remaining on the change window granted in authority_validity.valid_until
     evidence_efficacy: EVIDENCE_TO_DECISION   # at least
     decision_outputs: [ALLOW, SHAPE, VETO]
   basis: single_description

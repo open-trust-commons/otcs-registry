@@ -1,7 +1,7 @@
 # OTCS-0017 — Work Types: kinds of work, and what must be able to refuse them
 
-**Class:** `model_revision` · **Phase:** DRAFT · **Clock start:** 2026-10-08
-**Clock:** 45–90 days (`GOVERNANCE.md` §3, changing the shared vocabulary) — **earliest decision: see `proposals/CALENDAR.md`, and no earlier than OTCS-0010 and OTCS-0011** (this proposal uses their fields)
+**Class:** `model_revision` · **Phase:** DRAFT · **Clock start:** 2026-10-14 (restarted by Amendment 1; first published 2026-10-08)
+**Clock:** 45–90 days (`GOVERNANCE.md` §3, changing the shared vocabulary) — **earliest decision: see `proposals/CALENDAR.md`; the class floor 2026-11-28, not before 28 days after the deliberation window opens (OTCS-0013), and no earlier than OTCS-0010 and OTCS-0011** (this proposal uses their fields)
 
 ## The gap
 
@@ -19,6 +19,8 @@ That gap has four effects:
 ### 1. A work type
 
 A **work type** is a durable description of a kind of consequential work (work that changes something). An offer is an **instance** of one or more work types.
+
+Two records describe an instance, and this proposal keeps them apart. An **instance declaration** is what a registered project states about its offer, and it lives in the registry (§7). A **deployment record** is what a deploying party records about the work as it runs in one place, and it lives outside the registry (§7, §11). Every field in this proposal names which of the two it belongs to.
 
 A work type is a **profile**. It is a name, plus the values it requires in fields OTCS already has or proposes (§3), plus a small set of fields that nothing else in OTCS carries (§4). It changes the meaning of no coordinate.
 
@@ -95,7 +97,7 @@ A work type states the values it requires in these fields. It adds no new meanin
 | What the work's evidence must be able to cause | `evidence_efficacy` (EVIDENCE_ONLY · EVIDENCE_TO_DECISION · EVIDENCE_TO_ENFORCEMENT) | OTCS-0011 |
 | The outcomes a refusal point must be able to produce | `decision_outputs` (ALLOW · SHAPE · DEAUTOMATE · VETO) | the manifest schema |
 
-Where each required value is written: the roles in §4 carry Actor values; `maps_to` carries the Action verbs; each refusal point (§5) carries `constructability` and, in an instance, `uncertainty_behavior`; the `requires:` block in §4 carries the rest.
+Where each required value is written: the roles in §4 carry Actor values; `maps_to` carries the Action verbs; each refusal point (§5) carries `constructability` and, in an instance declaration or a deployment record, `uncertainty_behavior`; the `requires:` block in §4 carries the rest.
 
 A work type may set **no** ceiling on `maximum_unobserved_interval` only if it also requires a recorded acceptance of the risk by the deploying party's governance, with a date and a reviewer. OTCS never accepts the risk.
 
@@ -109,7 +111,7 @@ work_type:
   roles:                       # values from the Actor coordinate (§1.1) only
     configurator: []           # may set the work up
     executor: []               # may carry it out
-    effect_verifier: []        # confirms the effect; never the executor; always includes human
+    effect_verifier: human     # confirms the effect; never the executor; machine checks inform it, never hold it
     acceptor: [human]          # accepts this kind of work, can stop it, owns the residual risk
   mandate:
     required_before_fan_out: true | false
@@ -134,13 +136,13 @@ work_type:
 - Roles take values from the `Actor` coordinate only. Work Types adds no list of worker kinds.
 - Here a **machine** is any `Actor` value other than `human` and `organization`.
 - **The effect verifier is never the executor.** A system's confirmation of its own effect does not count.
-- **Every effect-verifier set includes `human`.** A machine may contribute checks. It is never the only effect verifier.
+- **The effect verifier is `human`.** Machine checks may inform the confirmation. They are inputs to the verifier's judgment, not holders of the role, and a confirmation made of machine checks alone is no confirmation.
 - **A machine is an executor only.** It never holds the configurator, effect-verifier or acceptor role.
 - **The acceptor is always `human`.** The acceptor accepts this kind of work, can stop it, and owns the residual risk. This is the party OTCS-0010's `revocation_source` points to.
 
 **Mandate and fan-out.** When `required_before_fan_out` is true, a mandate is stated before any part of the work spreads to other actors. "Do what I meant" is not a mandate. No part of the work may exceed the mandate it was given.
 
-**Fan-out.** `none`: the work does not spread to other actors. `bounded`: the spread has a limit, set by policy, by what the environment can hold, or by physics. An instance names which bound applies. `open`: no limit is stated.
+**Fan-out.** `none`: the work does not spread to other actors. `bounded`: the spread has a limit, set by policy, by what the environment can hold, or by physics. A deployment record names which bound applies; an instance declaration may state the bound the offer supports. `open`: no limit is stated.
 
 **Consequence ceiling.** The most the work may do, not what it usually does. The levels rise in this order: `evidence_only`, `recommend`, `mutate`, `contain`.
 
@@ -148,55 +150,57 @@ work_type:
 
 ### 5. Refusal points
 
-Refusal points appear at two levels:
+Refusal points appear at three levels:
 
 - **In a work type, they are requirements:** what must be able to refuse the work, and how strong each point must be.
-- **In an instance, they are the actual points** that meet those requirements.
+- **In an instance declaration, they are what the offer states about itself:** which points it supplies, and at what rung, as built.
+- **In a deployment record, they are the actual points** that meet the requirements where the work runs.
 
 Each point states:
 
 ```yaml
 refusal_point:
   can_refuse: [scope | identity | path | consequence | mandate | continuation]   # continuation: the work going on once started
-  constructability:            # minimum rung (work type) or actual rung (instance); OTCS-0010 §4
-  kind: gateway | identity_fabric | policy_engine | human_approver | runtime_hook   # instance level; identity_fabric: the systems that issue and check identities
-  environment:                 # instance level; environments can contain environments
-  uncertainty_behavior:        # instance level; OTCS-0010 §3
+  constructability:            # work type: minimum rung · instance declaration: the rung the offer states, as built · deployment record: the rung in force; OTCS-0010 §4
+  kind: gateway | identity_fabric | policy_engine | human_approver | runtime_hook   # instance declaration: what the offer supplies · deployment record: what is in place; identity_fabric: the systems that issue and check identities
+  environment:                 # deployment record only; environments can contain environments
+  uncertainty_behavior:        # instance declaration: the offer's posture as shipped · deployment record: the posture in force; OTCS-0010 §3
 ```
 
 Rules:
 
 1. **A work type with no refusal points is not part of Work Types.**
-2. **If an instance does not declare `uncertainty_behavior` for a point, a reader treats that point as giving no assurance** when it fails. OTCS-0010 §3 already holds that reduced observability may never argue for continuation.
+2. **If a deployment record does not state `uncertainty_behavior` for a point, a reader treats that point as giving no assurance** when it fails. OTCS-0010 §3 already holds that reduced observability may never argue for continuation. **An instance declaration that is silent on a field has not stated it,** and nothing more (`docs/coordinate-system.md` §3). Silence in the registry is absence, never a posture.
 3. **The work type applies at every point that can refuse,** not only where the work starts. The same work type applies inside one organization, across organizations on one case, and across connected networks. The points change; the work type does not.
 4. **No part of the work may weaken or remove a refusal point, or widen its own mandate.**
 
 ### 6. Rules for the collection
 
-- **Completeness applies to work types only.** A work type sets every field that applies to it (§4). A project record keeps the rule that absence is honest (`docs/coordinate-system.md` §3).
-- **Same or different.** A different object class or verb is always a different work type. Different refusal points or a different consequence ceiling means a different work type. The same refusal points and ceiling under a new name means the same work type.
+- **Completeness applies to work types only.** A work type sets every field that applies to it (§4). A project record, including its instance declarations, keeps the rule that absence is honest (`docs/coordinate-system.md` §3). What a deployment record must contain before the work is `authorized` is in §7.
+- **Same or different.** A different object class or verb is always a different work type. Under one object class and verb, different refusal points or a different consequence ceiling means a different work type, and the same refusal points and ceiling under a new name means the same work type.
 - **Not work types.** "Assistant", "copilot", "automation", "AI platform", "agentic workforce", "digital worker", "AI teammate" and "agent persona" are names for offers, not kinds of work. An offer under such a name is described as one or more work types.
 - **Basis.** A new work type cites at least two independent descriptions that name no product (`basis: independent_descriptions`). With one, it is recorded as `basis: single_description`, and the record says so.
 - **Adding and changing.** New work types are added in batches, each batch a proposal of this class (`model_revision`, changing the shared vocabulary). A faster class for single entries may be proposed later, as a change to `GOVERNANCE.md`. Changing a field, the grammar or the object classes is always a `model_revision`.
-- **Versions.** Each ratified batch is a version of Work Types, named by the proposal that ratified it. This proposal is version OTCS-0017. Every instance names the version of Work Types it was described against.
+- **Versions.** Each ratified batch is a version of Work Types, named by the proposal that ratified it. This proposal is version OTCS-0017. Every instance declaration and every deployment record names the version of Work Types it was described against.
 
-### 7. Instances
+### 7. Instance declarations and deployment records
 
-An **instance declaration** is a registered project's own statement of the work types it performs. In the registry, each declared work type carries:
+An **instance declaration** is a registered project's own statement of the work types its offer performs. In the registry, each declared work type carries:
 
 - the status **`offered`**: the project performs this kind of work as sold or documented;
-- an evidence maturity, as for any claim (`EVIDENCE-MODEL.md`).
+- the §5 fields marked for an instance declaration, as the project chooses to state them. A field the project does not state is not stated;
+- an evidence maturity, as for any claim (`EVIDENCE-MODEL.md`). A project's statement of its own refusal points is `SELF_ASSERTED` until evidence of a higher state is cited.
 
 A project's own declaration is its own words. When anyone other than the project attributes a work type to it, the states in `CHARTER.md` §11 apply.
 
-**Deployments are outside the registry.** A registry record describes a project, not a running authorization instance (OTCS-0010, *What this deliberately does NOT add*). Two further statuses describe a deployment, and are recorded by the deploying party, not here:
+**A deployment record is outside the registry.** A registry record describes a project, not a running authorization instance (OTCS-0010, *What this deliberately does NOT add*). A deployment record is kept by the deploying party. It is where the §5 fields marked for it live: the environment each point sits in, the rung and posture in force, and which fan-out bound applies. It carries two further statuses:
 
 - **`configured`**: set up in a deployment.
-- **`authorized`**: granted by the deploying party's governance. **A deployment cannot call an instance `authorized` while any required role is unassigned.** The configurator, effect verifier and acceptor are named people, or teams of people, and the deployment names the objects in scope, before the work is authorized.
+- **`authorized`**: granted by the deploying party's governance. An instance is `authorized` only when every required role is assigned: the configurator, effect verifier and acceptor are named people, or teams of people, and the objects in scope are named. Until then it is at most `configured`.
 
-Public material can establish `offered` and nothing more. Who holds each role in a deployment is that party's record, not OTCS's.
+Public material can establish `offered` and nothing more. Who holds each role in a deployment, and what is in force at each point, is that party's record, not OTCS's.
 
-The manifest field that carries instance declarations, and its validator checks, are specified in a separate proposal (§11).
+The manifest field that carries instance declarations, and its validator checks, are specified in a separate proposal (§11). So is the deployment record's format (§11).
 
 ### 8. Observation
 
@@ -220,7 +224,7 @@ work_type:
     required_before_fan_out: true
     fan_out: open
   consequence_ceiling: contain       # the stated mandate may set it lower, never higher
-  composed_of: []                    # the work types its parts perform, named per instance
+  composed_of: []                    # the work types its parts perform, named in the deployment record
   refusal_points:                    # at least one point able to refuse each of:
     - can_refuse: [scope]
       constructability: NON_CONSTRUCTABLE
@@ -240,11 +244,11 @@ work_type:
     time: [design, initiation, before_action, commit_point, during_action, across_trajectory, after_action, repair_window]
     authority_validity:
       established_at: when the mandate is given, before any fan-out
-      valid_until: set by the mandate; zero for relational consequence (§9 rules)
+      valid_until: set by the mandate; a relational consequence has none to set, because the work never completes it (rule 6)
       freshness_requirement: how long the work may act on the person's intent before it re-asks whether the intent is still meant
       revocation_source: [the person who gave the mandate, the acceptor, any party with recognized authority over an object in scope]
       continuation_conditions: see the rules below
-    maximum_unobserved_interval: no longer than the mandate's authority_validity.valid_until
+    maximum_unobserved_interval: no longer than the time remaining on the mandate's authority_validity.valid_until
     evidence_efficacy: EVIDENCE_TO_DECISION   # at least
     decision_outputs: [ALLOW, SHAPE, DEAUTOMATE, VETO]
   basis: single_description
@@ -256,18 +260,18 @@ Rules for this entry:
 - **Who can end it.** The person who gave the mandate, the acceptor, and any party with recognized authority over an object in scope can each refuse continuation. That party may be a data owner, or a community exercising collective control over its data or knowledge.
 - **Continuation conditions.** The work may go on only while all of these hold:
   1. The mandate is unchanged and still valid, and the person's intent was re-asked within `freshness_requirement`.
-  2. The work still serves the stated objective, not only remains permitted. The instance declares where this question is answered and by whom. Work Types supplies no norms of its own.
+  2. The work still serves the stated objective, not only remains permitted. The deployment record states where this question is answered and by whom. Work Types supplies no norms of its own.
   3. A hand-back path exists. A refusal returns the work, its state and the decision to the person who gave the mandate. A stop with no way back is not accepted.
   4. Conditions that travel with an object in scope are honored. They are set by whoever holds authority over the object, including labels a community applies under its own protocols. Work Types neither defines nor applies them.
   5. Time windows on objects in scope are honored, including seasonal and scheduled windows (`schedule`).
   6. A relational consequence is never completed by a machine. An act that changes trust, obligation, consent or standing between people may be prepared by the work, never completed by it.
-- **The outcome follows standing.** If a named person in the deploying party has standing to complete the act now, the outcome is DEAUTOMATE, and the act goes to that person. If no one in the deploying party has that standing, the outcome is VETO, and the instance names who does. If the failure touches only some objects in scope, the outcome is SHAPE: those objects are removed and the work goes on.
+- **The outcome follows standing.** If a named person in the deploying party has standing to complete the act now, the outcome is DEAUTOMATE, and the act goes to that person. If no one in the deploying party has that standing, the outcome is VETO, and the deployment record names who does. If the failure touches only some objects in scope, the outcome is SHAPE: those objects are removed and the work goes on.
 - **Applied to the conditions:** a withdrawn, expired or changed mandate (1) → VETO · intent not re-asked in time (1) → DEAUTOMATE, to the person who gave the mandate · no longer serves the objective (2) → DEAUTOMATE · no hand-back path (3) → VETO · an object's own conditions not honored (4) → VETO, or SHAPE if only some objects · outside a window the deploying party set (5) → DEAUTOMATE, to the schedule's owner · outside a window another authority set (5) → VETO, or SHAPE if only some objects · relational consequence (6) → DEAUTOMATE.
 - **DEAUTOMATE goes to a named person,** never to the work's own judgment.
 - **Scope and continuation are NON_CONSTRUCTABLE.** No part of the work can be built to act outside its scope, and no part can be built to keep acting once continuation is refused. The other four points are at least COMMIT_GATED.
 - **No ceiling is not permitted.** The work runs unchecked for no longer than the mandate itself is valid.
 - **The evidence must show the state reached against the stated mandate,** not only that something completed.
-- **The outcome is VETO** if any of these is missing (a refusal point below its required rung counts as missing): a refusal point for each listed refusal, including continuation, a human effect verifier, the objects in scope, or a consequence ceiling.
+- **In a deployment, the outcome is VETO** if any of these is missing from its record (a refusal point below its required rung counts as missing): a refusal point for each listed refusal, including continuation, a human effect verifier, the objects in scope, or a consequence ceiling. An instance declaration that omits one of them has not stated it (§5 rule 2). It reads as `offered` with that field not stated, not as VETO.
 - **Completion is not success, and inefficiency is not a defense.**
 
 It is recorded with `basis: single_description` until two independent descriptions are cited in the decision record.
@@ -287,9 +291,9 @@ Most of these standards describe **the work**. One group describes **who holds a
 | OpenTelemetry semantic conventions v1.44.0 (2026); OpenSLO (`openslo/v1`) | application telemetry and service objectives | the `application` observation domain |
 | 3GPP TS 32.450 V19.0.0 (2025) | network performance indicators: accessibility, retainability, integrity, availability | the `network` domain; the experience terms |
 | Local Contexts Traditional Knowledge Labels; the First Nations Principles of OCAP®; the CARE Principles for Indigenous Data Governance (2020) | communities' own conditions on their data and knowledge, and their authority to control it | condition 4 and the revocation source in §9. Work Types refers to these systems and never enumerates, copies or applies their labels or principles. |
-| OWASP Agent Control Standard v0.1.0 (2026) | the run-time exchange between an agent and a guardian: hooks, and dispositions allow, deny, modify, ask, defer | **a run-time layer an instance of `objective.pursue` can use to supply refusal points** |
+| OWASP Agent Control Standard v0.1.0 (2026) | the run-time exchange between an agent and a guardian: hooks, and dispositions allow, deny, modify, ask, defer | **a run-time layer a deployment of `objective.pursue` can use to supply refusal points** |
 
-ACS dispositions read onto `decision_outputs` as follows: `allow` → ALLOW · `deny` → VETO · `modify` → SHAPE · `ask` → DEAUTOMATE. `defer` is a pending state, not an outcome. As of v0.1.0, the ACS reference implementation proceeds when its guardian fails, unless it is configured otherwise. Under §5 rule 2, an instance that does not declare otherwise gives no assurance at that point.
+ACS dispositions read onto `decision_outputs` as follows: `allow` → ALLOW · `deny` → VETO · `modify` → SHAPE · `ask` → DEAUTOMATE. `defer` is a pending state, not an outcome. As of v0.1.0, the ACS reference implementation proceeds when its guardian fails, unless it is configured otherwise. Under §5 rule 2, a deployment whose record does not state otherwise gives no assurance at that point.
 
 Sources: https://docs.oasis-open.org/openc2/oc2ls/v1.0/oc2ls-v1.0.html · https://docs.oasis-open.org/cacao/security-playbooks/v2.0/security-playbooks-v2.0.html · https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html · https://github.com/ocsf/ocsf-schema · https://d3fend.mitre.org/ · https://nvlpubs.nist.gov/nistpubs/CSWP/NIST.CSWP.29.pdf · https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-61r3.pdf · https://github.com/open-telemetry/semantic-conventions · https://github.com/OpenSLO/OpenSLO · https://www.etsi.org/deliver/etsi_TS/132400_132499/132450/19.00.00_60/ts_132450v190000p.pdf · https://localcontexts.org/labels/traditional-knowledge-labels/ · https://fnigc.ca/ocap-training/ · https://doi.org/10.5334/dsj-2020-043 · https://github.com/GenAI-Security-Project/agent-control-standard
 
@@ -304,7 +308,7 @@ These need their own proposals. Nothing here enables them.
 - The manifest field for instance declarations, and its validator checks.
 - A method for classifying an offer, with a test of whether independent classifiers agree.
 - Descriptions of a project's offers by someone other than the project. These are observed records, and they wait for the rules that govern observed records (OTCS-0016).
-- An optional format a deploying party can use to publish its own role holders and statuses. It would be EXPERIMENTAL, and it would never make the registry hold deployments.
+- The deployment record's format (§7): an optional, EXPERIMENTAL format a deploying party can use to publish its role holders, statuses and the §5 fields marked for a deployment record. It would never make the registry hold deployments.
 - A faster class for adding single work types (§6).
 - A machine-readable linked-data context for Work Types.
 
@@ -338,6 +342,7 @@ None. No manifest changes in this proposal. Instance declarations need the separ
 - **Outcomes set by how severe a failure is.** Rejected: outcomes follow standing (§9), so a person is only asked to decide what they have the authority to decide.
 - **Categories taken from product marketing.** Rejected: they name offers, not work (§6).
 - **One experience score.** Rejected: `NON-GOALS.md` #2.
+- **One word for the offer and the running system.** Rejected in Amendment 1: an offer can state what it supplies; only a deployment can state where it runs and what is in force. Using *instance* for both made the registry demand facts a project cannot have, and made silence in the registry read as failure.
 
 ## On decision — required cleanup
 
@@ -346,6 +351,16 @@ None. No manifest changes in this proposal. Instance declarations need the separ
    - add a coherence check that `WORK-TYPES.md` matches §§1–9 of the ratified text;
    - add the dispositions table in §10 to `WORK-TYPES.md`.
 2. **If rejected:** nothing to remove.
+
+## Amendments
+
+**Amendment 1** (SUBSTANTIVE under OTCS-0013 §3.1; pinned as v1 at its merge, 2026-10-14, which restarted the clock). Made before deliberation, after the author's own adversarial read of this proposal with OTCS-0010, OTCS-0011, OTCS-0019 and OTCS-0020. Five changes:
+
+1. **Two records, not one word.** *Instance* covered both a project's statement in the registry and a running deployment. §1 now names an **instance declaration** (registry) and a **deployment record** (outside the registry), and every §4, §5, §7, §9 and §10 field says which it belongs to. `environment` is a deployment-record field only.
+2. **Silence in the registry is absence.** §5 rule 2 and §9's VETO rule now apply to a deployment record. An instance declaration that omits a field has not stated it (`docs/coordinate-system.md` §3). §7 states that a project's own refusal points are `SELF_ASSERTED` until evidence is cited.
+3. **Same or different.** §6's two sentences on identity were read as contradicting each other on the four parked `*.observe` drafts. The second sentence now applies under one object class and verb.
+4. **The effect verifier is `human`.** §4 said every verifier set includes `human` and that a machine never holds the role. The field is now the scalar `human`; machine checks are inputs to the confirmation, not holders of the role. §9's entry already read this way.
+5. **Types.** `maximum_unobserved_interval` is a duration and `valid_until` a point in time; §9 and the eighteen parked drafts bounded the one by the other. They now say "the time remaining on" the grant's `valid_until`. §9's `valid_until: zero` for a relational consequence is replaced: there is nothing to set, because the work never completes that act (rule 6).
 
 ## Provenance
 
