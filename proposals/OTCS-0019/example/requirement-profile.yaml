@@ -53,7 +53,6 @@ requirement_profile:
             - { can_refuse: identity, min_constructability: COMMIT_GATED }
             - { can_refuse: consequence, min_constructability: COMMIT_GATED }
           min_evidence_efficacy: EVIDENCE_TO_DECISION
-          effect_verifier: [human]
     - id: RQ-02
       type: functional
       statement: Collection settings changes are tracked, including retention, access and forwarding.
@@ -65,7 +64,6 @@ requirement_profile:
             - { can_refuse: scope, min_constructability: COMMIT_GATED }
             - { can_refuse: continuation, min_constructability: COMMIT_GATED }
           min_evidence_efficacy: EVIDENCE_TO_DECISION
-          effect_verifier: [human]
     - id: RQ-03
       type: non_functional
       statement: Retention is defined for each group of sources.
@@ -81,7 +79,6 @@ requirement_profile:
           refusal_points:
             - { can_refuse: consequence, min_constructability: COMMIT_GATED }
           min_evidence_efficacy: EVIDENCE_TO_DECISION
-          effect_verifier: [human]
     - id: RQ-05
       type: functional
       statement: Findings are triaged with a recorded disposition.
@@ -92,7 +89,6 @@ requirement_profile:
           refusal_points:
             - { can_refuse: consequence, min_constructability: COMMIT_GATED }
           min_evidence_efficacy: EVIDENCE_TO_DECISION
-          effect_verifier: [human]
     - id: RQ-06
       type: non_functional
       statement: The health of collection is watched continuously.
@@ -104,7 +100,6 @@ requirement_profile:
             - { can_refuse: scope, min_constructability: COMMIT_GATED }
           min_evidence_efficacy: EVIDENCE_ONLY
           max_unobserved_interval: PT15M
-          effect_verifier: [human]
     - id: RQ-07
       type: functional
       statement: Time sources are configured and documented for every source and collector.
@@ -115,7 +110,6 @@ requirement_profile:
           refusal_points:
             - { can_refuse: scope, min_constructability: COMMIT_GATED }
           min_evidence_efficacy: EVIDENCE_TO_DECISION
-          effect_verifier: [human]
     - id: RQ-08
       type: functional
       statement: Access to collected records is least-privilege and reviewed.
@@ -127,7 +121,6 @@ requirement_profile:
             - { can_refuse: identity, min_constructability: COMMIT_GATED }
             - { can_refuse: mandate, min_constructability: COMMIT_GATED }
           min_evidence_efficacy: EVIDENCE_TO_DECISION
-          effect_verifier: [human]
     - id: RQ-09
       type: functional
       statement: Collected records cannot be altered after collection.
@@ -138,7 +131,6 @@ requirement_profile:
           refusal_points:
             - { can_refuse: scope, min_constructability: NON_CONSTRUCTABLE }
           min_evidence_efficacy: EVIDENCE_ONLY
-          effect_verifier: [human]
     - id: RQ-10
       type: functional
       statement: Events are enriched with service context and current indicators.
@@ -149,7 +141,6 @@ requirement_profile:
           refusal_points:
             - { can_refuse: scope, min_constructability: COMMIT_GATED }
           min_evidence_efficacy: EVIDENCE_ONLY
-          effect_verifier: [human]
     - id: RQ-11
       type: functional
       statement: New indicators are searched for across retained history.
@@ -161,7 +152,6 @@ requirement_profile:
             - { can_refuse: scope, min_constructability: COMMIT_GATED }
           min_evidence_efficacy: EVIDENCE_TO_DECISION
           max_unobserved_interval: PT24H
-          effect_verifier: [human]
     - id: RQ-12
       type: functional
       statement: The service owner is told what a look-back finds.
