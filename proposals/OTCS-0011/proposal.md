@@ -1,7 +1,7 @@
 # OTCS-0011 — Evidence efficacy: what a record can cause, and what cryptography does not establish
 
 **Class:** `model_revision` · **Phase:** DRAFT · **Clock start:** 2026-08-11
-**Clock:** 45–90 days (`GOVERNANCE.md` §3, changing the shared vocabulary) — **earliest ratification 2026-09-25**
+**Clock:** 45–90 days (`GOVERNANCE.md` §3, changing the shared vocabulary) — **earliest decision: see `proposals/CALENDAR.md`; after OTCS-0003, alongside OTCS-0010, and not before 28 days after this proposal's deliberation window opens (OTCS-0013)**
 
 ## The gap
 
@@ -74,7 +74,7 @@ One optional field; no existing record becomes invalid. `ktp-demo` would gain `E
 
 ## Sequencing
 
-Ratifiable from 2026-09-25, after OTCS-0003 (09-10) and alongside OTCS-0010 (09-24). Like 0010, this field belongs with the control-function layer under 0003's three-layer split; if 0003 is rejected, it stands unmodified against the current vector. 0010 and 0011 are independent — neither depends on the other's outcome.
+Decided after OTCS-0003 (no earlier than 2026-10-18) and alongside OTCS-0010, and not before 28 days after its own deliberation window opens (OTCS-0013). Like 0010, this field belongs with the control-function layer under 0003's three-layer split; if 0003 is rejected, it stands unmodified against the current vector. 0010 and 0011 are independent — neither depends on the other's outcome.
 
 ## Provenance
 
