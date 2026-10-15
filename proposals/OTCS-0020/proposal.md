@@ -1,6 +1,6 @@
 # OTCS-0020 — Observation classes: how an observation came to exist, and when it may count
 
-**Class:** `model_revision` · **Phase:** DRAFT · **Clock start:** 2026-10-10
+**Class:** `model_revision` · **Phase:** DRAFT · **Clock start:** 2026-10-14
 **Clock:** 45–90 days (`GOVERNANCE.md` §3, changing the shared vocabulary) — **earliest decision: see `proposals/CALENDAR.md`, and no earlier than OTCS-0017** (this proposal adds to its fields)
 
 ## The gap
@@ -21,10 +21,10 @@ Every observation that a refusal point reads belongs to exactly one class. The c
 | Class | How it came to exist | Example |
 |---|---|---|
 | `direct` | One instrument sampled a quantity at one place | A path probe, a sensor, a camera frame |
-| `enumerated` | Computed over a counted set inside a boundary | A service health figure, a count of open findings, an entity graph |
+| `counted` | Computed over a counted set inside a boundary | A service health figure, a count of open findings, an entity graph |
 | `adjudicated` | An authority recorded it | A safety declaration, a consent record, a legal hold, a no-action ruling |
 | `published` | A third party published it, and it was read | A weather service figure, an outside threat feed |
-| `derived_state` | Read from a calendar, a configuration or a table | A schedule, a maintenance window, a configuration flag |
+| `configured` | Set by an operator, in a calendar, a configuration or a table | A schedule, a maintenance window, a configuration flag |
 
 ### 2. The envelope each class needs
 
@@ -32,14 +32,14 @@ An observation counts only with its envelope. The envelope is what lets a reader
 
 ```yaml
 observation:
-  observation_class: direct | enumerated | adjudicated | published | derived_state
+  observation_class: direct | counted | adjudicated | published | configured
   envelope:
     # direct
     instrument:
     location:
     modality:
     calibrated_at:
-    # enumerated
+    # counted
     membership_rule:          # what is in the counted set
     boundary:                 # where the set ends
     accumulation_window:      # the period the count covers
@@ -52,7 +52,7 @@ observation:
     series:
     vintage:                  # which release of the series
     publication_lag:          # the delay between the period covered and publication
-    # derived_state
+    # configured
     as_of:
     validity_horizon:         # after this, the state is unknown
 ```
@@ -62,9 +62,9 @@ Only the fields for the observation's own class are set. The envelope reuses the
 ### 3. The rules
 
 1. **No envelope, no constraint.** An observation without its class and envelope cannot permit or constrain consequential work. It may still be shown to a person as context.
-2. **Unknown is not zero.** An empty enumerated set is unknown, not zero. A missing adjudicated record is unknown, not "no ruling". Any observation past its window or validity horizon is unknown.
+2. **Unknown is not zero.** An empty counted set is unknown, not zero. A missing adjudicated record is unknown, not "no ruling". Any observation past its window or validity horizon is unknown.
 3. **What unknown does is the work type's choice, not the observation's.** An unknown reading goes to the refusal point's `uncertainty_behavior` (OTCS-0010). This proposal adds no second rule for it.
-4. **A computation does not change the class.** A figure computed from `direct` samples is `enumerated`, with its membership rule. No `direct` or `enumerated` observation becomes `adjudicated`, however many of them agree. A count is never a declaration.
+4. **A computation does not change the class.** A figure computed from `direct` samples is `counted`, with its membership rule. No `direct` or `counted` observation becomes `adjudicated`, however many of them agree. A count is never a declaration.
 5. **The deployment is never its own adjudicator.** The issuing party of an `adjudicated` observation is never the configurator or executor of the work that observation would permit or constrain (OTCS-0017 §4). When the issuing party shares the failure domain of the work, the observation is self-attested (`schemas/wire/signal.schema.json`) and is not `adjudicated`.
 6. **Published is never restated as ours.** A `published` observation keeps its publisher, series and vintage everywhere it is used, including inside a computed figure. A deploying party that republishes it does not become its publisher.
 7. **Observing is not controlling.** Work whose ceiling is `evidence_only` produces observations. It does not gain any ceiling above that by producing them.
@@ -81,7 +81,7 @@ refusal_point:
     - about: physical safety of an area
       accepts: [adjudicated]
     - about: area occupancy
-      accepts: [direct, enumerated]
+      accepts: [direct, counted]
 ```
 
 A refusal point that accepts only `adjudicated` for a question cannot be satisfied by a count, however recent.
@@ -119,6 +119,7 @@ None. No manifest, record or wire schema changes.
 
 ## Expressly deferred
 
+- A physical or public-safety observation domain. The area-safety, occupancy and weather examples above fall outside OTCS-0017's three observation domains (security, network, application). Work that observes the physical world needs a domain of its own, with its standards named (OTCS-0017 §8). The classes in this proposal apply in any domain; the domain list stays OTCS-0017's.
 - Placing `observation_class` and `envelope` on the wire. `interfaces/observer.md` is EXPERIMENTAL and says adding required semantics there is a proposal; its formalization trigger is evidence that observer-only projects need contract terms signal providers do not. Whether that trigger has fired is a ruling for that interface, not this proposal.
 
 ## Alternatives considered
@@ -126,7 +127,7 @@ None. No manifest, record or wire schema changes.
 - **A confidence number per observation.** Rejected: the wire signal already has `confidence`, and a number cannot say whether a figure is a count or a declaration. A count at 0.99 confidence is still a count.
 - **Fold the classes into the evidence states.** Rejected: the evidence states grade registry claims about projects. Mixing the two would let a project's documentation grade a live observation.
 - **Let enough `direct` observations add up to `adjudicated`.** Rejected: agreement among sensors is still a measurement, not a declaration by an authority. Rule 4.
-- **Treat an empty set as zero once a feed has a record of reporting.** Rejected for now: a feed can stop reporting into an empty result. An `enumerated` observation that wants to report a true zero states its membership rule and window, and the reader judges the coverage.
+- **Treat an empty set as zero once a feed has a record of reporting.** Rejected for now: a feed can stop reporting into an empty result. A `counted` observation that wants to report a true zero states its membership rule and window, and the reader judges the coverage.
 
 ## Strongest objection (written by the author)
 
