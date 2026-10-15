@@ -181,19 +181,22 @@ Rules:
 - **Not work types.** "Assistant", "copilot", "automation", "AI platform", "agentic workforce", "digital worker", "AI teammate" and "agent persona" are names for offers, not kinds of work. An offer under such a name is described as one or more work types.
 - **Basis.** A new work type cites at least two independent descriptions that name no product (`basis: independent_descriptions`). With one, it is recorded as `basis: single_description`, and the record says so.
 - **Adding and changing.** New work types are added in batches, each batch a proposal of this class (`model_revision`, changing the shared vocabulary). A faster class for single entries may be proposed later, as a change to `GOVERNANCE.md`. Changing a field, the grammar or the object classes is always a `model_revision`.
-- **Versions.** Each ratified batch is a version of Work Types, named by the proposal that ratified it. This proposal is version OTCS-0017. Every instance declaration and every deployment record names the version of Work Types it was described against.
+- **Versions.** Each ratified batch is a version of Work Types, and a version has two names that travel together. `work_types_version` is an integer: 1 at the first ratified batch, and one higher with each proposal that ratifies another. `ratified_by` is the id of that proposal. `WORK-TYPES.md` keeps the table of the two. This proposal, if ratified, is `work_types_version: 1`, ratified by OTCS-0017. Every instance declaration and every deployment record carries the `work_types_version` it was described against; the table says which proposal that is. OTCS-0019 §2 names the same field on a requirement profile, and a join profile names it where an edge names a work type; this is its definition.
 
 ### 7. Instance declarations and deployment records
 
 An **instance declaration** is a registered project's own statement of the work types its offer performs. In the registry, each declared work type carries:
 
 - the status **`offered`**: the project performs this kind of work as sold or documented;
+- the `work_types_version` it was described against (§6);
 - the §5 fields marked for an instance declaration, as the project chooses to state them. A field the project does not state is not stated;
 - an evidence maturity, as for any claim (`EVIDENCE-MODEL.md`). A project's statement of its own refusal points is `SELF_ASSERTED` until evidence of a higher state is cited.
 
 A project's own declaration is its own words. When anyone other than the project attributes a work type to it, the states in `CHARTER.md` §11 apply.
 
 **A deployment record is outside the registry.** A registry record describes a project, not a running authorization instance (OTCS-0010, *What this deliberately does NOT add*). A deployment record is kept by the deploying party. It is where the §5 fields marked for it live: the environment each point sits in, the rung and posture in force, and which fan-out bound applies. It carries two further statuses:
+
+A deployment record carries the `work_types_version` it was described against (§6), as an instance declaration does.
 
 - **`configured`**: set up in a deployment.
 - **`authorized`**: granted by the deploying party's governance. An instance is `authorized` only when every required role is assigned: the configurator, effect verifier and acceptor are named people, or teams of people, and the objects in scope are named. Until then it is at most `configured`.
@@ -350,6 +353,7 @@ None. No manifest changes in this proposal. Instance declarations need the separ
 
 1. **If ratified:**
    - create `schemas/work-type.schema.json`, `WORK-TYPES.md` and `work-types/`, with the entry `otcs-work:objective.pursue` exactly as in §9;
+   - put `work_types_version` (integer, minimum 1) and `ratified_by` in the schema, and start the version table in `WORK-TYPES.md` at 1, ratified by OTCS-0017;
    - add a coherence check that `WORK-TYPES.md` matches §§1–9 of the ratified text;
    - add the dispositions table in §10 to `WORK-TYPES.md`.
 2. **If rejected:** nothing to remove.
@@ -365,6 +369,8 @@ None. No manifest changes in this proposal. Instance declarations need the separ
 5. **Types.** `maximum_unobserved_interval` is a duration and `valid_until` a point in time; §9 and the eighteen parked drafts bounded the one by the other. They now say "the time remaining on" the grant's `valid_until`. §9's `valid_until: zero` for a relational consequence is replaced: there is nothing to set, because the work never completes that act (rule 6).
 
 **Amendment 2** (NON_SUBSTANTIVE under OTCS-0013 §3.1; pinned as v2 at its merge, 2026-10-14; the clock did not restart). Adds no field and changes no meaning. Three changes: the licence of this proposal, its drafts and its future schema is stated in Provenance, under the two categories in `DCO.md` §2; the D3FEND source points at the ontology releases page that lists 1.6.0 first; §10 records the licence of each standard it names, and says where that licence is not yet established.
+
+**Amendment 3** (SUBSTANTIVE under OTCS-0013 §3.1; restarts the clock at its merge). One change: §6 defines the version identifier that the text already required every instance declaration and deployment record to name. `work_types_version` is an integer, 1 at the first ratified batch and one higher per ratifying proposal; `ratified_by` is that proposal's id; `WORK-TYPES.md` keeps the table. §7 names the field on both records. OTCS-0019 §2 and the join-profile draft already use the name; the schema and the table are added to the ratification cleanup. A new field, so SUBSTANTIVE.
 
 ## Provenance
 
