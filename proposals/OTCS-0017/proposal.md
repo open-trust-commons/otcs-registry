@@ -364,7 +364,7 @@ None. No manifest changes in this proposal. Instance declarations need the separ
 4. **The effect verifier is `human`.** §4 said every verifier set includes `human` and that a machine never holds the role. The field is now the scalar `human`; machine checks are inputs to the confirmation, not holders of the role. §9's entry already read this way.
 5. **Types.** `maximum_unobserved_interval` is a duration and `valid_until` a point in time; §9 and the eighteen parked drafts bounded the one by the other. They now say "the time remaining on" the grant's `valid_until`. §9's `valid_until: zero` for a relational consequence is replaced: there is nothing to set, because the work never completes that act (rule 6).
 
-**Amendment 2** (NON_SUBSTANTIVE under OTCS-0013 §3.1; no restart of the clock). Adds no field and changes no meaning. Three changes: the licence of this proposal, its drafts and its future schema is stated in Provenance, under the two categories in `DCO.md` §2; the D3FEND source points at the ontology releases page that lists 1.6.0 first; §10 records the licence of each standard it names, and says where that licence is not yet established.
+**Amendment 2** (NON_SUBSTANTIVE under OTCS-0013 §3.1; pinned as v2 at its merge, 2026-10-14; the clock did not restart). Adds no field and changes no meaning. Three changes: the licence of this proposal, its drafts and its future schema is stated in Provenance, under the two categories in `DCO.md` §2; the D3FEND source points at the ontology releases page that lists 1.6.0 first; §10 records the licence of each standard it names, and says where that licence is not yet established.
 
 ## Provenance
 
