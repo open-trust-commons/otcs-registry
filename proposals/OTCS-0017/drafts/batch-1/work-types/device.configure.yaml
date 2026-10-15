@@ -1,0 +1,37 @@
+# DRAFT — not ratified. OTCS-0017 governs; this file is not part of its pinned text.
+# Batch 1 material (OTCS-0017 §6). Values are the author's proposal for deliberation and may change.
+# Source: the Mission Join pack (the author's own work, invented organization), AI-assisted; see ../README.md.
+work_type:
+  id: otcs-work:device.configure
+  label: configure a device
+  maps_to: [modify_policy, write]
+  roles:
+    configurator: [human]
+    executor: [human, ai_agent]
+    effect_verifier: human
+    acceptor: [human]
+  mandate:
+    required_before_fan_out: false
+    fan_out: bounded
+  consequence_ceiling: mutate
+  composed_of: []
+  refusal_points:
+    - can_refuse: [scope]
+      constructability: COMMIT_GATED
+    - can_refuse: [consequence]
+      constructability: COMMIT_GATED
+    - can_refuse: [identity]
+      constructability: COMMIT_GATED
+  requires:
+    authority: [role, organizational_policy]
+    environment: [downstream_capacity, human_availability, reversibility, system_health]
+    time: [before_action, commit_point, after_action, repair_window]
+    maximum_unobserved_interval: no longer than the time remaining on the change window granted in authority_validity.valid_until
+    evidence_efficacy: EVIDENCE_TO_DECISION   # at least
+    decision_outputs: [ALLOW, SHAPE, DEAUTOMATE, VETO]
+  basis: independent_descriptions   # 2 recorded in the source pack; citations are attached in the batch proposal
+notes: >
+  OTCS candidate; checked for overlap against the sweep.
+  Requires block from the batch defaults for ceiling mutate, class group physical (G3 Q7).
+crosswalk: >
+  Native points named in the source: device management platform (policy_engine); device identity (identity_fabric).
