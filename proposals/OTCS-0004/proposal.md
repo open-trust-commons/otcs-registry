@@ -1,6 +1,6 @@
 # OTCS-0004 — A registry entry is licensed by its author, not by the contribution licenses
 
-*Class: `model_revision` · Clock: 45–90 days · Earliest decision: set by Amendment 1's pin; see `proposals/CALENDAR.md`*
+*Class: `model_revision` · Clock: 45–90 days · Clock start: 2026-10-15 (restarted by Amendment 1's pin; first published 2026-07-31) · Earliest decision: 2026-11-29; see `proposals/CALENDAR.md`*
 
 ## Provenance
 
@@ -308,7 +308,7 @@ Principles only; the detail is proposed when this phase becomes reachable.
 
 A renewal is not a change (§A3). **The terms of this instrument change only through the applicable proposal process**, together with any grants and new consent that process and §4 require. Any change is recorded in the governance ledger and open to objection. No change may widen the scope in §3.
 
-## Amendment 1 — MERGE-DATE (set at merge), substantive
+## Amendment 1 — 2026-10-15, substantive
 
 **What changed.** The sections of "What this proposal changes" (§§1–7) were replaced, the operating permission instrument was added as Appendix A, and "Impact on existing records", "Alternatives considered" and "On decision — required cleanup" were updated to match. The Provenance, the statement of the defect, and "What this proposal does not do" are unchanged in substance.
 
@@ -316,6 +316,6 @@ A renewal is not a change (§A3). **The terms of this instrument change only thr
 
 **Attribution.** The four declarations and the rules that apply to them (§2), the five consent scopes (§4), the identification permission (§5), the succession rule (§3), and the rule that every operation is either fixed or expressly deferred (§7) are adopted from the contributor's amendment, [`amendment-rights-retention.md`](https://github.com/open-trust-commons/otcs-registry/blob/main/proposals/OTCS-0004/amendment-rights-retention.md) ([#67](https://github.com/open-trust-commons/otcs-registry/pull/67)), with light editing for this document. The holder, the 12-month term, the renewal and lapse rules (§3), and the rule that published material stays outside the lease (§6) are the author's, as stated on #49 on 2026-09-25. The requirement that continuity be designated in advance (§3) answers the contributor's [reply on #49](https://github.com/open-trust-commons/otcs-registry/issues/49#issuecomment-5876247644) of 2026-09-28: that a successor appointment be confirmed by an authority designated in advance, and that the caretaker and their preservation scope be specified before any lapse. The mechanism in Appendix A is the author's. The contributor's review of 2026-09-29 on the pull request led to five changes before merge: the instrument moved into this file so the pin covers it; a renewal carries the same terms, and terms change only by proposal; preservation stays subject to redaction; hashes and witnesses establish a match to a reference snapshot but do not decide between competing histories; and holder activity restores operation only while the permission has not otherwise ended. The contributor's second review of 2026-10-04 led to three more: the reference snapshot is defined when the permission ends without an emergency period and when no ledger head was anchored; the cleanup names the check that binds the created file to Appendix A; and the cleanup's closing sentence matches items 1 and 3. The contributor's third review of 2026-10-12, which confirmed the five points, led to two clarifications: §A5 states that the permission state relevant to a registry operation is its state at the time of that operation, assessed from the instrument and ledger history, not from a stored copy alone; and §A6 states that a caretaker claim made during the emergency period takes effect at day 97 or at an earlier lapse, whichever comes first.
 
-**Class and clock.** Substantive. Under OTCS-0013, applied as the founder's self-binding commitment until it is decided, this amendment is a new pin. The clock restarts at the merge date, and no decision is earlier than 45 days after it. The pin is recorded in the governance ledger as a `VERSION_PUBLISHED` event with `amendment_class: SUBSTANTIVE`.
+**Class and clock.** Substantive. Under OTCS-0013, applied as the founder's self-binding commitment until it is decided, this amendment is a new pin: v2, at its merge on 2026-10-15. The clock restarted that day, and no decision is earlier than 45 days after it, 2026-11-29. The pin is recorded in the governance ledger as a `VERSION_PUBLISHED` event with `amendment_class: SUBSTANTIVE`.
 
 **Review.** As stated on #49: whoever's work an amendment carries reviews it before it merges. This amendment does not merge before the contributor has reviewed it on its pull request.

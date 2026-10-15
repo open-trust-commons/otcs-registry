@@ -16,7 +16,7 @@ describe("clock reproduces the hand calendar from the ledger alone", () => {
     "OTCS-0001": "2026-07-28", // registry_update, 3-day floor — the "clock demonstration"
     "OTCS-0002": "2026-09-09",
     "OTCS-0003": "2026-10-18", // window opened 2026-09-20 + 28 (OTCS-0013 window minimum)
-    "OTCS-0004": "2026-10-10", // window opened 2026-09-12 + 28
+    "OTCS-0004": "2026-11-29", // v2 pin 2026-10-15, SUBSTANTIVE (Amendment 1) + 45 class floor; the window minimum 2026-09-12 + 28 elapsed 2026-10-10
     "OTCS-0005": "2026-11-02", // window opened 2026-10-05 + 28 (OTCS-0013 window minimum)
     "OTCS-0006": "2026-09-14",
     "OTCS-0007": "2026-09-17",

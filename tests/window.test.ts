@@ -4,7 +4,7 @@ import { join } from "node:path";
 import { tmpdir } from "node:os";
 import { buildWindow, dueWindows, windowTitle } from "../src/window.js";
 
-const H = "5cca3b8c473d7da4d9b4aba8327aa4acbc96b145a4db256512a1c268f0beaa00";
+const H = "2c3f9a4ca830e65b27c6e92563b6d8bd4c9cd60c2e861bf7ad5e914504e79c1e"; // v2, Amendment 1's pin (ev-000078)
 
 describe("the window for OTCS-0004 is generated from the record", () => {
   const w = buildWindow("OTCS-0004");
@@ -13,9 +13,9 @@ describe("the window for OTCS-0004 is generated from the record", () => {
     expect(windowTitle("OTCS-0004", "2026-09-12")).toBe(w.title);
   });
   it("names the pin, the computed date, and where objections land", () => {
-    expect(w.pin).toEqual({ version: "v1", hash: H });
+    expect(w.pin).toEqual({ version: "v2", hash: H });
     expect(w.body).toContain(`artifact hash \`${H}\``);
-    expect(w.body).toContain("**Earliest legal decision:** 2026-10-10");
+    expect(w.body).toContain("**Earliest legal decision:** 2026-11-29");
     expect(w.body).toContain("### Where objections land");
     expect(w.body).toContain("Nothing in it was typed by a person.");
   });
