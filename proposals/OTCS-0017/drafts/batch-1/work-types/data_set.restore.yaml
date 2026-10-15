@@ -1,0 +1,38 @@
+# DRAFT — not ratified. OTCS-0017 governs; this file is not part of its pinned text.
+# Batch 1 material (OTCS-0017 §6). Values are the author's proposal for deliberation and may change.
+# Source: the Mission Join pack (the author's own work, invented organization), AI-assisted; see ../README.md.
+work_type:
+  id: otcs-work:data_set.restore
+  label: restore a data set
+  maps_to: [write]
+  roles:
+    configurator: [human]
+    executor: [human, ai_agent]
+    effect_verifier: human
+    acceptor: [human]
+  mandate:
+    required_before_fan_out: false
+    fan_out: bounded
+  consequence_ceiling: mutate
+  composed_of: []
+  refusal_points:
+    - can_refuse: [consequence]
+      constructability: COMMIT_GATED
+    - can_refuse: [scope]
+      constructability: COMMIT_GATED
+    - can_refuse: [path]
+      constructability: COMMIT_GATED
+  requires:
+    authority: [role, organizational_policy]
+    environment: [data_quality, downstream_capacity, legal_context, reversibility, system_health]
+    time: [before_action, commit_point, after_action, repair_window]
+    maximum_unobserved_interval: no longer than the time remaining on the change window granted in authority_validity.valid_until
+    evidence_efficacy: EVIDENCE_TO_DECISION   # at least
+    decision_outputs: [ALLOW, SHAPE, DEAUTOMATE, VETO]
+  basis: independent_descriptions   # 3 recorded in the source pack; citations are attached in the batch proposal
+notes: >
+  OTCS candidate; checked for overlap against the sweep.
+  Requires block from the batch defaults for ceiling mutate, class group data (G3 Q7).
+  Refusal-point qualifiers from the source: consequence: production overwrite.
+crosswalk: >
+  Native points named in the source: restore approval (human_approver); backup vault (policy_engine).

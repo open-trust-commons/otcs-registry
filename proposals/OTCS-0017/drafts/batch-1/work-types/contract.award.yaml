@@ -1,0 +1,35 @@
+# DRAFT — not ratified. OTCS-0017 governs; this file is not part of its pinned text.
+# Batch 1 material (OTCS-0017 §6). Values are the author's proposal for deliberation and may change.
+# Source: the Mission Join pack (the author's own work, invented organization), AI-assisted; see ../README.md.
+work_type:
+  id: otcs-work:contract.award
+  label: award a contract to a supplier
+  maps_to: [purchase]
+  roles:
+    configurator: [human]
+    executor: [human]
+    effect_verifier: human
+    acceptor: [human]
+  mandate:
+    required_before_fan_out: true
+    fan_out: none
+  consequence_ceiling: mutate
+  composed_of: []
+  refusal_points:
+    - can_refuse: [consequence]
+      constructability: COMMIT_GATED
+    - can_refuse: [mandate]
+      constructability: COMMIT_GATED
+  requires:
+    authority: [contract, mandate, organizational_policy, role]
+    environment: [downstream_capacity, financial_exposure, legal_context, reversibility, system_health]
+    time: [before_action, commit_point, after_action, repair_window]
+    maximum_unobserved_interval: no longer than the time remaining on the mandate's authority_validity.valid_until
+    evidence_efficacy: EVIDENCE_TO_DECISION   # at least
+    decision_outputs: [ALLOW, SHAPE, DEAUTOMATE, VETO]
+  basis: independent_descriptions   # 6 recorded in the source pack; citations are attached in the batch proposal
+notes: >
+  Carried forward; checked for overlap against the sweep.
+  Requires block from the batch defaults for ceiling mutate, class group finance (G3 Q7).
+crosswalk: >
+  Native points named in the source: procurement authority (human_approver); delegated spending limit (policy_engine).

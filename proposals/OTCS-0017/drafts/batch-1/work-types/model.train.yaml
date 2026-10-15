@@ -1,0 +1,39 @@
+# DRAFT — not ratified. OTCS-0017 governs; this file is not part of its pinned text.
+# Batch 1 material (OTCS-0017 §6). Values are the author's proposal for deliberation and may change.
+# Source: the Mission Join pack (the author's own work, invented organization), AI-assisted; see ../README.md.
+work_type:
+  id: otcs-work:model.train
+  label: train a model
+  maps_to: [execute, write]
+  roles:
+    configurator: [human]
+    executor: [ai_agent, human, service]
+    effect_verifier: human
+    acceptor: [human]
+  mandate:
+    required_before_fan_out: true
+    fan_out: bounded
+  consequence_ceiling: mutate
+  composed_of: []
+  refusal_points:
+    - can_refuse: [scope]
+      constructability: COMMIT_GATED
+    - can_refuse: [continuation]
+      constructability: COMMIT_GATED
+    - can_refuse: [mandate]
+      constructability: COMMIT_GATED
+    - can_refuse: [consequence]
+      constructability: COMMIT_GATED
+  requires:
+    authority: [mandate, organizational_policy, role]
+    environment: [data_quality, downstream_capacity, legal_context, reversibility, system_health]
+    time: [before_action, commit_point, after_action, repair_window]
+    maximum_unobserved_interval: no longer than the time remaining on the change window granted in authority_validity.valid_until
+    evidence_efficacy: EVIDENCE_TO_DECISION   # at least
+    decision_outputs: [ALLOW, SHAPE, DEAUTOMATE, VETO]
+  basis: independent_descriptions   # 2 recorded in the source pack; citations are attached in the batch proposal
+notes: >
+  OTCS candidate; checked for overlap against the sweep.
+  Requires block from the batch defaults for ceiling mutate, class group data (G3 Q7).
+crosswalk: >
+  Native points named in the source: data rights check (policy_engine); compute budget (policy_engine); model owner (human_approver).

@@ -1,0 +1,36 @@
+# DRAFT — not ratified. OTCS-0017 governs; this file is not part of its pinned text.
+# Batch 1 material (OTCS-0017 §6). Values are the author's proposal for deliberation and may change.
+# Source: the Mission Join pack (the author's own work, invented organization), AI-assisted; see ../README.md.
+work_type:
+  id: otcs-work:person.verify
+  label: verify a person
+  maps_to: [read]
+  roles:
+    configurator: [human]
+    executor: [human, ai_agent]
+    effect_verifier: human
+    acceptor: [human]
+  mandate:
+    required_before_fan_out: true
+    fan_out: none
+  consequence_ceiling: recommend
+  composed_of: []
+  refusal_points:
+    - can_refuse: [identity]
+      constructability: COMMIT_GATED
+    - can_refuse: [consequence]
+      constructability: COMMIT_GATED
+  requires:
+    authority: [mandate, role]
+    environment: [identity_confidence, reversibility, human_availability, legal_context]
+    time: [before_action, after_action]
+    maximum_unobserved_interval: no longer than the time remaining on the mandate's authority_validity.valid_until
+    evidence_efficacy: EVIDENCE_TO_DECISION   # at least
+    decision_outputs: [ALLOW, SHAPE, DEAUTOMATE, VETO]
+  basis: independent_descriptions   # 3 recorded in the source pack; citations are attached in the batch proposal
+notes: >
+  OTCS candidate; checked for overlap against the sweep.
+  Requires block from the batch defaults for ceiling recommend, class group identity (G3 Q7).
+  Refusal-point qualifiers from the source: consequence: vetting result.
+crosswalk: >
+  Native points named in the source: identity document check (identity_fabric); government vetting agency (human_approver).
