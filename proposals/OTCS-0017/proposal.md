@@ -1,6 +1,6 @@
 # OTCS-0017 — Work Types: kinds of work, and what must be able to refuse them
 
-**Class:** `model_revision` · **Phase:** DRAFT · **Clock start:** 2026-10-14 (restarted by Amendment 1; first published 2026-10-08)
+**Class:** `model_revision` · **Phase:** DRAFT · **Clock start:** 2026-10-14 (restarted by Amendments 1 and 3; first published 2026-10-08)
 **Clock:** 45–90 days (`GOVERNANCE.md` §3, changing the shared vocabulary) — **earliest decision: see `proposals/CALENDAR.md`; the class floor 2026-11-28, not before 28 days after the deliberation window opens (OTCS-0013), and no earlier than OTCS-0010 and OTCS-0011** (this proposal uses their fields)
 
 ## The gap
@@ -370,7 +370,7 @@ None. No manifest changes in this proposal. Instance declarations need the separ
 
 **Amendment 2** (NON_SUBSTANTIVE under OTCS-0013 §3.1; pinned as v2 at its merge, 2026-10-14; the clock did not restart). Adds no field and changes no meaning. Three changes: the licence of this proposal, its drafts and its future schema is stated in Provenance, under the two categories in `DCO.md` §2; the D3FEND source points at the ontology releases page that lists 1.6.0 first; §10 records the licence of each standard it names, and says where that licence is not yet established.
 
-**Amendment 3** (SUBSTANTIVE under OTCS-0013 §3.1; restarts the clock at its merge). One change: §6 defines the version identifier that the text already required every instance declaration and deployment record to name. `work_types_version` is an integer, 1 at the first ratified batch and one higher per ratifying proposal; `ratified_by` is that proposal's id; `WORK-TYPES.md` keeps the table. §7 names the field on both records. OTCS-0019 §2 and the join-profile draft already use the name; the schema and the table are added to the ratification cleanup. A new field, so SUBSTANTIVE.
+**Amendment 3** (SUBSTANTIVE under OTCS-0013 §3.1; pinned as v3 at its merge, 2026-10-14, which restarted the clock). One change: §6 defines the version identifier that the text already required every instance declaration and deployment record to name. `work_types_version` is an integer, 1 at the first ratified batch and one higher per ratifying proposal; `ratified_by` is that proposal's id; `WORK-TYPES.md` keeps the table. §7 names the field on both records. OTCS-0019 §2 and the join-profile draft already use the name; the schema and the table are added to the ratification cleanup. A new field, so SUBSTANTIVE.
 
 ## Provenance
 
