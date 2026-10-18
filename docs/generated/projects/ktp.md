@@ -34,7 +34,7 @@ shared vocabulary — a projection the owner may dispute without losing anything
 
 - **actor** — `ai_agent`, `service`, `delegated_subagent`, `human`
 - **authority** — `mandate`, `capability`, `delegation`, `situational_approval`
-- **action** — _not addressed_
+- **action** — `execute`, `transfer`, `delegate`, `commit`, `revoke`
 - **environment** — `system_health`, `data_quality`, `identity_confidence`, `dependency_health`, `threat_pressure`, `reversibility`, `financial_exposure`, `human_availability`, `uncertainty`, `cumulative_trajectory`, `downstream_capacity`
 - **function** — _not addressed_
 - **time** — `before_action`, `initiation`, `during_action`, `across_trajectory`, `repair_window`
