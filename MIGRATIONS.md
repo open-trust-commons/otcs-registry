@@ -24,7 +24,7 @@ Two of those fields do the real work:
 
 ## 2. Entries
 
-### v0.2.0 — the coordinate vector split into three layers *(pending OTCS-0003's decision; published here at trial so the note exists before the tag)*
+### v0.2.0 — the coordinate vector split into three layers *(OTCS-0003 ratified 2026-10-18; published here at trial so the note existed before the tag)*
 
 **Affected:** `schemas/project-manifest.schema.json`; every record declaring `coordinates.verbs`, `coordinates.custom_verbs`, or `coordinates.functions`; the function name `sense`
 
@@ -37,7 +37,9 @@ Two of those fields do the real work:
 
 **Verification:** `npm run validate` — no `deprecated by OTCS-0003` warning on your record. Then `npm run generate`: `computed/complementarity.json` and `computed/matrix.json` must change **only** in their input `sha256` stamps. That is the proof that a rename changed no assertion; the trial reproduced it on all eight records on 2026-09-13.
 
-**Backout:** reverse the three steps. The old paths validate (with a warning) until ratification + 6 months, error until + 12, and are removed at + 12; the dates are fixed by 0003's decision record.
+**Backout:** reverse the three steps. The old paths validate (with a warning) until **2027-04-18** (ratification 2026-10-18 + 6 months), error until **2027-10-18** (+ 12), and are removed at 2027-10-18; the dates are fixed by 0003's decision record.
+
+**`otcs_version` on migrated records:** the schema accepts `"0.1"` and `"0.2"`. A record migrated to the three-layer shape may keep `"0.1"` until `v0.2.0` is tagged; from that tag, new and migrated records declare `"0.2"`. Under VERSIONING.md a record means what its coordinates meant under the version it declares, and the values did not change.
 
 **Deprecation window — the four extras GOVERNANCE.md §11 requires are in the proposal:** migration notes (this entry), impact analysis (seven records, no assertion changes), compatibility mapping (old term → new, in `proposals/OTCS-0003/proposal.md`), and the 12-month window above.
 

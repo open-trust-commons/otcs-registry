@@ -1,0 +1,11 @@
+proposal_id: OTCS-0003
+ballot_type: A_READINESS
+voter: chris-perkins-nmcitra
+affiliation: nmcitra (founder; author of KTP, the vocabulary's custodian; maintainer of three registered records)
+choice: READY
+rationale: The trial the proposal set for itself ran on 2026-09-13 — eight records migrated, validate and tests green, computed outputs changed only in input stamps, Bitcoin re-expressed with nothing weakened and one function gained, a heavy-Layer-3 case mapped, neutrality re-run. The custody seam is named and answered (objection-001). The four open questions have recorded answers. Nothing needed to decide is missing.
+conflicts_disclosed:
+  - author of the proposal
+  - author of KTP, custodian of the vocabulary this proposal relocates (CHARTER.md §2)
+  - maintainer of three of the seven affected records
+date: "2026-10-18"
