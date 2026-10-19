@@ -22,8 +22,8 @@ describe("clock reproduces the hand calendar from the ledger alone", () => {
     "OTCS-0007": "2026-09-17",
     "OTCS-0008": "2026-09-17",
     "OTCS-0009": "2026-09-18",
-    "OTCS-0010": "2026-10-20", // v1 pin 2026-10-13, NON_SUBSTANTIVE + 7 (OTCS-0013 contest hold); the floor passed 2026-09-24
-    "OTCS-0011": "2026-10-20", // v1 pin 2026-10-13, NON_SUBSTANTIVE + 7; the floor passed 2026-09-25
+    "OTCS-0010": "2026-11-15", // window opened 2026-10-18 + 28 (OTCS-0013 window minimum); the floor passed 2026-09-24, the pin's contest hold 2026-10-20
+    "OTCS-0011": "2026-11-15", // window opened 2026-10-18 + 28, alongside 0010; the floor passed 2026-09-25
   };
   const table = new Map(clockTable().map((c) => [c.proposal_id, c]));
   for (const [id, date] of Object.entries(expected)) {
