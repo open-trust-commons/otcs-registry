@@ -30,13 +30,19 @@ requirement_profile:
       intent:                     # what must be true
       acceptance:                 # how the organization will judge the use case met
       requirements: []            # requirement identifiers
+  capabilities:                   # optional: the organization's own grouping of work, one hop between requirement and work type
+    - id:                         # the organization's own identifier
+      title:
+      work_types: []              # otcs-work identifiers that serve this capability
   requirements:
     - id:                         # the organization's own identifier
       type: functional | non_functional
       statement:
       acceptance:                 # how the organization will judge it met
+      measured_by: []             # optional: the organization's own measures that evidence acceptance; never the judge of it
       needs:                      # what the requirement demands of the work
-        - work_type:              # an otcs-work identifier
+        - work_type:              # an otcs-work identifier, or
+          capability:             # a capability identifier from above; the need then applies to every work type the capability lists
           max_consequence_ceiling:      # the most the work may do for this requirement
           refusal_points:               # what must be able to refuse it, and how strongly
             - can_refuse:
@@ -50,6 +56,9 @@ requirement_profile:
 - **A need states no effect verifier.** OTCS-0017 §4 fixes the effect verifier as `human` for every work type; there is nothing for a need to add.
 - **A requirement may need no work type.** Some requirements are about people, contracts or documents. They stay in the profile with an empty `needs`, and that is a complete entry.
 - **One requirement can need several work types,** and one work type can serve several requirements.
+- **Line of sight is derived, never asserted.** The path from a use case to the work that serves it runs use case → requirement → (capability →) work type, and is computed from the entries above. No entry points from a use case straight at a work type; a reader that finds one treats it as not stated.
+- **A work type that serves no capability is a finding.** Where a profile declares `capabilities`, every work type named in a `needs` entry appears under at least one capability; one that does not is listed by the reading as unserved, not hidden.
+- **No measure, no "met".** A use case or requirement whose `acceptance` is absent, or whose `measured_by` names nothing, reads as unknown when its state is asked for, never as met. A measure is evidence for the organization's own judgment; it never makes the judgment (OTCS-0017 §4).
 
 ### 3. Reading a profile against an offer
 
@@ -135,6 +144,8 @@ None. No manifest or record changes.
 1. **`effect_verifier` leaves the need shape.** OTCS-0017 §4 now fixes the effect verifier as the scalar `human`; a list on a need had nothing to add and implied a machine could be in it. Removed from §2 and from the worked example.
 2. **Silence is `not stated`.** §3 says an offer is `contradicted` only by what it declares, never by what it omits, and that a profile is read against an instance declaration, not a deployment record.
 3. **A reading carries the evidence state** of what it read, so a self-asserted rung is not read as a tested one.
+
+**Amendment 2** (SUBSTANTIVE under OTCS-0013 §3.1; restarts the clock at its merge). Adds one optional hop and three rules to §2. `capabilities` is the organization's own grouping of work between a requirement and the work types that serve it, and a need may name a capability in place of a work type. Line of sight from a use case to work is derived from the entries and never asserted by a direct entry; a work type that serves no declared capability is a finding the reading lists; a use case or requirement with no acceptance measure reads as unknown, never met, and a measure is evidence for the organization's judgment and never the judge (OTCS-0017 §4). `measured_by` is the optional field that carries the measures. New fields, so SUBSTANTIVE. Generalized from a second operating model of the author's, with every organization-specific term removed.
 
 ## Provenance
 
