@@ -98,8 +98,10 @@ The distinction is easy to blur and expensive to blur, which is why the tooling 
 A daily workflow does the part that needs no identity:
 
 - Upgrades pending OpenTimestamps proofs — **this is the step that turns a calendar promise into a Bitcoin block attestation**, hours after submission
-- Re-verifies and promotes `ANCHOR_SUBMITTED` to `ANCHOR_CONFIRMED`
-- Commits newly confirmed proofs
+- Re-checks that every manifest still matches its record, and reports what the verifier can see without a Bitcoin node (which is never a confirmation)
+- Commits an upgraded proof to the `anchor-log` data branch; the maintainer carries it to `main` in a reviewed change, as the standing and participation logs are carried
+
+It does not promote anything to `ANCHOR_CONFIRMED`. Confirmation needs a verifying client with a node, or the maintainer, and `main` refuses commits from a workflow (repository rules). A scheduled run that cannot verify has nothing to add to the record; that claim was retired in #66.
 
 **Rekor submission is not automated, and will not be.** It signs the manifest with the maintainer's release key. Putting that key in continuous integration would let CI sign as the maintainer — and a witness whose value is recording *who submitted this* is worth nothing if the answer is *"a workflow anyone with push access can trigger."*
 
