@@ -1,6 +1,6 @@
 # OTCS-0020 — Observation classes: how an observation came to exist, and when it may count
 
-**Class:** `model_revision` · **Phase:** DRAFT · **Clock start:** 2026-10-14
+**Class:** `model_revision` · **Phase:** DRAFT · **Clock start:** 2026-10-27 (restarted by Amendment 1; first published 2026-10-14)
 **Clock:** 45–90 days (`GOVERNANCE.md` §3, changing the shared vocabulary) — **earliest decision: see `proposals/CALENDAR.md`, and no earlier than OTCS-0017** (this proposal adds to its fields)
 
 ## The gap
