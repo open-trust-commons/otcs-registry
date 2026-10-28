@@ -3,9 +3,9 @@
 
 # Roadmap
 
-!!! note "Measured 2026-08-11, not asserted"
+!!! note "Measured 2026-10-18, not asserted"
     Commons stage **C0 — Seed**.
-    **1** qualifying active project(s) of 8 records ·
+    **1** qualifying active project(s) of 9 records ·
     **1** independent steward(s) · 0 project class(es).
     Computed from the live registry by `npm run roadmap:status` against the rules in
     `QUALIFYING-PROJECTS.md`. Records that fail are listed below with the reason.
@@ -21,6 +21,7 @@
 | `ex-watchtower` | record_state=example · owner not verified · no canonical public artifact · no evidence record · owner confirmation older than 12 months|
 | `ktp-demo` | no canonical public artifact|
 | `lifecycle-fixture` | record_state=withdrawn · no canonical public artifact · no evidence record · withdrawn|
+| `otcs-ai-use` | no evidence record|
 
 ### Road to v1.0.0
 

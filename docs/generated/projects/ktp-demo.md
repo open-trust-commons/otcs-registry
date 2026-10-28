@@ -34,7 +34,7 @@ shared vocabulary — a projection the owner may dispute without losing anything
 
 - **actor** — `ai_agent`, `service`
 - **authority** — `capability`, `situational_approval`
-- **action** — _not addressed_
+- **action** — `execute`
 - **environment** — `system_health`, `data_quality`, `identity_confidence`, `dependency_health`, `threat_pressure`, `uncertainty`, `cumulative_trajectory`
 - **function** — _not addressed_
 - **time** — `initiation`, `during_action`, `across_trajectory`

@@ -35,7 +35,7 @@ const semantic: Record<string, (d: Doc) => Finding[]> = {
     // by 0003's decision record, not here.
     for (const [old, now] of [["verbs", "action"], ["custom_verbs", "custom_action"], ["functions", "functions (top level; sense → observe)"]] as const)
       if (coords && old in coords)
-        out.push({ level: "warning", msg: `coordinates.${old} is deprecated by OTCS-0003 — use ${now}; accepted until ratification + 6 months` });
+        out.push({ level: "warning", msg: `coordinates.${old} is deprecated by OTCS-0003 — use ${now}; accepted until 2027-04-18 (OTCS-0003 ratified 2026-10-18, + 6 months)` });
     if (coords?.functions && d.functions)
       out.push({ level: "error", msg: "functions declared at both coordinates.functions (deprecated) and top level — one Layer 3, not two" });
     const oldF = (coords?.functions ?? {}) as Record<string, number>;

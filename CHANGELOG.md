@@ -11,7 +11,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/). Versioning: VERSIONING.
 The set of proposals ratified since v0.1.0. Each entry lands when its decision record does; an entry listed here before its decision is in trial, and says so.
 
 ### Changed
-- **OTCS-0003 (in trial) — the coordinate vector split into three layers.** `coordinates.verbs` → `coordinates.action`; `coordinates.functions` → top-level `functions` with `sense` → `observe` and two new functions, `coordinate` and `learn`; a new optional free-text `governance_intent` that is never enumerated, counted, or compared. Values unchanged; all eight records migrated; computed outputs changed only in their input stamps. Old paths accepted with a warning through the deprecation window in MIGRATIONS.md. `otcs_version` accepts `0.2`.
+- **OTCS-0003 (ratified 2026-10-18) — the coordinate vector split into three layers.** `coordinates.verbs` → `coordinates.action`; `coordinates.functions` → top-level `functions` with `sense` → `observe` and two new functions, `coordinate` and `learn`; a new optional free-text `governance_intent` that is never enumerated, counted, or compared. Values unchanged; all eight records migrated; computed outputs changed only in their input stamps. Old paths accepted with a warning through the deprecation window in MIGRATIONS.md. `otcs_version` accepts `0.2`.
 
 ## [v0.1.0] — 2026-07-29 · First public release
 

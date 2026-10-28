@@ -1,22 +1,28 @@
 # Keeps anchoring current without a human remembering to run it.
 #
-# WHAT THIS CAN DO WITHOUT SECRETS:
-#   - open a new round (writing a manifest needs no key)
-#   - submit to OpenTimestamps (stamping needs no key)
-#   - upgrade pending proofs, which is what turns a calendar promise into a
-#     Bitcoin block attestation hours later
-#   - check manifest integrity and attempt proof verification
-#     (Bitcoin confirmation additionally requires an available validating node)
+# WHAT THIS CAN DO WITHOUT SECRETS OR A NODE:
+#   - upgrade pending OpenTimestamps proofs, which is what turns a calendar
+#     promise into a Bitcoin block attestation hours later
+#   - check manifest integrity (records INTACT) and attempt proof verification
+#   - commit an upgraded proof to the anchor-log data branch
 #
 # WHAT IT DELIBERATELY CANNOT DO:
+#   - write to main. main refuses bot commits (repository rules: pull request,
+#     seven required checks), the same reason the standing and participation
+#     logs live on data branches. Upgraded proofs go to anchor-log; the
+#     maintainer carries them to main in a reviewed change.
+#   - promote a witness to CONFIRMED. `ots verify` needs a Bitcoin node and
+#     the runner has none, so the verifier's observation here is always
+#     "not verified". That observation is reported in the job summary and is
+#     never committed: the index on main is the maintainer's verified record,
+#     and a nightly run that cannot verify has nothing to add to it (#66).
 #   - submit to Rekor. That signs the manifest with the maintainer's release
 #     key, and putting that key in CI would mean CI could sign as the
 #     maintainer. A witness proving "who submitted this" is worth nothing if
 #     the answer is "a workflow anyone with push access can trigger".
 #
-# Proof upgrades are automated; Bitcoin confirmation needs a node. Rekor stays a local
-# act. That asymmetry is the honest one: the witness that records an identity
-# requires the identity's holder.
+# The run fails only when a manifest no longer matches its record, which is
+# the one thing a run without a node can still establish.
 name: anchor
 on:
   schedule:
@@ -48,27 +54,51 @@ jobs:
           done
 
       - name: Re-verify and record state
+        # Without a Bitcoin node the verifier cannot confirm a proof, and it
+        # rewrites index.json to say so. Integrity of the manifests is what this
+        # step establishes; the index rewrite is discarded below, not committed.
         run: npm run anchor:verify
 
       - name: Report
-        run: npm run anchor:status
-
-      - name: Commit updated proofs and verification state
         run: |
-          if git diff --quiet; then
-            echo "no anchor state changed"
+          npm run anchor:status | tee /tmp/anchor-status.txt
+          { echo '```'; cat /tmp/anchor-status.txt; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Commit upgraded proofs to the anchor-log branch
+        # Same pattern as standing.yml and participation.yml, same reason. Only
+        # proof files (*.ots) travel: a proof is a fact from a calendar server,
+        # and an upgrade is deterministic. The verifier's index is left alone.
+        run: |
+          git checkout -- governance-log/anchors/index.json
+          shopt -s nullglob
+          changed=()
+          for f in governance-log/anchors/*.ots; do
+            git diff --quiet -- "$f" || changed+=("$f")
+          done
+          if [ "${#changed[@]}" -eq 0 ]; then
+            echo "no proof changed"
             exit 0
           fi
+          mkdir -p /tmp/proofs
+          for f in "${changed[@]}"; do cp "$f" "/tmp/proofs/$(basename "$f")"; done
+          git checkout -- governance-log/anchors
           git config user.name  "otcs-anchor[bot]"
           git config user.email "otcs-anchor[bot]@users.noreply.github.com"
-          git add governance-log/anchors
-          git commit -m "anchor: update block attestations and verification state
+          if git fetch origin anchor-log 2>/dev/null; then
+            git checkout -B anchor-log FETCH_HEAD
+          else
+            git checkout -B anchor-log
+          fi
+          for f in "${changed[@]}"; do cp "/tmp/proofs/$(basename "$f")" "$f"; done
+          git add governance-log/anchors/*.ots
+          if git diff --cached --quiet; then
+            echo "anchor-log already carries these proofs"
+            exit 0
+          fi
+          git commit -m "anchor: upgraded OpenTimestamps proofs $(date -u +%Y-%m-%d)
 
-          Automated. Upgrades OpenTimestamps proofs whose hashes have since been
-          committed to a Bitcoin block, and attempts verification. A block
-          attestation alone does not certify a verified timestamp.
-
-          Rekor submission is NOT automated: it signs with the maintainer's
-          release key, and a witness that records who submitted something is
-          worthless if CI can be that someone."
-          git push
+          Automated. A proof whose hash has since been committed to a Bitcoin block
+          now carries the block attestation. This branch is where the scheduled
+          run writes; main's copy advances when the maintainer carries it over.
+          A block attestation alone does not make a verified timestamp."
+          git push origin anchor-log

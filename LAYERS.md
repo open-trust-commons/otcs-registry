@@ -1,6 +1,6 @@
 # The three layers
 
-*Version 0.1 · Status: **PROPOSED. Not ratified, not implemented.** See [where this stands](#where-this-stands).*
+*Version 0.1 · Status: **RATIFIED 2026-10-18 by OTCS-0003 (RATIFIED / ALLOW).** Implemented in the schema since the trial of 2026-09-13. See [where this stands](#where-this-stands).*
 
 The vocabulary was carrying two different kinds of question in one list. It took a question about repair to make that visible.
 
@@ -100,14 +100,14 @@ Neither observation requires a score and neither ranks anything. Both simply sta
 
 ## Where this stands
 
-**Not ratified. Not implemented.**
+**Ratified 2026-10-18. Implemented.**
 
 | | |
 |---|---|
-| The schema today | Control function inside the coordinate block, no Layer 2, older function vocabulary |
-| Records today | Validate against that shape, and will until a revision ratifies |
-| The route | **OTCS-0003**, a `model_revision` proposal opened 2026-07-27 |
-| Earliest ratification | **2026-09-10** — a 45-day floor |
+| The schema today | Layer 1 `coordinates` (`action`, not `verbs`); Layer 2 `governance_intent`, optional free text; Layer 3 `functions` at the top level (`observe`, not `sense`; `coordinate` and `learn` available) |
+| Records today | All eight migrated at the trial (2026-09-13) by rename and relocation; computed outputs changed only in their input stamps. Old paths validate with a warning until 2027-04-18, error until 2027-10-18, then are removed ([MIGRATIONS.md](MIGRATIONS.md) v0.2.0) |
+| The route | **OTCS-0003**, a `model_revision` proposal opened 2026-07-27, pinned 2026-09-13, windowed 2026-09-20 ([#51](https://github.com/open-trust-commons/otcs-registry/issues/51)), decided 2026-10-18 ([decision record](proposals/OTCS-0003/decision.json)) |
+| Review | **2027-04-18**, the day deprecation stage 2 begins |
 
 That route is deliberate. This is the first change large enough to genuinely exercise the proposal process, and **a coordinate system altered by its author without process would be a poor advertisement for a registry that asks everyone else to declare and be challenged.**
 

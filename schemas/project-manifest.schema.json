@@ -326,7 +326,7 @@
             ]
           },
           "deprecated": true,
-          "description": "DEPRECATED by OTCS-0003 — use `action`. Accepted with a warning until ratification + 6 months, an error until + 12, then removed."
+          "description": "DEPRECATED by OTCS-0003 — use `action`. Accepted with a warning until 2027-04-18 (OTCS-0003 ratified 2026-10-18, + 6 months), an error until 2027-10-18, then removed."
         },
         "custom_verbs": {
           "type": "array",

@@ -33,7 +33,7 @@ shared vocabulary — a projection the owner may dispute without losing anything
 
 - **actor** — `service`, `ai_agent`
 - **authority** — `credential`, `capability`
-- **action** — _not addressed_
+- **action** — `execute`, `transfer`, `send`
 - **environment** — `system_health`
 - **function** — _not addressed_
 - **time** — `initiation`, `during_action`, `commit_point`

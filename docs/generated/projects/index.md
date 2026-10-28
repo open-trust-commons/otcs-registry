@@ -13,13 +13,14 @@ the project works. Record state is the first thing to read.
 | `observed` | built from public evidence, not project-controlled, **never** presented as participation |
 | `example` | fixtures that exercise the schema; **excluded from every count** |
 
-## Registered (3)
+## Registered (4)
 
 | Project | Record state | Status | Type | Owner verification |
 |---|---|---|---|---|
 | [ABT — Ambiguity Bandwidth Theory](abt.md) | `registered` | research | — | documentation_naming |
 | [Kinetic Trust Protocol](ktp.md) | `registered` | research | — | repository_control_confirmed |
 | [KTP Environmental Demo](ktp-demo.md) | `registered` | prototype | — | repository_control_confirmed |
+| [OTCS AI-use policy](otcs-ai-use.md) | `registered` | production | — | repository_control_confirmed |
 
 ## Observed (0)
 

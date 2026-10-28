@@ -25,7 +25,7 @@ Three rules govern the mapping, and each one grants a permission:
 ## 2. The template and a worked example — current vector
 
 !!! warning "This section is written against the current coordinate vector"
-    OTCS-0003 proposes splitting the vector into three layers (doctrine: [LAYERS.md](LAYERS.md)); it cannot be decided before 2026-09-10. Everything vector-shape-specific in this document is confined to this one section, so a ratified split re-expresses this section and nothing else. The boundary-statement concept, the enforce test, the stop-line, non-claims, and the triangulation rule (§3) are layer-independent and unaffected.
+    OTCS-0003 split the vector into three layers (doctrine: [LAYERS.md](LAYERS.md)), ratified 2026-10-18; this section still reads in the single-vector shape and its re-expression under the three layers is a follow-up. Everything vector-shape-specific in this document is confined to this one section, so a ratified split re-expresses this section and nothing else. The boundary-statement concept, the enforce test, the stop-line, non-claims, and the triangulation rule (§3) are layer-independent and unaffected.
 
 ### 2a. The template
 
