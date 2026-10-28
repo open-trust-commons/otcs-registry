@@ -1,6 +1,6 @@
 # OTCS-0014 — Disagreeing well: restatement, disposition, agreed facts
 
-**Class:** `constitutional` · **Phase:** DRAFT · **Clock start:** 2026-09-20
+**Class:** `constitutional` · **Phase:** DRAFT · **Clock start:** 2026-10-27 (restarted by Amendment 1; first published 2026-09-20)
 **Clock:** 45–90 days (`GOVERNANCE.md` §3, changing the rules themselves) — **earliest ratification: clock start + 45 days**
 
 ## Provenance
