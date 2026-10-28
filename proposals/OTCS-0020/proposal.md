@@ -1,6 +1,6 @@
 # OTCS-0020 — Observation classes: how an observation came to exist, and when it may count
 
-**Class:** `model_revision` · **Phase:** DRAFT · **Clock start:** 2026-10-14
+**Class:** `model_revision` · **Phase:** DRAFT · **Clock start:** 2026-10-27 (restarted by Amendment 1; first published 2026-10-14)
 **Clock:** 45–90 days (`GOVERNANCE.md` §3, changing the shared vocabulary) — **earliest decision: see `proposals/CALENDAR.md`, and no earlier than OTCS-0017** (this proposal adds to its fields)
 
 ## The gap
@@ -41,6 +41,7 @@ observation:
     calibrated_at:
     # counted
     membership_rule:          # what is in the counted set
+    rule_version:             # the version of that rule; a figure computed under another version is another observation
     boundary:                 # where the set ends
     accumulation_window:      # the period the count covers
     # adjudicated
@@ -64,7 +65,7 @@ Only the fields for the observation's own class are set. The envelope reuses the
 1. **No envelope, no constraint.** An observation without its class and envelope cannot permit or constrain consequential work. It may still be shown to a person as context.
 2. **Unknown is not zero.** An empty counted set is unknown, not zero. A missing adjudicated record is unknown, not "no ruling". Any observation past its window or validity horizon is unknown.
 3. **What unknown does is the work type's choice, not the observation's.** An unknown reading goes to the refusal point's `uncertainty_behavior` (OTCS-0010). This proposal adds no second rule for it.
-4. **A computation does not change the class.** A figure computed from `direct` samples is `counted`, with its membership rule. No `direct` or `counted` observation becomes `adjudicated`, however many of them agree. A count is never a declaration.
+4. **A computation does not change the class.** A figure computed from `direct` samples is `counted`, with its membership rule and that rule's version; it reads as computed, never as sampled, and two figures computed under different rule versions are two observations. No `direct` or `counted` observation becomes `adjudicated`, however many of them agree. A count is never a declaration.
 5. **The deployment is never its own adjudicator.** The issuing party of an `adjudicated` observation is never the configurator or executor of the work that observation would permit or constrain (OTCS-0017 §4). When the issuing party shares the failure domain of the work, the observation is self-attested (`schemas/wire/signal.schema.json`) and is not `adjudicated`.
 6. **Published is never restated as ours.** A `published` observation keeps its publisher, series and vintage everywhere it is used, including inside a computed figure. A deploying party that republishes it does not become its publisher.
 7. **Observing is not controlling.** Work whose ceiling is `evidence_only` produces observations. It does not gain any ceiling above that by producing them.
@@ -143,6 +144,10 @@ None. No manifest, record or wire schema changes.
    - add `reads` and `observation_classes` to the work-type schema created on OTCS-0017's ratification, `reads` at the work-type level as a requirement;
    - add a coherence check that `OBSERVATION-CLASSES.md` matches §§1–4 of the ratified text.
 2. **If rejected:** nothing to remove.
+
+## Amendments
+
+**Amendment 1** (SUBSTANTIVE under OTCS-0013 §3.1; pinned as v1 at its merge, which restarts the clock). One change: a `counted` observation's envelope names the version of its membership rule, `rule_version`, and rule 4 says what that means: a computed figure reads as computed, never as sampled, and a change of rule is a different observation. A new field, so SUBSTANTIVE. Generalized from a second operating model of the author's, where a derived edge names its rule and rule version; the word *derived* is not adopted here, since this proposal already uses it for nothing and `configured` for the state that model called derived.
 
 ## Provenance
 
