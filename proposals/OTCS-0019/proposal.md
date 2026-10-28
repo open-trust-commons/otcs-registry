@@ -1,7 +1,7 @@
 # OTCS-0019 — Requirement profiles: an on-ramp for an organization's own use cases and requirements
 
-**Class:** `model_revision` · **Phase:** DRAFT · **Clock start:** 2026-10-14 (restarted by Amendment 1; first published 2026-10-10)
-**Clock:** 45–90 days (`GOVERNANCE.md` §3, changing the shared vocabulary) — **earliest decision: see `proposals/CALENDAR.md`; the class floor 2026-11-28, not before 28 days after the deliberation window opens (OTCS-0013), and no earlier than OTCS-0017** (this proposal uses its fields)
+**Class:** `model_revision` · **Phase:** DRAFT · **Clock start:** 2026-10-27 (restarted by Amendment 2; first published 2026-10-10)
+**Clock:** 45–90 days (`GOVERNANCE.md` §3, changing the shared vocabulary) — **earliest decision: see `proposals/CALENDAR.md`; the class floor 2026-12-11, not before 28 days after the deliberation window opens (OTCS-0013), and no earlier than OTCS-0017** (this proposal uses its fields)
 
 ## The gap
 
