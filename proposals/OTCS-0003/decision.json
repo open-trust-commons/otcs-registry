@@ -1,0 +1,27 @@
+{
+  "proposal_id": "OTCS-0003",
+  "outcome": "RATIFIED",
+  "governance_outcome": "ALLOW",
+  "individual_result": {
+    "qualified": 1,
+    "support": 1,
+    "object": 0,
+    "abstain": 0
+  },
+  "project_result": {
+    "affected": 7,
+    "ballots": 0
+  },
+  "process_validity": {
+    "determination": "VALID",
+    "grounds": "Stage 1 founder-led incubation, declared in CHARTER.md §7. Participant set = founder only. The model_revision floor (45 days from 2026-07-27) elapsed 2026-09-10. The text was pinned for deliberation on 2026-09-13 (v1, ev-000047); the window reached the public record on 2026-09-20 (#51), and the decision was held to 28 days after that, 2026-10-18, the window minimum of OTCS-0013 applied as the founder's self-binding. No external comment was received on #51; silence is recorded as silence. The trial the proposal required ran on 2026-09-13 and is recorded in deliberation/record.md. One self-raised objection (custody seam, CHARTER.md §2; ev-000061, ev-000062) answered and carried; the ruling that this proposal changes locations and not meanings, and so does not require the vocabulary's custodian as a separate participant, is recorded there and is reopenable by any external participant. Disclosed as process facts: the migration, the schema's deprecated paths and the trial fixtures have been on main since #50 (2026-09-20), before this decision, so a rejection would have meant discarding published work; LAYERS.md read 'not implemented' while the implementation was live. The founder holds three roles here (proposal author, vocabulary custodian, maintainer of three affected records), all disclosed. project_result.ballots is 0: the founder's A/B pair is individual, and no project cast a ballot.",
+    "limitations_disclosed": [
+      "founder-only participant set",
+      "founder is also the vocabulary custodian (CHARTER.md §2) and the maintainer of three affected records",
+      "implementation and deprecation stage 1 published before the decision (#50, 2026-09-20)",
+      "external calibration subject selected by the founder"
+    ]
+  },
+  "review_date": "2027-04-18",
+  "recorded": "2026-10-18"
+}

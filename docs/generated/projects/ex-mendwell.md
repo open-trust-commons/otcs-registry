@@ -33,7 +33,7 @@ shared vocabulary — a projection the owner may dispute without losing anything
 
 - **actor** — `human`, `service`
 - **authority** — `organizational_policy`
-- **action** — _not addressed_
+- **action** — `revoke`
 - **environment** — `repair_capacity`, `reversibility`
 - **function** — _not addressed_
 - **time** — `repair_window`, `after_action`

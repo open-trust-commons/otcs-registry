@@ -26,3 +26,4 @@ no conformance suite exists. Saying so is the point of publishing the ladder at 
 | Kinetic Trust Protocol | — | — |
 | KTP Environmental Demo | `environment` MANIFEST_VALIDATED<br>`decision` MANIFEST_VALIDATED<br>`receipt` MANIFEST_VALIDATED | — |
 | Lifecycle Process Fixture (not a real project) | — | — |
+| OTCS AI-use policy | — | — |

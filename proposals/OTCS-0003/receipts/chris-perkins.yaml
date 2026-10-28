@@ -1,0 +1,20 @@
+participant: chris-perkins-nmcitra
+proposal: OTCS-0003
+joined_at: "2026-07-27"
+versions_reviewed: [v1]
+contributions:
+  - authored proposal
+  - executed the trial (2026-09-13)
+  - raised objection-001 (custody seam)
+  - answered objection-001
+  - recorded answers to the four open questions
+objections_reviewed: [objection-001]
+conflicts_disclosed:
+  - author of the proposal
+  - author of KTP, custodian of the vocabulary this proposal relocates (CHARTER.md §2)
+  - maintainer of three of the seven affected records
+initial_position: SUPPORT
+final_position: SUPPORT
+position_changed: false
+qualified_at: "2026-07-27"
+ballot: ballots/chris-perkins-B.yaml

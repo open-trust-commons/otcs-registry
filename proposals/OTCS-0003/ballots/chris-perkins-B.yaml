@@ -1,0 +1,11 @@
+proposal_id: OTCS-0003
+ballot_type: B_RATIFICATION
+voter: chris-perkins-nmcitra
+affiliation: nmcitra (founder; author of KTP, the vocabulary's custodian; maintainer of three registered records)
+choice: SUPPORT
+rationale: Decision inputs and system work are different subjects, and the trial supplied the evidence the argument lacked — consensus and rails both had nowhere to go in the single vector. No value changes meaning; the migration is rename and relocation, proven by a computed diff of stamps only. Layer 2 is declared and never enumerated, and the trial's own draft case shows why a tag would have failed. Recorded no earlier than seven days after the window opened.
+conflicts_disclosed:
+  - author of the proposal
+  - author of KTP, custodian of the vocabulary this proposal relocates (CHARTER.md §2)
+  - maintainer of three of the seven affected records
+date: "2026-10-18"
