@@ -1,7 +1,7 @@
 proposal_id: OTCS-0020
 title: Observation classes — how an observation came to exist, and when it may count
 class: model_revision
-phase: DRAFT
+phase: DELIBERATION
 author: Chris Perkins (nmcitra)
 sponsor: Chris Perkins (nmcitra)
 created: "2026-10-14"
@@ -11,3 +11,4 @@ affected_projects: []
 phase_history:
   - { phase: SEED, date: "2026-10-14" }
   - { phase: DRAFT, date: "2026-10-14" }
+  - { phase: DELIBERATION, date: "2026-10-27" }
