@@ -7,7 +7,7 @@ work_type:
   roles:
     configurator: [human]
     executor: [human, ai_agent]
-    effect_verifier: [human]
+    effect_verifier: human
     acceptor: [human]
   mandate:
     required_before_fan_out: false
