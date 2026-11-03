@@ -32,7 +32,7 @@ Each type takes the default for its consequence ceiling, then the override for i
 
 | Class group | Override |
 |---|---|
-| identity (credential, entitlement, session, account, facility_access, person, delegation, position, employment) | authority adds `mandate`; environment is identity_confidence, reversibility, human_availability (plus legal_context for person, employment, position); interval bounded by the mandate |
+| identity (credential, entitlement, session, account, facility_access, person; delegation, position and employment when they enter with a type, none being in this batch) | authority adds `mandate`; environment is identity_confidence, reversibility, human_availability (plus legal_context for person, employment, position); interval bounded by the mandate |
 | data (data_set, reference_data, schema, record, master_record, model, knowledge_article, content, consent, telemetry, evidence_artifact, agent_context) | environment adds data_quality, legal_context |
 | finance (budget, transaction, purchase_order, contract, supplier, payee_account, bank_account, ledger_entry, accounting_period, payroll, obligation, dispute, ip_right) | authority adds `mandate` (and `contract` for contract, supplier, purchase_order, obligation, dispute, ip_right); environment adds financial_exposure, legal_context; interval bounded by the mandate |
 | physical (asset, facility, device, equipment, power_supply, route, frequency, feed) | environment adds human_availability |
