@@ -216,6 +216,16 @@ That is the design intent, and it is honestly unbuilt. Identifiers are URNs rath
 
 What does not exist yet is a second instance, or the conflict model for two instances holding different observations of the same subject — designed, not implemented. It is one of nine **sovereignty criteria** in the v1.0 gate, all currently unmet, which together decide whether *no system must surrender its identity in order to coordinate* is true or merely written down. [FEDERATION.md](federation.md).
 
+### 35. Can an organization run all of this privately, inside its own network?
+
+Yes. "Public" here means three different things, and only one of them stays with the Commons.
+
+- **The text and the code are open.** The specifications are CC BY 4.0 and the code, schemas and tooling are Apache-2.0 ([LICENSE-SPECS](LICENSE-SPECS), [LICENSE](LICENSE)). Both permit private and commercial use, modification, and running offline. Neither requires changes to be shared back. Keep the notices and the attribution.
+- **The process is public, for the Commons only.** Proposals, windows, objections and decisions here happen on the public record ([GOVERNANCE.md](governance.md)). A private instance runs its own process, and its decisions are its own, not this Commons'.
+- **The record holds only what someone made public.** Being listed means a project made a public, attributable claim about itself ([CHARTER.md](charter.md) §8). Records in a private instance never appear here unless their owner registers them.
+
+Two limits apply. A private instance uses its own name and its own identifiers, and it does not imply endorsement by the Commons ([TRADEMARKS.md](trademarks.md), [CHARTER.md](charter.md) §12). And exchanging records between instances, so that a private instance can publish a few records here and keep the rest local, is designed and not built ([#34](#34-can-someone-else-run-their-own-instance), [FEDERATION.md](federation.md) §2).
+
 ---
 
 **Something missing, or an answer you think is wrong?** Both are useful — open a discussion, or comment on an open proposal. This page is a summary; the documents it points at are what actually govern, and they change through a public process anyone can join.
